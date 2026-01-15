@@ -1,0 +1,9 @@
+{
+  "tier": 0,
+  "entries": [
+    { "block": "minecraft:cobblestone", "weight": 55 },
+    { "block": "minecraft:stone", "weight": 30 },
+    { "block": "minecraft:coal_ore", "weight": 12 },
+    { "block": "minecraft:iron_ore", "weight": 3 }
+  ]
+}

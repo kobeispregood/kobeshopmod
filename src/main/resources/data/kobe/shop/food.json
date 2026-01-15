@@ -1,0 +1,18 @@
+{
+  "items": {
+    "1": { "material": "minecraft:bread", "buy": 24, "sell": 2 },
+    "2": { "material": "minecraft:baked_potato", "buy": 16, "sell": 1 },
+    "3": { "material": "minecraft:apple", "buy": 20, "sell": 2 },
+    "4": { "material": "minecraft:cookie", "buy": 8, "sell": 1 },
+
+    "5": { "material": "minecraft:cooked_beef", "buy": 32, "sell": 2 },
+    "6": { "material": "minecraft:cooked_porkchop", "buy": 32, "sell": 2 },
+    "7": { "material": "minecraft:cooked_chicken", "buy": 28, "sell": 2 },
+    "8": { "material": "minecraft:cooked_mutton", "buy": 28, "sell": 2 },
+    "9": { "material": "minecraft:cooked_rabbit", "buy": 28, "sell": 2 },
+
+    "10": { "material": "minecraft:golden_carrot", "buy": 96, "sell": 6 },
+    "11": { "material": "minecraft:cake", "buy": 320, "sell": 20 },
+    "12": { "material": "minecraft:beetroot_soup", "buy": 128, "sell": 8 }
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "items": {
+    "1": {
+      "material": "minecraft:black_dye",
+      "buy": 112,
+      "sell": 4
+    },
+    "2": {
+      "material": "minecraft:blue_dye",
+      "buy": 32,
+      "sell": 2
+    },
+    "3": {
+      "material": "minecraft:brown_dye",
+      "buy": 128,
+      "sell": 4
+    },
+    "4": {
+      "material": "minecraft:cyan_dye",
+      "buy": 16,
+      "sell": 2
+    },
+    "5": {
+      "material": "minecraft:gray_dye",
+      "buy": 80,
+      "sell": 4
+    },
+    "6": {
+      "material": "minecraft:green_dye",
+      "buy": 16,
+      "sell": 2
+    },
+    "7": {
+      "material": "minecraft:light_blue_dye",
+      "buy": 32,
+      "sell": 2
+    },
+    "8": {
+      "material": "minecraft:light_gray_dye",
+      "buy": 32,
+      "sell": 2
+    },
+    "9": {
+      "material": "minecraft:lime_dye",
+      "buy": 128,
+      "sell": 4
+    },
+    "10": {
+      "material": "minecraft:magenta_dye",
+      "buy": 32,
+      "sell": 2
+    },
+    "11": {
+      "material": "minecraft:orange_dye",
+      "buy": 32,
+      "sell": 2
+    },
+    "12": {
+      "material": "minecraft:pink_dye",
+      "buy": 32,
+      "sell": 2
+    },
+    "13": {
+      "material": "minecraft:purple_dye",
+      "buy": 32,
+      "sell": 2
+    },
+    "14": {
+      "material": "minecraft:red_dye",
+      "buy": 32,
+      "sell": 2
+    },
+    "15": {
+      "material": "minecraft:white_dye",
+      "buy": 48,
+      "sell": 2
+    },
+    "16": {
+      "material": "minecraft:yellow_dye",
+      "buy": 16,
+      "sell": 2
+    },
+    "17": {
+      "material": "minecraft:azure_bluet",
+      "buy": 32,
+      "sell": 2
+    },
+    "18": {
+      "material": "minecraft:blue_orchid",
+      "buy": 32,
+      "sell": 2
+    },
+    "19": {
+      "material": "minecraft:cornflower",
+      "buy": 32,
+      "sell": 2
+    },
+    "20": {
+      "material": "minecraft:lilac",
+      "buy": 32,
+      "sell": 2
+    },
+    "21": {
+      "material": "minecraft:lily_of_the_valley",
+      "buy": 32,
+      "sell": 2
+    },
+    "22": {
+      "material": "minecraft:orange_tulip",
+      "buy": 32,
+      "sell": 2
+    },
+    "23": {
+      "material": "minecraft:oxeye_daisy",
+      "buy": 32,
+      "sell": 2
+    },
+    "24": {
+      "material": "minecraft:peony",
+      "buy": 32,
+      "sell": 2
+    },
+    "25": {
+      "material": "minecraft:pink_petals",
+      "buy": 32,
+      "sell": 2
+    },
+    "26": {
+      "material": "minecraft:pink_tulip",
+      "buy": 32,
+      "sell": 2
+    },
+    "27": {
+      "material": "minecraft:pitcher_plant",
+      "buy": 416,
+      "sell": 14
+    },
+    "28": {
+      "material": "minecraft:poppy",
+      "buy": 32,
+      "sell": 2
+    },
+    "29": {
+      "material": "minecraft:red_tulip",
+      "buy": 32,
+      "sell": 2
+    },
+    "30": {
+      "material": "minecraft:sunflower",
+      "buy": 32,
+      "sell": 2
+    },
+    "31": {
+      "material": "minecraft:torchflower",
+      "buy": 416,
+      "sell": 14
+    },
+    "32": {
+      "material": "minecraft:ink_sac",
+      "buy": 112,
+      "sell": 4
+    }
+  }
+}

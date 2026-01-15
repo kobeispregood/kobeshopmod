@@ -1,0 +1,160 @@
+{
+  "items": {
+    "1": {
+      "material": "minecraft:spawner|minecraft:chicken",
+      "buy": 30000,
+      "sell": -1
+    },
+    "2": {
+      "material": "minecraft:spawner|minecraft:pig",
+      "buy": 30000,
+      "sell": -1
+    },
+    "3": {
+      "material": "minecraft:spawner|minecraft:sheep",
+      "buy": 35000,
+      "sell": -1
+    },
+    "4": {
+      "material": "minecraft:spawner|minecraft:cow",
+      "buy": 40000,
+      "sell": -1
+    },
+    "5": {
+      "material": "minecraft:spawner|minecraft:rabbit",
+      "buy": 40000,
+      "sell": -1
+    },
+
+    "6": {
+      "material": "minecraft:spawner|minecraft:zombie",
+      "buy": 50000,
+      "sell": -1
+    },
+    "7": {
+      "material": "minecraft:spawner|minecraft:skeleton",
+      "buy": 50000,
+      "sell": -1
+    },
+    "8": {
+      "material": "minecraft:spawner|minecraft:spider",
+      "buy": 50000,
+      "sell": -1
+    },
+    "9": {
+      "material": "minecraft:spawner|minecraft:cave_spider",
+      "buy": 60000,
+      "sell": -1
+    },
+
+    "10": {
+      "material": "minecraft:spawner|minecraft:silverfish",
+      "buy": 55000,
+      "sell": -1
+    },
+    "11": {
+      "material": "minecraft:spawner|minecraft:endermite",
+      "buy": 55000,
+      "sell": -1
+    },
+
+    "12": {
+      "material": "minecraft:spawner|minecraft:slime",
+      "buy": 70000,
+      "sell": -1
+    },
+    "13": {
+      "material": "minecraft:spawner|minecraft:creeper",
+      "buy": 90000,
+      "sell": -1
+    },
+    "14": {
+      "material": "minecraft:spawner|minecraft:bee",
+      "buy": 85000,
+      "sell": -1
+    },
+
+    "15": {
+      "material": "minecraft:spawner|minecraft:magma_cube",
+      "buy": 90000,
+      "sell": -1
+    },
+    "16": {
+      "material": "minecraft:spawner|minecraft:hoglin",
+      "buy": 95000,
+      "sell": -1
+    },
+    "17": {
+      "material": "minecraft:spawner|minecraft:zombified_piglin",
+      "buy": 100000,
+      "sell": -1
+    },
+
+    "18": {
+      "material": "minecraft:spawner|minecraft:blaze",
+      "buy": 120000,
+      "sell": -1
+    },
+    "19": {
+      "material": "minecraft:spawner|minecraft:drowned",
+      "buy": 120000,
+      "sell": -1
+    },
+
+    "20": {
+      "material": "minecraft:spawner|minecraft:witch",
+      "buy": 150000,
+      "sell": -1
+    },
+    "21": {
+      "material": "minecraft:spawner|minecraft:enderman",
+      "buy": 150000,
+      "sell": -1
+    },
+
+    "22": {
+      "material": "minecraft:spawner|minecraft:guardian",
+      "buy": 180000,
+      "sell": -1
+    },
+    "23": {
+      "material": "minecraft:spawner|minecraft:pillager",
+      "buy": 180000,
+      "sell": -1
+    },
+
+    "24": {
+      "material": "minecraft:spawner|minecraft:villager",
+      "buy": 220000,
+      "sell": -1
+    },
+
+    "25": {
+      "material": "minecraft:spawner|minecraft:wither_skeleton",
+      "buy": 250000,
+      "sell": -1
+    },
+    "26": {
+      "material": "minecraft:spawner|minecraft:evoker",
+      "buy": 250000,
+      "sell": -1
+    },
+
+    "27": {
+      "material": "minecraft:spawner|minecraft:ravager",
+      "buy": 300000,
+      "sell": -1
+    },
+    "28": {
+      "material": "minecraft:spawner|minecraft:elder_guardian",
+      "buy": 300000,
+      "sell": -1
+    },
+
+    "29": {
+      "material": "minecraft:spawner|minecraft:iron_golem",
+      "buy": 300000,
+      "sell": -1
+    }
+  }
+}

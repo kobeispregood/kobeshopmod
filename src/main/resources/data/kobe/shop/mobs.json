@@ -1,0 +1,99 @@
+{
+  "items": {
+    "1": {
+      "material": "minecraft:arrow",
+      "buy": 48,
+      "sell": 2
+    },
+    "2": {
+      "material": "minecraft:blaze_powder",
+      "buy": 64,
+      "sell": 2
+    },
+    "3": {
+      "material": "minecraft:blaze_rod",
+      "buy": 112,
+      "sell": 4
+    },
+    "4": {
+      "material": "minecraft:bone",
+      "buy": 128,
+      "sell": 4
+    },
+    "5": {
+      "material": "minecraft:breeze_rod",
+      "buy": 400,
+      "sell": 14
+    },
+    "6": {
+      "material": "minecraft:ender_pearl",
+      "buy": 144,
+      "sell": 6
+    },
+    "7": {
+      "material": "minecraft:feather",
+      "buy": 128,
+      "sell": 4
+    },
+    "8": {
+      "material": "minecraft:fermented_spider_eye",
+      "buy": 192,
+      "sell": 6
+    },
+    "9": {
+      "material": "minecraft:ghast_tear",
+      "buy": 800,
+      "sell": 26
+    },
+    "10": {
+      "material": "minecraft:gunpowder",
+      "buy": 320,
+      "sell": 10
+    },
+    "11": {
+      "material": "minecraft:magma_cream",
+      "buy": 176,
+      "sell": 6
+    },
+    "12": {
+      "material": "minecraft:nautilus_shell",
+      "buy": 3600,
+      "sell": 114
+    },
+    "13": {
+      "material": "minecraft:phantom_membrane",
+      "buy": 2512,
+      "sell": 80
+    },
+    "14": {
+      "material": "minecraft:rabbit_foot",
+      "buy": 3600,
+      "sell": 114
+    },
+    "15": {
+      "material": "minecraft:rabbit_hide",
+      "buy": 160,
+      "sell": 6
+    },
+    "16": {
+      "material": "minecraft:rotten_flesh",
+      "buy": 112,
+      "sell": 4
+    },
+    "17": {
+      "material": "minecraft:slime_ball",
+      "buy": 112,
+      "sell": 4
+    },
+    "18": {
+      "material": "minecraft:spider_eye",
+      "buy": 144,
+      "sell": 6
+    },
+    "19": {
+      "material": "minecraft:string",
+      "buy": 144,
+      "sell": 6
+    }
+  }
+}

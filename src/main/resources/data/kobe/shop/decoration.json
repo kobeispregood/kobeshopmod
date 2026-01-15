@@ -1,0 +1,769 @@
+{
+  "items": {
+    "1": {
+      "material": "minecraft:chain",
+      "buy": 144,
+      "sell": 6
+    },
+    "2": {
+      "material": "minecraft:flower_pot",
+      "buy": 1392,
+      "sell": 44
+    },
+    "3": {
+      "material": "minecraft:honeycomb_block",
+      "buy": 272,
+      "sell": 10
+    },
+    "4": {
+      "material": "minecraft:jack_o_lantern",
+      "buy": 144,
+      "sell": 6
+    },
+    "5": {
+      "material": "minecraft:pointed_dripstone",
+      "buy": 32,
+      "sell": 2
+    },
+    "6": {
+      "material": "minecraft:spore_blossom",
+      "buy": 80,
+      "sell": 4
+    },
+    "7": {
+      "material": "minecraft:black_candle",
+      "buy": 336,
+      "sell": 12
+    },
+    "8": {
+      "material": "minecraft:blue_candle",
+      "buy": 256,
+      "sell": 8
+    },
+    "9": {
+      "material": "minecraft:brown_candle",
+      "buy": 368,
+      "sell": 12
+    },
+    "10": {
+      "material": "minecraft:candle",
+      "buy": 224,
+      "sell": 8
+    },
+    "11": {
+      "material": "minecraft:cyan_candle",
+      "buy": 240,
+      "sell": 8
+    },
+    "12": {
+      "material": "minecraft:gray_candle",
+      "buy": 304,
+      "sell": 10
+    },
+    "13": {
+      "material": "minecraft:green_candle",
+      "buy": 240,
+      "sell": 8
+    },
+    "14": {
+      "material": "minecraft:light_blue_candle",
+      "buy": 256,
+      "sell": 8
+    },
+    "15": {
+      "material": "minecraft:light_gray_candle",
+      "buy": 256,
+      "sell": 8
+    },
+    "16": {
+      "material": "minecraft:lime_candle",
+      "buy": 368,
+      "sell": 12
+    },
+    "17": {
+      "material": "minecraft:magenta_candle",
+      "buy": 256,
+      "sell": 8
+    },
+    "18": {
+      "material": "minecraft:orange_candle",
+      "buy": 256,
+      "sell": 8
+    },
+    "19": {
+      "material": "minecraft:pink_candle",
+      "buy": 256,
+      "sell": 8
+    },
+    "20": {
+      "material": "minecraft:purple_candle",
+      "buy": 256,
+      "sell": 8
+    },
+    "21": {
+      "material": "minecraft:red_candle",
+      "buy": 256,
+      "sell": 8
+    },
+    "22": {
+      "material": "minecraft:white_candle",
+      "buy": 272,
+      "sell": 10
+    },
+    "23": {
+      "material": "minecraft:yellow_candle",
+      "buy": 240,
+      "sell": 8
+    },
+    "24": {
+      "material": "minecraft:brain_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "25": {
+      "material": "minecraft:brain_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "26": {
+      "material": "minecraft:brain_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "27": {
+      "material": "minecraft:bubble_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "28": {
+      "material": "minecraft:bubble_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "29": {
+      "material": "minecraft:bubble_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "30": {
+      "material": "minecraft:dead_brain_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "31": {
+      "material": "minecraft:dead_brain_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "32": {
+      "material": "minecraft:dead_brain_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "33": {
+      "material": "minecraft:dead_bubble_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "34": {
+      "material": "minecraft:dead_bubble_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "35": {
+      "material": "minecraft:dead_bubble_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "36": {
+      "material": "minecraft:dead_fire_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "37": {
+      "material": "minecraft:dead_fire_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "38": {
+      "material": "minecraft:dead_fire_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "39": {
+      "material": "minecraft:dead_horn_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "40": {
+      "material": "minecraft:dead_horn_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "41": {
+      "material": "minecraft:dead_horn_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "42": {
+      "material": "minecraft:dead_tube_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "43": {
+      "material": "minecraft:dead_tube_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "44": {
+      "material": "minecraft:dead_tube_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "45": {
+      "material": "minecraft:fire_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "46": {
+      "material": "minecraft:fire_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "47": {
+      "material": "minecraft:fire_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "48": {
+      "material": "minecraft:horn_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "49": {
+      "material": "minecraft:horn_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "50": {
+      "material": "minecraft:horn_coral_fan",
+      "buy": 64,
+      "sell": 2
+    },
+    "51": {
+      "material": "minecraft:tube_coral",
+      "buy": 112,
+      "sell": 4
+    },
+    "52": {
+      "material": "minecraft:tube_coral_block",
+      "buy": 320,
+      "sell": 10
+    },
+    "53": {
+      "material": "minecraft:tube_coral_fan",
+      "buy": 128,
+      "sell": 4
+    },
+    "54": {
+      "material": "minecraft:acacia_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "55": {
+      "material": "minecraft:azalea_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "56": {
+      "material": "minecraft:birch_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "57": {
+      "material": "minecraft:cherry_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "58": {
+      "material": "minecraft:dark_oak_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "59": {
+      "material": "minecraft:flowering_azalea_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "60": {
+      "material": "minecraft:jungle_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "61": {
+      "material": "minecraft:oak_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "62": {
+      "material": "minecraft:spruce_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "63": {
+      "material": "minecraft:copper_bulb",
+      "buy": 112,
+      "sell": 4
+    },
+    "64": {
+      "material": "minecraft:exposed_copper_bulb",
+      "buy": 112,
+      "sell": 4
+    },
+    "65": {
+      "material": "minecraft:oxidized_copper_bulb",
+      "buy": 128,
+      "sell": 4
+    },
+    "66": {
+      "material": "minecraft:sea_lantern",
+      "buy": 1328,
+      "sell": 42
+    },
+    "67": {
+      "material": "minecraft:shroomlight",
+      "buy": 160,
+      "sell": 6
+    },
+    "68": {
+      "material": "minecraft:weathered_copper_bulb",
+      "buy": 112,
+      "sell": 4
+    },
+    "69": {
+      "material": "minecraft:ochre_froglight",
+      "buy": 128,
+      "sell": 4
+    },
+    "70": {
+      "material": "minecraft:pearlescent_froglight",
+      "buy": 128,
+      "sell": 4
+    },
+    "71": {
+      "material": "minecraft:verdant_froglight",
+      "buy": 128,
+      "sell": 4
+    },
+    "72": {
+      "material": "minecraft:mangrove_leaves",
+      "buy": 64,
+      "sell": 2
+    },
+    "73": {
+      "material": "minecraft:mangrove_roots",
+      "buy": 64,
+      "sell": 2
+    },
+    "74": {
+      "material": "minecraft:muddy_mangrove_roots",
+      "buy": 64,
+      "sell": 2
+    },
+    "75": {
+      "material": "minecraft:acacia_sapling",
+      "buy": 64,
+      "sell": 2
+    },
+    "76": {
+      "material": "minecraft:azalea",
+      "buy": 64,
+      "sell": 2
+    },
+    "77": {
+      "material": "minecraft:birch_sapling",
+      "buy": 64,
+      "sell": 2
+    },
+    "78": {
+      "material": "minecraft:cherry_sapling",
+      "buy": 64,
+      "sell": 2
+    },
+    "79": {
+      "material": "minecraft:dark_oak_sapling",
+      "buy": 64,
+      "sell": 2
+    },
+    "80": {
+      "material": "minecraft:flowering_azalea",
+      "buy": 64,
+      "sell": 2
+    },
+    "81": {
+      "material": "minecraft:jungle_sapling",
+      "buy": 64,
+      "sell": 2
+    },
+    "82": {
+      "material": "minecraft:mangrove_propagule",
+      "buy": 64,
+      "sell": 2
+    },
+    "83": {
+      "material": "minecraft:oak_sapling",
+      "buy": 64,
+      "sell": 2
+    },
+    "84": {
+      "material": "minecraft:spruce_sapling",
+      "buy": 64,
+      "sell": 2
+    },
+    "85": {
+      "material": "minecraft:acacia_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "86": {
+      "material": "minecraft:acacia_sign",
+      "buy": 64,
+      "sell": 2
+    },
+    "87": {
+      "material": "minecraft:bamboo_hanging_sign",
+      "buy": 64,
+      "sell": 2
+    },
+    "88": {
+      "material": "minecraft:bamboo_sign",
+      "buy": 32,
+      "sell": 2
+    },
+    "89": {
+      "material": "minecraft:birch_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "90": {
+      "material": "minecraft:birch_sign",
+      "buy": 64,
+      "sell": 2
+    },
+    "91": {
+      "material": "minecraft:cherry_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "92": {
+      "material": "minecraft:cherry_sign",
+      "buy": 48,
+      "sell": 2
+    },
+    "93": {
+      "material": "minecraft:crimson_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "94": {
+      "material": "minecraft:crimson_sign",
+      "buy": 48,
+      "sell": 2
+    },
+    "95": {
+      "material": "minecraft:dark_oak_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "96": {
+      "material": "minecraft:dark_oak_sign",
+      "buy": 64,
+      "sell": 2
+    },
+    "97": {
+      "material": "minecraft:jungle_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "98": {
+      "material": "minecraft:jungle_sign",
+      "buy": 64,
+      "sell": 2
+    },
+    "99": {
+      "material": "minecraft:mangrove_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "100": {
+      "material": "minecraft:mangrove_sign",
+      "buy": 48,
+      "sell": 2
+    },
+    "101": {
+      "material": "minecraft:oak_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "102": {
+      "material": "minecraft:oak_sign",
+      "buy": 64,
+      "sell": 2
+    },
+    "103": {
+      "material": "minecraft:spruce_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "104": {
+      "material": "minecraft:spruce_sign",
+      "buy": 64,
+      "sell": 2
+    },
+    "105": {
+      "material": "minecraft:warped_hanging_sign",
+      "buy": 80,
+      "sell": 4
+    },
+    "106": {
+      "material": "minecraft:warped_sign",
+      "buy": 48,
+      "sell": 2
+    },
+    "107": {
+      "material": "minecraft:glow_lichen",
+      "buy": 32,
+      "sell": 2
+    },
+    "108": {
+      "material": "minecraft:twisting_vines",
+      "buy": 128,
+      "sell": 4
+    },
+    "109": {
+      "material": "minecraft:vine",
+      "buy": 144,
+      "sell": 6
+    },
+    "110": {
+      "material": "minecraft:weeping_vines",
+      "buy": 128,
+      "sell": 4
+    },
+    "111": {
+      "material": "minecraft:angler_pottery_sherd",
+      "buy": 608,
+      "sell": 20
+    },
+    "112": {
+      "material": "minecraft:archer_pottery_sherd",
+      "buy": 576,
+      "sell": 18
+    },
+    "113": {
+      "material": "minecraft:arms_up_pottery_sherd",
+      "buy": 496,
+      "sell": 16
+    },
+    "114": {
+      "material": "minecraft:blade_pottery_sherd",
+      "buy": 608,
+      "sell": 20
+    },
+    "115": {
+      "material": "minecraft:brewer_pottery_sherd",
+      "buy": 496,
+      "sell": 16
+    },
+    "116": {
+      "material": "minecraft:burn_pottery_sherd",
+      "buy": 592,
+      "sell": 20
+    },
+    "117": {
+      "material": "minecraft:danger_pottery_sherd",
+      "buy": 592,
+      "sell": 20
+    },
+    "118": {
+      "material": "minecraft:decorated_pot",
+      "buy": 1856,
+      "sell": 58
+    },
+    "119": {
+      "material": "minecraft:explorer_pottery_sherd",
+      "buy": 608,
+      "sell": 20
+    },
+    "120": {
+      "material": "minecraft:flow_pottery_sherd",
+      "buy": 656,
+      "sell": 22
+    },
+    "121": {
+      "material": "minecraft:friend_pottery_sherd",
+      "buy": 592,
+      "sell": 20
+    },
+    "122": {
+      "material": "minecraft:guster_pottery_sherd",
+      "buy": 656,
+      "sell": 22
+    },
+    "123": {
+      "material": "minecraft:heart_pottery_sherd",
+      "buy": 592,
+      "sell": 20
+    },
+    "124": {
+      "material": "minecraft:heartbreak_pottery_sherd",
+      "buy": 592,
+      "sell": 20
+    },
+    "125": {
+      "material": "minecraft:howl_pottery_sherd",
+      "buy": 592,
+      "sell": 20
+    },
+    "126": {
+      "material": "minecraft:miner_pottery_sherd",
+      "buy": 576,
+      "sell": 18
+    },
+    "127": {
+      "material": "minecraft:mourner_pottery_sherd",
+      "buy": 608,
+      "sell": 20
+    },
+    "128": {
+      "material": "minecraft:plenty_pottery_sherd",
+      "buy": 608,
+      "sell": 20
+    },
+    "129": {
+      "material": "minecraft:prize_pottery_sherd",
+      "buy": 576,
+      "sell": 18
+    },
+    "130": {
+      "material": "minecraft:scrape_pottery_sherd",
+      "buy": 656,
+      "sell": 22
+    },
+    "131": {
+      "material": "minecraft:sheaf_pottery_sherd",
+      "buy": 592,
+      "sell": 20
+    },
+    "132": {
+      "material": "minecraft:shelter_pottery_sherd",
+      "buy": 608,
+      "sell": 20
+    },
+    "133": {
+      "material": "minecraft:skull_pottery_sherd",
+      "buy": 576,
+      "sell": 18
+    },
+    "134": {
+      "material": "minecraft:snort_pottery_sherd",
+      "buy": 608,
+      "sell": 20
+    },
+    "135": {
+      "material": "minecraft:bolt_armor_trim_smithing_template",
+      "buy": 7808,
+      "sell": 244
+    },
+    "136": {
+      "material": "minecraft:coast_armor_trim_smithing_template",
+      "buy": 3872,
+      "sell": 122
+    },
+    "137": {
+      "material": "minecraft:dune_armor_trim_smithing_template",
+      "buy": 4000,
+      "sell": 126
+    },
+    "138": {
+      "material": "minecraft:eye_armor_trim_smithing_template",
+      "buy": 3920,
+      "sell": 124
+    },
+    "139": {
+      "material": "minecraft:flow_armor_trim_smithing_template",
+      "buy": 8144,
+      "sell": 256
+    },
+    "140": {
+      "material": "minecraft:host_armor_trim_smithing_template",
+      "buy": 4096,
+      "sell": 128
+    },
+    "141": {
+      "material": "minecraft:netherite_upgrade_smithing_template",
+      "buy": 3872,
+      "sell": 122
+    },
+    "142": {
+      "material": "minecraft:raiser_armor_trim_smithing_template",
+      "buy": 4096,
+      "sell": 128
+    },
+    "143": {
+      "material": "minecraft:rib_armor_trim_smithing_template",
+      "buy": 3872,
+      "sell": 122
+    },
+    "144": {
+      "material": "minecraft:sentry_armor_trim_smithing_template",
+      "buy": 3872,
+      "sell": 122
+    },
+    "145": {
+      "material": "minecraft:shaper_armor_trim_smithing_template",
+      "buy": 4096,
+      "sell": 128
+    },
+    "146": {
+      "material": "minecraft:silence_armor_trim_smithing_template",
+      "buy": 3872,
+      "sell": 122
+    },
+    "147": {
+      "material": "minecraft:snout_armor_trim_smithing_template",
+      "buy": 3872,
+      "sell": 122
+    },
+    "148": {
+      "material": "minecraft:spire_armor_trim_smithing_template",
+      "buy": 3904,
+      "sell": 122
+    },
+    "149": {
+      "material": "minecraft:tide_armor_trim_smithing_template",
+      "buy": 4176,
+      "sell": 132
+    },
+    "150": {
+      "material": "minecraft:vex_armor_trim_smithing_template",
+      "buy": 3872,
+      "sell": 122
+    },
+    "151": {
+      "material": "minecraft:ward_armor_trim_smithing_template",
+      "buy": 3872,
+      "sell": 122
+    },
+    "152": {
+      "material": "minecraft:wayfinder_armor_trim_smithing_template",
+      "buy": 4096,
+      "sell": 128
+    },
+    "153": {
+      "material": "minecraft:wild_armor_trim_smithing_template",
+      "buy": 3952,
+      "sell": 124
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "item.kobe.black_opal": "Black Opal",
+  "item.kobe.raw_black_opal": "Raw Black Opal",
+
+  "item.kobe.rare_key": "Rare Crate Key",
+  "item.kobe.legendary_key": "Legendary Crate Key",
+  "item.kobe.common_key": "Common Crate Key",
+
+  "itemGroup.kobe.black_opal_items_tab": "Black Opal Items",
+  "itemGroup.kobe.black_opal_blocks_tab": "Black Opal Blocks",
+
+  "block.kobe.common_crate": "Common Crate",
+  "block.kobe.rare_crate": "Rare Crate",
+  "block.kobe.legendary_crate": "Legendary Crate"
+
+}
+
+

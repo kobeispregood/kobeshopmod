@@ -1,0 +1,30 @@
+{
+  "items": {
+    "1":  { "material": "minecraft:wheat", "buy": 112, "sell": 6 },
+    "2":  { "material": "minecraft:carrot", "buy": 112, "sell": 6 },
+    "3":  { "material": "minecraft:potato", "buy": 112, "sell": 6 },
+    "4":  { "material": "minecraft:beetroot", "buy": 128, "sell": 6 },
+
+    "5":  { "material": "minecraft:melon", "buy": 192, "sell": 10 },
+    "6":  { "material": "minecraft:pumpkin", "buy": 112, "sell": 8 },
+
+    "7":  { "material": "minecraft:sugar_cane", "buy": 16, "sell": 3 },
+    "8":  { "material": "minecraft:cactus", "buy": 16, "sell": 3 },
+
+    "9":  { "material": "minecraft:nether_wart", "buy": 64, "sell": 4 },
+    "10": { "material": "minecraft:kelp", "buy": 16, "sell": 2 },
+
+    "11": { "material": "minecraft:oak_sapling", "buy": 32, "sell": 2 },
+    "12": { "material": "minecraft:spruce_sapling", "buy": 32, "sell": 2 },
+    "13": { "material": "minecraft:birch_sapling", "buy": 32, "sell": 2 },
+    "14": { "material": "minecraft:jungle_sapling", "buy": 32, "sell": 2 },
+    "15": { "material": "minecraft:acacia_sapling", "buy": 32, "sell": 2 },
+    "16": { "material": "minecraft:dark_oak_sapling", "buy": 32, "sell": 2 },
+
+    "17": { "material": "minecraft:mangrove_propagule", "buy": 48, "sell": 3 },
+    "18": { "material": "minecraft:cherry_sapling", "buy": 48, "sell": 3 },
+
+    "19": { "material": "minecraft:crimson_fungus", "buy": 48, "sell": 3 },
+    "20": { "material": "minecraft:warped_fungus", "buy": 48, "sell": 3 }
+  }
+}

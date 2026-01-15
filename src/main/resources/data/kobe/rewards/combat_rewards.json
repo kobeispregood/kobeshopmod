@@ -1,0 +1,84 @@
+{
+  "1": [
+    { "type": "money", "amount": 50 }
+  ],
+  "2": [
+    { "type": "money", "amount": 60 },
+    { "type": "item", "item": "minecraft:arrow", "count": 8 }
+  ],
+  "3": [
+    { "type": "money", "amount": 75 }
+  ],
+  "4": [
+    { "type": "money", "amount": 90 }
+  ],
+  "5": [
+    { "type": "money", "amount": 200 },
+    { "type": "item", "item": "minecraft:iron_ingot", "count": 4 }
+  ],
+  "6": [
+    { "type": "money", "amount": 120 }
+  ],
+  "7": [
+    { "type": "money", "amount": 150 },
+    { "type": "item", "item": "minecraft:arrow", "count": 16 }
+  ],
+  "8": [
+    { "type": "money", "amount": 180 }
+  ],
+  "9": [
+    { "type": "money", "amount": 220 }
+  ],
+  "10": [
+    { "type": "money", "amount": 500 },
+    { "type": "item", "item": "minecraft:iron_sword", "count": 1 }
+  ],
+  "11": [
+    { "type": "money", "amount": 260 }
+  ],
+  "12": [
+    { "type": "money", "amount": 300 }
+  ],
+  "13": [
+    { "type": "money", "amount": 340 }
+  ],
+  "14": [
+    { "type": "money", "amount": 380 }
+  ],
+  "15": [
+    { "type": "money", "amount": 700 },
+    { "type": "item", "item": "minecraft:shield", "count": 1 }
+  ],
+  "16": [
+    { "type": "money", "amount": 420 }
+  ],
+  "17": [
+    { "type": "money", "amount": 480 }
+  ],
+  "18": [
+    { "type": "money", "amount": 540 }
+  ],
+  "19": [
+    { "type": "money", "amount": 600 }
+  ],
+  "20": [
+    { "type": "money", "amount": 1000 },
+    { "type": "item", "item": "minecraft:diamond_sword", "count": 1 }
+  ],
+  "21": [
+    { "type": "money", "amount": 700 }
+  ],
+  "22": [
+    { "type": "money", "amount": 800 }
+  ],
+  "23": [
+    { "type": "money", "amount": 900 }
+  ],
+  "24": [
+    { "type": "money", "amount": 1000 }
+  ],
+  "25": [
+    { "type": "money", "amount": 2000 },
+    { "type": "item", "item": "minecraft:netherite_ingot", "count": 1 }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "items": {
+    "1": {
+      "material": "minecraft:music_disc_11",
+      "buy": 1504,
+      "sell": 48
+    },
+    "2": {
+      "material": "minecraft:music_disc_13",
+      "buy": 1504,
+      "sell": 48
+    },
+    "3": {
+      "material": "minecraft:music_disc_5",
+      "buy": 18912,
+      "sell": 592
+    },
+    "4": {
+      "material": "minecraft:music_disc_blocks",
+      "buy": 1504,
+      "sell": 48
+    },
+    "5": {
+      "material": "minecraft:music_disc_cat",
+      "buy": 1504,
+      "sell": 48
+    },
+    "6": {
+      "material": "minecraft:music_disc_chirp",
+      "buy": 1504,
+      "sell": 48
+    },
+    "7": {
+      "material": "minecraft:music_disc_creator",
+      "buy": 2000,
+      "sell": 64
+    },
+    "8": {
+      "material": "minecraft:music_disc_creator_music_box",
+      "buy": 2000,
+      "sell": 64
+    },
+    "9": {
+      "material": "minecraft:music_disc_far",
+      "buy": 1504,
+      "sell": 48
+    },
+    "10": {
+      "material": "minecraft:music_disc_mall",
+      "buy": 1504,
+      "sell": 48
+    },
+    "11": {
+      "material": "minecraft:music_disc_mellohi",
+      "buy": 1504,
+      "sell": 48
+    },
+    "12": {
+      "material": "minecraft:music_disc_otherside",
+      "buy": 1504,
+      "sell": 48
+    },
+    "13": {
+      "material": "minecraft:music_disc_pigstep",
+      "buy": 1504,
+      "sell": 48
+    },
+    "14": {
+      "material": "minecraft:music_disc_precipice",
+      "buy": 2000,
+      "sell": 64
+    },
+    "15": {
+      "material": "minecraft:music_disc_relic",
+      "buy": 2000,
+      "sell": 64
+    },
+    "16": {
+      "material": "minecraft:music_disc_stal",
+      "buy": 1504,
+      "sell": 48
+    },
+    "17": {
+      "material": "minecraft:music_disc_strad",
+      "buy": 1504,
+      "sell": 48
+    },
+    "18": {
+      "material": "minecraft:music_disc_wait",
+      "buy": 1504,
+      "sell": 48
+    },
+    "19": {
+      "material": "minecraft:music_disc_ward",
+      "buy": 1504,
+      "sell": 48
+    },
+    "20": {
+      "material": "minecraft:goat_horn",
+      "buy": 2000,
+      "sell": 64
+    },
+    "21": {
+      "material": "minecraft:goat_horn",
+      "buy": 2000,
+      "sell": 64
+    },
+    "22": {
+      "material": "minecraft:goat_horn",
+      "buy": 2000,
+      "sell": 64
+    },
+    "23": {
+      "material": "minecraft:goat_horn",
+      "buy": 2000,
+      "sell": 64
+    },
+    "24": {
+      "material": "minecraft:goat_horn",
+      "buy": 2000,
+      "sell": 64
+    },
+    "25": {
+      "material": "minecraft:goat_horn",
+      "buy": 2000,
+      "sell": 64
+    },
+    "26": {
+      "material": "minecraft:goat_horn",
+      "buy": 2000,
+      "sell": 64
+    },
+    "27": {
+      "material": "minecraft:goat_horn",
+      "buy": 2000,
+      "sell": 64
+    }
+  }
+}

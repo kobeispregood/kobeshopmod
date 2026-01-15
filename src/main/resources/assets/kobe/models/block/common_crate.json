@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down":  "kobe:block/common_crate",
+    "up":    "kobe:block/common_crate",
+    "north": "kobe:block/common_crate",
+    "south": "kobe:block/common_crate",
+    "east":  "kobe:block/common_crate",
+    "west":  "kobe:block/common_crate"
+  }
+}

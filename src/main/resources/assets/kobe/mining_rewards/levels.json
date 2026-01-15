@@ -1,0 +1,141 @@
+{
+  "1": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 6 }
+    ],
+    "money": 100
+  },
+
+  "2": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 8 }
+    ],
+    "money": 150
+  },
+
+  "3": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 10 }
+    ],
+    "money": 200
+  },
+
+  "4": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 12 }
+    ],
+    "money": 250
+  },
+
+  "5": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 12 },
+      { "item": "kobe:common_key", "count": 1 }
+    ],
+    "money": 500
+  },
+
+  "6": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 14 }
+    ],
+    "money": 600
+  },
+
+  "7": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 16 }
+    ],
+    "money": 700
+  },
+
+  "8": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 18 }
+    ],
+    "money": 800
+  },
+
+  "9": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 20 }
+    ],
+    "money": 900
+  },
+
+  "10": {
+    "items": [
+      { "item": "minecraft:iron_ore", "count": 20 },
+      { "item": "minecraft:diamond", "count": 1 },
+      { "item": "kobe:common_key", "count": 1 }
+    ],
+    "money": 1500
+  },
+
+  "15": {
+    "items": [
+      { "item": "minecraft:gold_ore", "count": 16 },
+      { "item": "minecraft:diamond", "count": 2 },
+      { "item": "kobe:common_key", "count": 1 }
+    ],
+    "money": 3000
+  },
+
+  "20": {
+    "items": [
+      { "item": "minecraft:gold_ore", "count": 20 },
+      { "item": "minecraft:diamond", "count": 3 },
+      { "item": "kobe:rare_key", "count": 1 }
+    ],
+    "money": 6000
+  },
+
+  "25": {
+    "items": [
+      { "item": "minecraft:diamond", "count": 5 },
+      { "item": "kobe:rare_key", "count": 1 }
+    ],
+    "money": 10000
+  },
+
+  "30": {
+    "items": [
+      { "item": "minecraft:diamond", "count": 8 },
+      { "item": "kobe:rare_key", "count": 2 }
+    ],
+    "money": 15000
+  },
+
+  "35": {
+    "items": [
+      { "item": "minecraft:diamond", "count": 10 },
+      { "item": "kobe:rare_key", "count": 2 }
+    ],
+    "money": 20000
+  },
+
+  "40": {
+    "items": [
+      { "item": "minecraft:diamond", "count": 12 },
+      { "item": "kobe:rare_key", "count": 2 },
+      { "item": "kobe:legendary_key", "count": 1 }
+    ],
+    "money": 30000
+  },
+
+  "45": {
+    "items": [
+      { "item": "minecraft:diamond", "count": 16 },
+      { "item": "kobe:rare_key", "count": 3 }
+    ],
+    "money": 40000
+  },
+
+  "50": {
+    "items": [
+      { "item": "minecraft:diamond", "count": 20 },
+      { "item": "kobe:legendary_key", "count": 1 }
+    ],
+    "money": 60000
+  }
+}

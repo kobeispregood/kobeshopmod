@@ -1,0 +1,1244 @@
+{
+  "items": {
+    "1": {
+      "material": "minecraft:calcite",
+      "buy": 48,
+      "sell": 2
+    },
+    "2": {
+      "material": "minecraft:dripstone_block",
+      "buy": 32,
+      "sell": 2
+    },
+    "3": {
+      "material": "minecraft:hay_block",
+      "buy": 960,
+      "sell": 30
+    },
+    "4": {
+      "material": "minecraft:honey_block",
+      "buy": 672,
+      "sell": 22
+    },
+    "5": {
+      "material": "minecraft:magma_block",
+      "buy": 688,
+      "sell": 22
+    },
+    "6": {
+      "material": "minecraft:packed_ice",
+      "buy": 272,
+      "sell": 10
+    },
+    "7": {
+      "material": "minecraft:rooted_dirt",
+      "buy": 32,
+      "sell": 2
+    },
+    "8": {
+      "material": "minecraft:slime_block",
+      "buy": 960,
+      "sell": 30
+    },
+    "9": {
+      "material": "minecraft:snow_block",
+      "buy": 256,
+      "sell": 8
+    },
+    "10": {
+      "material": "minecraft:soul_sand",
+      "buy": 208,
+      "sell": 8
+    },
+    "11": {
+      "material": "minecraft:tnt",
+      "buy": 2144,
+      "sell": 68
+    },
+    "12": {
+      "material": "minecraft:andesite",
+      "buy": 16,
+      "sell": 2
+    },
+    "13": {
+      "material": "minecraft:andesite_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "14": {
+      "material": "minecraft:andesite_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "15": {
+      "material": "minecraft:polished_andesite",
+      "buy": 16,
+      "sell": 2
+    },
+    "16": {
+      "material": "minecraft:polished_andesite_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "17": {
+      "material": "minecraft:polished_andesite_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "18": {
+      "material": "minecraft:bamboo_block",
+      "buy": 32,
+      "sell": 2
+    },
+    "19": {
+      "material": "minecraft:bamboo_mosaic",
+      "buy": 16,
+      "sell": 2
+    },
+    "20": {
+      "material": "minecraft:bamboo_mosaic_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "21": {
+      "material": "minecraft:bamboo_mosaic_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "22": {
+      "material": "minecraft:bamboo_planks",
+      "buy": 16,
+      "sell": 2
+    },
+    "23": {
+      "material": "minecraft:bamboo_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "24": {
+      "material": "minecraft:bamboo_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "25": {
+      "material": "minecraft:blackstone",
+      "buy": 16,
+      "sell": 2
+    },
+    "26": {
+      "material": "minecraft:blackstone_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "27": {
+      "material": "minecraft:blackstone_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "28": {
+      "material": "minecraft:polished_blackstone",
+      "buy": 16,
+      "sell": 2
+    },
+    "29": {
+      "material": "minecraft:polished_blackstone_brick_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "30": {
+      "material": "minecraft:polished_blackstone_brick_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "31": {
+      "material": "minecraft:polished_blackstone_bricks",
+      "buy": 16,
+      "sell": 2
+    },
+    "32": {
+      "material": "minecraft:polished_blackstone_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "33": {
+      "material": "minecraft:polished_blackstone_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "34": {
+      "material": "minecraft:bookshelf",
+      "buy": 2384,
+      "sell": 76
+    },
+    "35": {
+      "material": "minecraft:chiseled_bookshelf",
+      "buy": 176,
+      "sell": 6
+    },
+    "36": {
+      "material": "minecraft:brick_slab",
+      "buy": 976,
+      "sell": 32
+    },
+    "37": {
+      "material": "minecraft:brick_stairs",
+      "buy": 1952,
+      "sell": 62
+    },
+    "38": {
+      "material": "minecraft:bricks",
+      "buy": 1856,
+      "sell": 58
+    },
+    "39": {
+      "material": "minecraft:basalt",
+      "buy": 32,
+      "sell": 4
+    },
+    "40": {
+      "material": "minecraft:cobblestone",
+      "buy": 16,
+      "sell": 2
+    },
+    "41": {
+      "material": "minecraft:cobblestone_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "42": {
+      "material": "minecraft:cobblestone_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "43": {
+      "material": "minecraft:mossy_cobblestone",
+      "buy": 160,
+      "sell": 4
+    },
+    "44": {
+      "material": "minecraft:mossy_cobblestone_slab",
+      "buy": 80,
+      "sell": 2
+    },
+    "45": {
+      "material": "minecraft:mossy_cobblestone_stairs",
+      "buy": 160,
+      "sell": 6
+    },
+    "46": {
+      "material": "minecraft:black_concrete",
+      "buy": 176,
+      "sell": 6
+    },
+    "47": {
+      "material": "minecraft:blue_concrete",
+      "buy": 176,
+      "sell": 6
+    },
+    "48": {
+      "material": "minecraft:brown_concrete",
+      "buy": 176,
+      "sell": 6
+    },
+    "49": {
+      "material": "minecraft:cyan_concrete",
+      "buy": 160,
+      "sell": 6
+    },
+    "50": {
+      "material": "minecraft:gray_concrete",
+      "buy": 176,
+      "sell": 6
+    },
+    "51": {
+      "material": "minecraft:green_concrete",
+      "buy": 160,
+      "sell": 6
+    },
+    "52": {
+      "material": "minecraft:light_blue_concrete",
+      "buy": 160,
+      "sell": 6
+    },
+    "53": {
+      "material": "minecraft:light_gray_concrete",
+      "buy": 160,
+      "sell": 6
+    },
+    "54": {
+      "material": "minecraft:lime_concrete",
+      "buy": 624,
+      "sell": 20
+    },
+    "55": {
+      "material": "minecraft:magenta_concrete",
+      "buy": 624,
+      "sell": 20
+    },
+    "56": {
+      "material": "minecraft:orange_concrete",
+      "buy": 624,
+      "sell": 20
+    },
+    "57": {
+      "material": "minecraft:pink_concrete",
+      "buy": 624,
+      "sell": 20
+    },
+    "58": {
+      "material": "minecraft:purple_concrete",
+      "buy": 624,
+      "sell": 20
+    },
+    "59": {
+      "material": "minecraft:red_concrete",
+      "buy": 160,
+      "sell": 6
+    },
+    "60": {
+      "material": "minecraft:white_concrete",
+      "buy": 176,
+      "sell": 6
+    },
+    "61": {
+      "material": "minecraft:yellow_concrete",
+      "buy": 160,
+      "sell": 6
+    },
+    "62": {
+      "material": "minecraft:chiseled_copper",
+      "buy": 32,
+      "sell": 2
+    },
+    "63": {
+      "material": "minecraft:exposed_chiseled_copper",
+      "buy": 32,
+      "sell": 2
+    },
+    "64": {
+      "material": "minecraft:oxidized_chiseled_copper",
+      "buy": 32,
+      "sell": 2
+    },
+    "65": {
+      "material": "minecraft:oxidized_copper",
+      "buy": 96,
+      "sell": 4
+    },
+    "66": {
+      "material": "minecraft:waxed_copper_block",
+      "buy": 160,
+      "sell": 6
+    },
+    "67": {
+      "material": "minecraft:waxed_cut_copper",
+      "buy": 48,
+      "sell": 2
+    },
+    "68": {
+      "material": "minecraft:waxed_cut_copper_slab",
+      "buy": 32,
+      "sell": 2
+    },
+    "69": {
+      "material": "minecraft:waxed_cut_copper_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "70": {
+      "material": "minecraft:waxed_exposed_copper",
+      "buy": 160,
+      "sell": 6
+    },
+    "71": {
+      "material": "minecraft:waxed_exposed_cut_copper",
+      "buy": 160,
+      "sell": 4
+    },
+    "72": {
+      "material": "minecraft:waxed_exposed_cut_copper_slab",
+      "buy": 32,
+      "sell": 2
+    },
+    "73": {
+      "material": "minecraft:waxed_exposed_cut_copper_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "74": {
+      "material": "minecraft:waxed_oxidized_copper",
+      "buy": 160,
+      "sell": 6
+    },
+    "75": {
+      "material": "minecraft:waxed_oxidized_cut_copper",
+      "buy": 176,
+      "sell": 6
+    },
+    "76": {
+      "material": "minecraft:waxed_oxidized_cut_copper_slab",
+      "buy": 32,
+      "sell": 2
+    },
+    "77": {
+      "material": "minecraft:waxed_oxidized_cut_copper_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "78": {
+      "material": "minecraft:waxed_weathered_copper",
+      "buy": 160,
+      "sell": 6
+    },
+    "79": {
+      "material": "minecraft:waxed_weathered_cut_copper",
+      "buy": 176,
+      "sell": 4
+    },
+    "80": {
+      "material": "minecraft:waxed_weathered_cut_copper_slab",
+      "buy": 32,
+      "sell": 2
+    },
+    "81": {
+      "material": "minecraft:waxed_weathered_cut_copper_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "82": {
+      "material": "minecraft:weathered_chiseled_copper",
+      "buy": 32,
+      "sell": 2
+    },
+    "83": {
+      "material": "minecraft:cobbled_deepslate",
+      "buy": 16,
+      "sell": 2
+    },
+    "84": {
+      "material": "minecraft:cobbled_deepslate_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "85": {
+      "material": "minecraft:cobbled_deepslate_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "86": {
+      "material": "minecraft:deepslate",
+      "buy": 16,
+      "sell": 2
+    },
+    "87": {
+      "material": "minecraft:deepslate_tile_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "88": {
+      "material": "minecraft:deepslate_tile_stairs",
+      "buy": 32,
+      "sell": 2
+    },
+    "89": {
+      "material": "minecraft:deepslate_tiles",
+      "buy": 16,
+      "sell": 2
+    },
+    "90": {
+      "material": "minecraft:diorite",
+      "buy": 16,
+      "sell": 2
+    },
+    "91": {
+      "material": "minecraft:diorite_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "92": {
+      "material": "minecraft:diorite_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "93": {
+      "material": "minecraft:polished_diorite",
+      "buy": 16,
+      "sell": 2
+    },
+    "94": {
+      "material": "minecraft:polished_diorite_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "95": {
+      "material": "minecraft:polished_diorite_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "96": {
+      "material": "minecraft:clay",
+      "buy": 432,
+      "sell": 14
+    },
+    "97": {
+      "material": "minecraft:crimson_nylium",
+      "buy": 128,
+      "sell": 4
+    },
+    "98": {
+      "material": "minecraft:dirt",
+      "buy": 64,
+      "sell": 2
+    },
+    "99": {
+      "material": "minecraft:grass_block",
+      "buy": 160,
+      "sell": 6
+    },
+    "100": {
+      "material": "minecraft:gravel",
+      "buy": 160,
+      "sell": 6
+    },
+    "101": {
+      "material": "minecraft:mycelium",
+      "buy": 160,
+      "sell": 6
+    },
+    "102": {
+      "material": "minecraft:podzol",
+      "buy": 160,
+      "sell": 6
+    },
+    "103": {
+      "material": "minecraft:warped_nylium",
+      "buy": 128,
+      "sell": 4
+    },
+    "104": {
+      "material": "minecraft:end_stone",
+      "buy": 112,
+      "sell": 4
+    },
+    "105": {
+      "material": "minecraft:end_stone_brick_slab",
+      "buy": 64,
+      "sell": 2
+    },
+    "106": {
+      "material": "minecraft:end_stone_brick_stairs",
+      "buy": 112,
+      "sell": 4
+    },
+    "107": {
+      "material": "minecraft:end_stone_bricks",
+      "buy": 112,
+      "sell": 4
+    },
+    "108": {
+      "material": "minecraft:glass",
+      "buy": 128,
+      "sell": 4
+    },
+    "109": {
+      "material": "minecraft:glass_pane",
+      "buy": 64,
+      "sell": 2
+    },
+    "110": {
+      "material": "minecraft:tinted_glass",
+      "buy": 128,
+      "sell": 4
+    },
+    "111": {
+      "material": "minecraft:granite",
+      "buy": 16,
+      "sell": 2
+    },
+    "112": {
+      "material": "minecraft:granite_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "113": {
+      "material": "minecraft:granite_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "114": {
+      "material": "minecraft:polished_granite",
+      "buy": 16,
+      "sell": 2
+    },
+    "115": {
+      "material": "minecraft:polished_granite_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "116": {
+      "material": "minecraft:polished_granite_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "117": {
+      "material": "minecraft:glowstone",
+      "buy": 592,
+      "sell": 20
+    },
+    "118": {
+      "material": "minecraft:mud",
+      "buy": 64,
+      "sell": 2
+    },
+    "119": {
+      "material": "minecraft:mud_brick_slab",
+      "buy": 96,
+      "sell": 4
+    },
+    "120": {
+      "material": "minecraft:mud_brick_stairs",
+      "buy": 192,
+      "sell": 6
+    },
+    "121": {
+      "material": "minecraft:mud_brick_wall",
+      "buy": 192,
+      "sell": 6
+    },
+    "122": {
+      "material": "minecraft:mud_bricks",
+      "buy": 192,
+      "sell": 6
+    },
+    "123": {
+      "material": "minecraft:packed_mud",
+      "buy": 176,
+      "sell": 6
+    },
+    "124": {
+      "material": "minecraft:netherrack",
+      "buy": 16,
+      "sell": 2
+    },
+    "125": {
+      "material": "minecraft:nether_brick_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "126": {
+      "material": "minecraft:nether_brick_stairs",
+      "buy": 32,
+      "sell": 2
+    },
+    "127": {
+      "material": "minecraft:nether_bricks",
+      "buy": 32,
+      "sell": 2
+    },
+    "128": {
+      "material": "minecraft:red_nether_brick_slab",
+      "buy": 96,
+      "sell": 4
+    },
+    "129": {
+      "material": "minecraft:red_nether_brick_stairs",
+      "buy": 176,
+      "sell": 6
+    },
+    "130": {
+      "material": "minecraft:red_nether_bricks",
+      "buy": 176,
+      "sell": 6
+    },
+    "131": {
+      "material": "minecraft:crying_obsidian",
+      "buy": 1264,
+      "sell": 40
+    },
+    "132": {
+      "material": "minecraft:obsidian",
+      "buy": 640,
+      "sell": 20
+    },
+    "133": {
+      "material": "minecraft:prismarine",
+      "buy": 592,
+      "sell": 20
+    },
+    "134": {
+      "material": "minecraft:prismarine_slab",
+      "buy": 320,
+      "sell": 10
+    },
+    "135": {
+      "material": "minecraft:prismarine_stairs",
+      "buy": 624,
+      "sell": 20
+    },
+    "136": {
+      "material": "minecraft:prismarine_brick_slab",
+      "buy": 704,
+      "sell": 22
+    },
+    "137": {
+      "material": "minecraft:prismarine_brick_stairs",
+      "buy": 1392,
+      "sell": 44
+    },
+    "138": {
+      "material": "minecraft:prismarine_bricks",
+      "buy": 1328,
+      "sell": 42
+    },
+    "139": {
+      "material": "minecraft:dark_prismarine",
+      "buy": 1296,
+      "sell": 42
+    },
+    "140": {
+      "material": "minecraft:dark_prismarine_slab",
+      "buy": 688,
+      "sell": 22
+    },
+    "141": {
+      "material": "minecraft:dark_prismarine_stairs",
+      "buy": 1360,
+      "sell": 44
+    },
+    "142": {
+      "material": "minecraft:purpur_block",
+      "buy": 80,
+      "sell": 4
+    },
+    "143": {
+      "material": "minecraft:purpur_slab",
+      "buy": 48,
+      "sell": 2
+    },
+    "144": {
+      "material": "minecraft:purpur_stairs",
+      "buy": 80,
+      "sell": 4
+    },
+    "145": {
+      "material": "minecraft:quartz_bricks",
+      "buy": 736,
+      "sell": 24
+    },
+    "146": {
+      "material": "minecraft:quartz_slab",
+      "buy": 368,
+      "sell": 12
+    },
+    "147": {
+      "material": "minecraft:quartz_stairs",
+      "buy": 736,
+      "sell": 24
+    },
+    "148": {
+      "material": "minecraft:red_sand",
+      "buy": 160,
+      "sell": 6
+    },
+    "149": {
+      "material": "minecraft:sand",
+      "buy": 128,
+      "sell": 4
+    },
+    "150": {
+      "material": "minecraft:sandstone",
+      "buy": 240,
+      "sell": 8
+    },
+    "151": {
+      "material": "minecraft:sandstone_slab",
+      "buy": 128,
+      "sell": 4
+    },
+    "152": {
+      "material": "minecraft:sandstone_stairs",
+      "buy": 256,
+      "sell": 8
+    },
+    "153": {
+      "material": "minecraft:smooth_sandstone",
+      "buy": 256,
+      "sell": 8
+    },
+    "154": {
+      "material": "minecraft:smooth_sandstone_slab",
+      "buy": 144,
+      "sell": 6
+    },
+    "155": {
+      "material": "minecraft:smooth_sandstone_stairs",
+      "buy": 272,
+      "sell": 10
+    },
+    "156": {
+      "material": "minecraft:red_sandstone",
+      "buy": 672,
+      "sell": 22
+    },
+    "157": {
+      "material": "minecraft:red_sandstone_slab",
+      "buy": 368,
+      "sell": 12
+    },
+    "158": {
+      "material": "minecraft:red_sandstone_stairs",
+      "buy": 720,
+      "sell": 24
+    },
+    "159": {
+      "material": "minecraft:smooth_red_sandstone",
+      "buy": 720,
+      "sell": 24
+    },
+    "160": {
+      "material": "minecraft:smooth_red_sandstone_slab",
+      "buy": 384,
+      "sell": 12
+    },
+    "161": {
+      "material": "minecraft:smooth_red_sandstone_stairs",
+      "buy": 752,
+      "sell": 24
+    },
+    "162": {
+      "material": "minecraft:stone",
+      "buy": 16,
+      "sell": 2
+    },
+    "163": {
+      "material": "minecraft:stone_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "164": {
+      "material": "minecraft:stone_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "165": {
+      "material": "minecraft:stone_brick_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "166": {
+      "material": "minecraft:stone_brick_stairs",
+      "buy": 16,
+      "sell": 2
+    },
+    "167": {
+      "material": "minecraft:stone_bricks",
+      "buy": 16,
+      "sell": 2
+    },
+    "168": {
+      "material": "minecraft:mossy_stone_brick_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "169": {
+      "material": "minecraft:mossy_stone_brick_stairs",
+      "buy": 176,
+      "sell": 6
+    },
+    "170": {
+      "material": "minecraft:mossy_stone_bricks",
+      "buy": 160,
+      "sell": 4
+    },
+    "171": {
+      "material": "minecraft:terracotta",
+      "buy": 448,
+      "sell": 14
+    },
+    "172": {
+      "material": "minecraft:chiseled_tuff",
+      "buy": 48,
+      "sell": 2
+    },
+    "173": {
+      "material": "minecraft:chiseled_tuff_bricks",
+      "buy": 48,
+      "sell": 2
+    },
+    "174": {
+      "material": "minecraft:polished_tuff",
+      "buy": 48,
+      "sell": 2
+    },
+    "175": {
+      "material": "minecraft:polished_tuff_slab",
+      "buy": 32,
+      "sell": 2
+    },
+    "176": {
+      "material": "minecraft:polished_tuff_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "177": {
+      "material": "minecraft:tuff",
+      "buy": 48,
+      "sell": 2
+    },
+    "178": {
+      "material": "minecraft:tuff_brick_slab",
+      "buy": 32,
+      "sell": 2
+    },
+    "179": {
+      "material": "minecraft:tuff_brick_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "180": {
+      "material": "minecraft:tuff_bricks",
+      "buy": 48,
+      "sell": 2
+    },
+    "181": {
+      "material": "minecraft:tuff_slab",
+      "buy": 32,
+      "sell": 2
+    },
+    "182": {
+      "material": "minecraft:tuff_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "183": {
+      "material": "minecraft:acacia_log",
+      "buy": 64,
+      "sell": 2
+    },
+    "184": {
+      "material": "minecraft:acacia_planks",
+      "buy": 32,
+      "sell": 2
+    },
+    "185": {
+      "material": "minecraft:acacia_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "186": {
+      "material": "minecraft:acacia_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "187": {
+      "material": "minecraft:acacia_wood",
+      "buy": 96,
+      "sell": 4
+    },
+    "188": {
+      "material": "minecraft:birch_log",
+      "buy": 64,
+      "sell": 2
+    },
+    "189": {
+      "material": "minecraft:birch_planks",
+      "buy": 32,
+      "sell": 2
+    },
+    "190": {
+      "material": "minecraft:birch_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "191": {
+      "material": "minecraft:birch_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "192": {
+      "material": "minecraft:birch_wood",
+      "buy": 96,
+      "sell": 4
+    },
+    "193": {
+      "material": "minecraft:crimson_hyphae",
+      "buy": 96,
+      "sell": 4
+    },
+    "194": {
+      "material": "minecraft:crimson_planks",
+      "buy": 16,
+      "sell": 2
+    },
+    "195": {
+      "material": "minecraft:crimson_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "196": {
+      "material": "minecraft:crimson_stairs",
+      "buy": 32,
+      "sell": 2
+    },
+    "197": {
+      "material": "minecraft:crimson_stem",
+      "buy": 64,
+      "sell": 2
+    },
+    "198": {
+      "material": "minecraft:dark_oak_log",
+      "buy": 64,
+      "sell": 2
+    },
+    "199": {
+      "material": "minecraft:dark_oak_planks",
+      "buy": 32,
+      "sell": 2
+    },
+    "200": {
+      "material": "minecraft:dark_oak_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "201": {
+      "material": "minecraft:dark_oak_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "202": {
+      "material": "minecraft:dark_oak_wood",
+      "buy": 96,
+      "sell": 4
+    },
+    "203": {
+      "material": "minecraft:jungle_log",
+      "buy": 64,
+      "sell": 2
+    },
+    "204": {
+      "material": "minecraft:jungle_planks",
+      "buy": 32,
+      "sell": 2
+    },
+    "205": {
+      "material": "minecraft:jungle_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "206": {
+      "material": "minecraft:jungle_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "207": {
+      "material": "minecraft:jungle_wood",
+      "buy": 96,
+      "sell": 4
+    },
+    "208": {
+      "material": "minecraft:mangrove_log",
+      "buy": 64,
+      "sell": 2
+    },
+    "209": {
+      "material": "minecraft:mangrove_planks",
+      "buy": 16,
+      "sell": 2
+    },
+    "210": {
+      "material": "minecraft:mangrove_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "211": {
+      "material": "minecraft:mangrove_stairs",
+      "buy": 32,
+      "sell": 2
+    },
+    "212": {
+      "material": "minecraft:mangrove_wood",
+      "buy": 96,
+      "sell": 4
+    },
+    "213": {
+      "material": "minecraft:oak_log",
+      "buy": 64,
+      "sell": 2
+    },
+    "214": {
+      "material": "minecraft:oak_planks",
+      "buy": 32,
+      "sell": 2
+    },
+    "215": {
+      "material": "minecraft:oak_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "216": {
+      "material": "minecraft:oak_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "217": {
+      "material": "minecraft:oak_wood",
+      "buy": 96,
+      "sell": 4
+    },
+    "218": {
+      "material": "minecraft:spruce_log",
+      "buy": 64,
+      "sell": 2
+    },
+    "219": {
+      "material": "minecraft:spruce_planks",
+      "buy": 32,
+      "sell": 2
+    },
+    "220": {
+      "material": "minecraft:spruce_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "221": {
+      "material": "minecraft:spruce_stairs",
+      "buy": 48,
+      "sell": 2
+    },
+    "222": {
+      "material": "minecraft:spruce_wood",
+      "buy": 96,
+      "sell": 4
+    },
+    "223": {
+      "material": "minecraft:cherry_log",
+      "buy": 64,
+      "sell": 2
+    },
+    "224": {
+      "material": "minecraft:cherry_planks",
+      "buy": 16,
+      "sell": 2
+    },
+    "225": {
+      "material": "minecraft:cherry_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "226": {
+      "material": "minecraft:cherry_stairs",
+      "buy": 32,
+      "sell": 2
+    },
+    "227": {
+      "material": "minecraft:cherry_wood",
+      "buy": 96,
+      "sell": 4
+    },
+    "228": {
+      "material": "minecraft:warped_hyphae",
+      "buy": 96,
+      "sell": 4
+    },
+    "229": {
+      "material": "minecraft:warped_planks",
+      "buy": 16,
+      "sell": 2
+    },
+    "230": {
+      "material": "minecraft:warped_slab",
+      "buy": 16,
+      "sell": 2
+    },
+    "231": {
+      "material": "minecraft:warped_stairs",
+      "buy": 32,
+      "sell": 2
+    },
+    "232": {
+      "material": "minecraft:warped_stem",
+      "buy": 64,
+      "sell": 2
+    },
+    "233": {
+      "material": "minecraft:black_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "234": {
+      "material": "minecraft:blue_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "235": {
+      "material": "minecraft:brown_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "236": {
+      "material": "minecraft:cyan_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "237": {
+      "material": "minecraft:gray_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "238": {
+      "material": "minecraft:green_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "239": {
+      "material": "minecraft:light_blue_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "240": {
+      "material": "minecraft:light_gray_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "241": {
+      "material": "minecraft:lime_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "242": {
+      "material": "minecraft:magenta_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "243": {
+      "material": "minecraft:orange_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "244": {
+      "material": "minecraft:pink_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "245": {
+      "material": "minecraft:purple_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "246": {
+      "material": "minecraft:red_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "247": {
+      "material": "minecraft:white_wool",
+      "buy": 592,
+      "sell": 20
+    },
+    "248": {
+      "material": "minecraft:yellow_wool",
+      "buy": 592,
+      "sell": 20
+    }
+  }
+}

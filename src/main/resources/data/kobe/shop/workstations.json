@@ -1,0 +1,64 @@
+{
+  "items": {
+    "1": {
+      "material": "minecraft:barrel",
+      "buy": 176,
+      "sell": 6
+    },
+    "2": {
+      "material": "minecraft:blast_furnace",
+      "buy": 752,
+      "sell": 24
+    },
+    "3": {
+      "material": "minecraft:brewing_stand",
+      "buy": 160,
+      "sell": 6
+    },
+    "4": {
+      "material": "minecraft:cartography_table",
+      "buy": 112,
+      "sell": 4
+    },
+    "5": {
+      "material": "minecraft:composter",
+      "buy": 96,
+      "sell": 4
+    },
+    "6": {
+      "material": "minecraft:fletching_table",
+      "buy": 192,
+      "sell": 6
+    },
+    "7": {
+      "material": "minecraft:grindstone",
+      "buy": 80,
+      "sell": 4
+    },
+    "8": {
+      "material": "minecraft:lectern",
+      "buy": 2560,
+      "sell": 80
+    },
+    "9": {
+      "material": "minecraft:loom",
+      "buy": 352,
+      "sell": 12
+    },
+    "10": {
+      "material": "minecraft:smithing_table",
+      "buy": 336,
+      "sell": 12
+    },
+    "11": {
+      "material": "minecraft:smoker",
+      "buy": 384,
+      "sell": 12
+    },
+    "12": {
+      "material": "minecraft:stonecutter",
+      "buy": 176,
+      "sell": 6
+    }
+  }
+}

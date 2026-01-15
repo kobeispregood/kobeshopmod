@@ -1,0 +1,88 @@
+{
+  "1": [
+    { "type": "money", "amount": 25 }
+  ],
+  "2": [
+    { "type": "money", "amount": 30 },
+    { "type": "item", "item": "minecraft:wheat_seeds", "count": 4 }
+  ],
+  "3": [
+    { "type": "money", "amount": 40 }
+  ],
+  "4": [
+    { "type": "money", "amount": 50 },
+    { "type": "item", "item": "minecraft:bone_meal", "count": 4 }
+  ],
+  "5": [
+    { "type": "money", "amount": 100 },
+    { "type": "item", "item": "minecraft:wheat_seeds", "count": 16 }
+  ],
+  "6": [
+    { "type": "money", "amount": 75 }
+  ],
+  "7": [
+    { "type": "money", "amount": 90 },
+    { "type": "item", "item": "minecraft:carrot", "count": 4 }
+  ],
+  "8": [
+    { "type": "money", "amount": 110 }
+  ],
+  "9": [
+    { "type": "money", "amount": 130 },
+    { "type": "item", "item": "minecraft:potato", "count": 4 }
+  ],
+  "10": [
+    { "type": "money", "amount": 250 },
+    { "type": "item", "item": "minecraft:bone_meal", "count": 32 }
+  ],
+  "11": [
+    { "type": "money", "amount": 160 }
+  ],
+  "12": [
+    { "type": "money", "amount": 180 },
+    { "type": "item", "item": "minecraft:beetroot_seeds", "count": 8 }
+  ],
+  "13": [
+    { "type": "money", "amount": 200 }
+  ],
+  "14": [
+    { "type": "money", "amount": 225 }
+  ],
+  "15": [
+    { "type": "money", "amount": 400 },
+    { "type": "item", "item": "minecraft:golden_hoe", "count": 1 }
+  ],
+  "16": [
+    { "type": "money", "amount": 260 }
+  ],
+  "17": [
+    { "type": "money", "amount": 300 },
+    { "type": "item", "item": "minecraft:pumpkin_seeds", "count": 8 }
+  ],
+  "18": [
+    { "type": "money", "amount": 340 }
+  ],
+  "19": [
+    { "type": "money", "amount": 380 }
+  ],
+  "20": [
+    { "type": "money", "amount": 600 },
+    { "type": "item", "item": "minecraft:melon_seeds", "count": 8 }
+  ],
+  "21": [
+    { "type": "money", "amount": 420 }
+  ],
+  "22": [
+    { "type": "money", "amount": 460 }
+  ],
+  "23": [
+    { "type": "money", "amount": 520 }
+  ],
+  "24": [
+    { "type": "money", "amount": 580 }
+  ],
+  "25": [
+    { "type": "money", "amount": 1000 },
+    { "type": "item", "item": "minecraft:diamond_hoe", "count": 1 }
+  ]
+}
