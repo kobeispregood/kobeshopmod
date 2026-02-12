@@ -1,0 +1,89 @@
+{
+  "type": "fishing",
+  "rewards": {
+    "1":  { "money": 50 },
+    "2":  { "money": 60 },
+    "3":  { "money": 70 },
+    "4":  { "money": 80 },
+
+    "5": {
+      "money": 100,
+      "items": [{ "id": "minecraft:cod", "count": 2 }]
+    },
+
+    "6":  { "money": 110 },
+    "7":  { "money": 120 },
+    "8":  { "money": 130 },
+    "9":  { "money": 140 },
+
+    "10": {
+      "money": 300,
+      "perk": {
+        "id": "fishing_speed_1",
+        "name": "Quick Reel",
+        "description": "Catch fish faster"
+      }
+    },
+
+    "11": { "money": 150 },
+    "12": { "money": 160 },
+    "13": { "money": 170 },
+    "14": { "money": 180 },
+
+    "15": {
+      "money": 200,
+      "items": [{ "id": "minecraft:salmon", "count": 3 }]
+    },
+
+    "16": { "money": 210 },
+    "17": { "money": 220 },
+    "18": { "money": 230 },
+    "19": { "money": 240 },
+
+    "20": {
+      "money": 600,
+      "perk": {
+        "id": "fishing_treasure",
+        "name": "Treasure Hunter",
+        "description": "Higher chance to fish up treasure"
+      }
+    },
+
+    "25": {
+      "money": 300,
+      "items": [{ "id": "minecraft:nautilus_shell", "count": 1 }]
+    },
+
+    "30": {
+      "money": 1000,
+      "perk": {
+        "id": "fishing_double",
+        "name": "Double Catch",
+        "description": "Chance to receive double drops"
+      }
+    },
+
+    "35": {
+      "money": 400,
+      "items": [{ "id": "minecraft:enchanted_book", "count": 1 }]
+    },
+
+    "40": {
+      "money": 1500,
+      "perk": {
+        "id": "fishing_rare",
+        "name": "Deep Sea Luck",
+        "description": "Rare loot appears more often"
+      }
+    },
+
+    "45": {
+      "money": 2500,
+      "title": {
+        "id": "master_angler",
+        "name": "Master Angler",
+        "color": "gold"
+      }
+    }
+  }
+}

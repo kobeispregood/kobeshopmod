@@ -120,4 +120,10 @@ public class MiningData implements INBTSerializable<CompoundTag> {
             for (int lvl : arr) claimedLevels.add(lvl);
         }
     }
+    public void copyFrom(MiningData other) {
+        this.xp = other.xp;
+        this.claimedLevels.clear();
+        this.claimedLevels.addAll(other.claimedLevels);
+    }
+
 }

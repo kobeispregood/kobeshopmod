@@ -2,9 +2,11 @@ package net.lazy.kobe.item;
 
 import net.lazy.kobe.KobeMod;
 
+import net.lazy.kobe.curios.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 
+import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -18,8 +20,51 @@ public class ModItems {
             DeferredRegister.create(Registries.ITEM, KobeMod.MOD_ID);
 
     // ----------------------
-    //  YOUR EXISTING ITEMS
+    //  ODDITIES
     // ----------------------
+    public static final DeferredHolder<Item, Item> DUNHAMDICE =
+            ITEMS.register("dunhamdice",
+                    () -> new DunhamDiceItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredHolder<Item, Item> RILEYS_RAMEN =
+            ITEMS.register("rileys_ramen",
+                    () -> new RileysRamen(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.UNCOMMON)
+                    ));
+
+    public static final DeferredHolder<Item, Item> JESS_JACKPOT =
+            ITEMS.register("jess_jackpot",
+                    () -> new JessJackpot(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.RARE) // aqua name = jackpot vibes
+                    ));
+
+    public static final DeferredHolder<Item, Item> BLAKEY_BAG =
+            ITEMS.register("blakey_bag",
+                    () -> new BlakeyBag(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.COMMON) //
+                    ));
+
+    public static final DeferredHolder<Item, Item> DINOS_DOLLAR =
+            ITEMS.register("dinos_dollar",
+                    () -> new DinosDollar(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.COMMON) //
+                    ));
+
+    public static final DeferredHolder<Item, Item> SWIFT_SOCKS =
+            ITEMS.register("swift_socks",
+                    () -> new SwiftSocks(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.EPIC) //
+                    ));
 
     public static final DeferredHolder<Item, Item> BLACK_OPAL =
             ITEMS.register("black_opal", () ->

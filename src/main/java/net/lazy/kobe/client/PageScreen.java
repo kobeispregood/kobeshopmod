@@ -1,5 +1,7 @@
 package net.lazy.kobe.client;
 
+import net.lazy.kobe.curios.CurioHelper;
+import net.lazy.kobe.item.ModItems;
 import net.lazy.kobe.network.BuyPacket;
 import net.lazy.kobe.network.NetworkHandler;
 import net.lazy.kobe.network.SellPacket;
@@ -83,7 +85,7 @@ public class PageScreen extends Screen {
         int innerH = PANEL_H - 8;
 
         // ===========================================================
-        // CHEST-LIKE CHECKERBOARD BACKGROUND (FAST)
+        // CHEST-LIKE CHECKERBOARD BACKGROUND
         // ===========================================================
         int light = 0xFF3A2E1F;
         int dark  = 0xFF2E2418;
@@ -91,7 +93,6 @@ public class PageScreen extends Screen {
 
         for (int ty = 0; ty < innerH; ty += tile) {
             for (int tx = 0; tx < innerW; tx += tile) {
-
                 boolean alt = ((tx / tile) + (ty / tile)) % 2 == 0;
                 int color = alt ? light : dark;
 
@@ -103,23 +104,19 @@ public class PageScreen extends Screen {
         }
 
         // ===========================================================
-        // ENHANCED GOLD BORDER (layered, corner highlights)
+        // GOLD BORDER
         // ===========================================================
-
-        // Outer border
         gui.fill(px, py, px + PANEL_W, py + 4, GOLD_BORDER);
         gui.fill(px, py + PANEL_H - 4, px + PANEL_W, py + PANEL_H, GOLD_BORDER);
         gui.fill(px, py, px + 4, py + PANEL_H, GOLD_BORDER);
         gui.fill(px + PANEL_W - 4, py, px + PANEL_W, py + PANEL_H, GOLD_BORDER);
 
-        // Inner darker gold
         int goldDark = 0xFFB8964E;
         gui.fill(px + 4, py + 4, px + PANEL_W - 4, py + 6, goldDark);
         gui.fill(px + 4, py + PANEL_H - 6, px + PANEL_W - 4, py + PANEL_H - 4, goldDark);
         gui.fill(px + 4, py + 4, px + 6, py + PANEL_H - 4, goldDark);
         gui.fill(px + PANEL_W - 6, py + 4, px + PANEL_W - 4, py + PANEL_H - 4, goldDark);
 
-        // Corner highlights
         int goldLight = 0xFFF3DFA8;
         gui.fill(px + 4, py + 4, px + 8, py + 8, goldLight);
         gui.fill(px + PANEL_W - 8, py + 4, px + PANEL_W - 4, py + 8, goldLight);
@@ -127,11 +124,10 @@ public class PageScreen extends Screen {
         gui.fill(px + PANEL_W - 8, py + PANEL_H - 8, px + PANEL_W - 4, py + PANEL_H - 4, goldLight);
 
         // ===========================================================
-        // TITLE + PAGE LABEL (moved slightly DOWN for spacing)
+        // TITLE + PAGE LABEL
         // ===========================================================
-
-        int titleY = py + 22;      // was 10 → lowered
-        int pageLabelY = py + 40;  // was 28 → lowered
+        int titleY = py + 22;
+        int pageLabelY = py + 40;
 
         String title = category.getDisplayName().getString();
         gui.drawString(this.font, title,
@@ -148,7 +144,7 @@ public class PageScreen extends Screen {
         // ===========================================================
         int gridW = COLUMNS * SLOT + (COLUMNS - 1) * PAD;
         int startX = this.width / 2 - gridW / 2;
-        int startY = py + 60; //
+        int startY = py + 60;
 
         int startIndex = page * ITEMS_PER_PAGE;
 
@@ -165,7 +161,6 @@ public class PageScreen extends Screen {
             int x = startX + col * (SLOT + PAD);
             int y = startY + row * (SLOT + PAD);
 
-            // Slot frame + inner
             gui.fill(x, y, x + SLOT, y + SLOT, SLOT_BORDER);
             gui.fill(x + 2, y + 2, x + SLOT - 2, y + SLOT - 2, SLOT_BG);
 
@@ -176,18 +171,65 @@ public class PageScreen extends Screen {
             gui.renderItem(stack, x + SLOT / 2 - 8, y + SLOT / 2 - 8);
 
             if (hover) {
+                var player = Minecraft.getInstance().player;
+
                 String key = ShopData.getKeyForStack(stack);
                 PriceEntry price = ShopData.getPrice(key);
 
-                gui.renderComponentTooltip(
-                        this.font,
-                        List.of(
-                                stack.getHoverName(),
-                                Component.literal("Buy: $" + price.buy()).withColor(0x55FF55),
-                                Component.literal("Sell: $" + price.sell()).withColor(0xFF5555)
-                        ),
-                        mx, my
+                int baseBuy = (int) price.buy();
+                boolean hasDiscount = player != null &&
+                        CurioHelper.hasDinosDollarClient(player);
+
+                float discount = hasDiscount ? 0.05f : 0.0f;
+
+                discount = Math.min(discount, 0.50f);
+                int finalBuy = Math.max(1, Math.round(baseBuy * (1.0f - discount)));
+
+                boolean hasEquippedDollar = false;
+
+                if (player != null) {
+                    hasEquippedDollar = top.theillusivec4.curios.api.CuriosApi
+                            .getCuriosInventory(player)
+                            .map(inv -> inv.findFirstCurio(ModItems.DINOS_DOLLAR.get()).isPresent())
+                            .orElse(false);
+                }
+
+                String source = null;
+                if (discount > 0) {
+                    source = hasEquippedDollar
+                            ? "Dino's Dollar"
+                            : "Blakey Bag";
+                }
+
+                List<Component> tooltip = new java.util.ArrayList<>();
+                tooltip.add(stack.getHoverName());
+
+                if (discount > 0) {
+                    tooltip.add(
+                            Component.literal("Buy: $" + finalBuy)
+                                    .withColor(0x55FF55)
+                    );
+                    tooltip.add(
+                            Component.literal("Discount: -" + (int)(discount * 100) + "%")
+                                    .withColor(0xEBC46F)
+                    );
+                    tooltip.add(
+                            Component.literal("Source: " + source)
+                                    .withColor(0xA9FF9C)
+                    );
+                } else {
+                    tooltip.add(
+                            Component.literal("Buy: $" + baseBuy)
+                                    .withColor(0x55FF55)
+                    );
+                }
+
+                tooltip.add(
+                        Component.literal("Sell: $" + price.sell())
+                                .withColor(0xFF5555)
                 );
+
+                gui.renderComponentTooltip(this.font, tooltip, mx, my);
             }
         }
 

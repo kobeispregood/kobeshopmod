@@ -1,0 +1,59 @@
+{
+  "type": "enchanting",
+  "rewards": {
+    "1": { "money": 70 },
+    "2": { "money": 80 },
+    "3": { "money": 90 },
+    "4": { "money": 100 },
+
+    "5": {
+      "money": 150,
+      "items": [{ "id": "minecraft:lapis_lazuli", "count": 8 }]
+    },
+
+    "10": {
+      "money": 400,
+      "perk": {
+        "id": "enchant_cost",
+        "name": "Arcane Efficiency",
+        "description": "Lower XP cost when enchanting"
+      }
+    },
+
+    "20": {
+      "money": 800,
+      "perk": {
+        "id": "enchant_quality",
+        "name": "Refined Magic",
+        "description": "Better enchantment rolls"
+      }
+    },
+
+    "30": {
+      "money": 1200,
+      "perk": {
+        "id": "enchant_extra",
+        "name": "Expanded Knowledge",
+        "description": "More enchantment options"
+      }
+    },
+
+    "40": {
+      "money": 1800,
+      "perk": {
+        "id": "enchant_levels",
+        "name": "Arcane Mastery",
+        "description": "Higher level enchants appear"
+      }
+    },
+
+    "45": {
+      "money": 3000,
+      "title": {
+        "id": "arcane_scholar",
+        "name": "Arcane Scholar",
+        "color": "aqua"
+      }
+    }
+  }
+}

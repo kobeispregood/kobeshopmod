@@ -54,9 +54,11 @@ public class CobbleGenEvents {
 
 
         int tier = 1;
+
         if (player != null) {
-            tier = Math.max(1, player.getData(OreGenAttachment.LEVEL) + 1);
+            tier = player.getData(OreGenAttachment.LEVEL) + 1;
         }
+
 
         Block result = rollOre(level.random, tier);
 

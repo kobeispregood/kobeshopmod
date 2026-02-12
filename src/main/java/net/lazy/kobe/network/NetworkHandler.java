@@ -3,9 +3,13 @@ package net.lazy.kobe.network;
 import net.lazy.kobe.farming.FarmingLevelUpPacket;
 import net.lazy.kobe.econ.MoneySyncPacket;
 import net.lazy.kobe.farming.*;
+import net.lazy.kobe.mastery.net.MasteryClaimAllPacket;
+import net.lazy.kobe.mastery.net.MasteryClaimLevelPacket;
 import net.lazy.kobe.mining.*;
 import net.lazy.kobe.oregen.network.OreGenUpgradePacket;
 
+import net.lazy.kobe.mastery.net.MasterySyncPacket;
+import net.lazy.kobe.mastery.net.MasteryLevelUpPacket;
 
 import net.lazy.kobe.shop.net.SyncShopDataPacketHandler;
 import net.lazy.kobe.shop.net.SyncShopDataPacket;
@@ -45,28 +49,11 @@ public final class NetworkHandler {
                 MiningClaimAllPacket::handle
         );
 
-        registrar.playToServer(
-                CombatClaimAllPacket.TYPE,
-                CombatClaimAllPacket.STREAM_CODEC,
-                CombatClaimAllPacket::handle
-        );
-
-        registrar.playToClient(
-                CombatLevelUpPacket.TYPE,
-                CombatLevelUpPacket.STREAM_CODEC,
-                CombatLevelUpPacket::handle
-        );
 
         registrar.playToServer(
                 MiningClaimLevelPacket.TYPE,
                 MiningClaimLevelPacket.STREAM_CODEC,
                 MiningClaimLevelPacket::handle
-        );
-
-        registrar.playToServer(
-                CombatClaimLevelPacket.TYPE,
-                CombatClaimLevelPacket.STREAM_CODEC,
-                CombatClaimLevelPacket::handle
         );
 
 
@@ -100,9 +87,32 @@ public final class NetworkHandler {
                 SellPacket::handle
         );
 
+        registrar.playToServer(
+                MasteryClaimLevelPacket.TYPE,
+                MasteryClaimLevelPacket.STREAM_CODEC,
+                MasteryClaimLevelPacket::handle
+        );
+
+        registrar.playToServer(
+                MasteryClaimAllPacket.TYPE,
+                MasteryClaimAllPacket.STREAM_CODEC,
+                MasteryClaimAllPacket::handle
+        );
+
         // =============================================================
         //  SERVER → CLIENT
         // =============================================================
+        registrar.playToClient(
+                MasterySyncPacket.TYPE,
+                MasterySyncPacket.CODEC,
+                MasterySyncPacket::handle
+        );
+
+        registrar.playToClient(
+                MasteryLevelUpPacket.TYPE,
+                MasteryLevelUpPacket.CODEC,
+                MasteryLevelUpPacket::handle
+        );
 
         registrar.playToClient(
                 FarmingClaimSyncPacket.TYPE,
@@ -111,21 +121,9 @@ public final class NetworkHandler {
         );
 
         registrar.playToClient(
-                CombatClaimSyncPacket.TYPE,
-                CombatClaimSyncPacket.STREAM_CODEC,
-                CombatClaimSyncPacket::handle
-        );
-
-        registrar.playToClient(
                 MiningSyncPacket.TYPE,
                 MiningSyncPacket.CODEC,
                 MiningSyncPacket::handle
-        );
-
-        registrar.playToClient(
-                CombatSyncPacket.TYPE,
-                CombatSyncPacket.CODEC,
-                CombatSyncPacket::handle
         );
 
         registrar.playToClient(
@@ -164,7 +162,6 @@ public final class NetworkHandler {
                 CustomPacketPayload.codec(CrateRevealPacket::write, CrateRevealPacket::new),
                 CrateRevealPacket::handle
         );
-
 
         registrar.playToClient(
                 OpenShopPacket.TYPE,

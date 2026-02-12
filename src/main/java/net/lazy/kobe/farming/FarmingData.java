@@ -162,4 +162,9 @@ public class FarmingData implements INBTSerializable<CompoundTag> {
             }
         }
     }
+    public void copyFrom(FarmingData other) {
+        this.xp = other.xp;
+        this.claimedLevels.clear();
+        this.claimedLevels.addAll(other.claimedLevels);
+    }
 }

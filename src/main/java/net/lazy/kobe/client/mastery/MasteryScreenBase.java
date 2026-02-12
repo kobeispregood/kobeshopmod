@@ -2,7 +2,6 @@ package net.lazy.kobe.client.mastery;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -42,12 +41,28 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
     protected abstract int getPlayerLevel();
     protected abstract int getXpIntoLevel();
     protected abstract int getXpForNextLevel();
+
+    /**
+     * IMPORTANT:
+     * Implementations MUST use (level - 1) when checking bitmasks.
+     */
     protected abstract boolean isLevelClaimed(int level);
+
     protected abstract void onClaimLevel(int level);
     protected abstract Component getTitleText();
-    protected abstract List<Component> getPerkTooltip(int level);
 
-    // Optional Claim All support
+    protected List<Component> getPerkTooltip(int level) {
+        return List.of();
+    }
+
+    /* ============================================================
+     *  MODE FLAGS
+     * ============================================================ */
+
+    protected boolean hasClaiming() {
+        return true;
+    }
+
     protected boolean hasClaimAll() {
         return false;
     }
@@ -67,10 +82,7 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
         int buttonWidth = 110;
         int buttonHeight = 20;
 
-        // Center horizontally on screen
         int x = (this.width - buttonWidth) / 2;
-
-        // 🔒 Anchor directly under the GUI (fullscreen safe)
         int y = topPos + imageHeight + 8;
 
         addRenderableWidget(
@@ -90,7 +102,7 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
 
         pendingTooltip = null;
 
-        int level = getPlayerLevel();
+        int playerLevel = getPlayerLevel();
         float progress = Mth.clamp(
                 (float) getXpIntoLevel() / Math.max(1, getXpForNextLevel()),
                 0f,
@@ -110,7 +122,7 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
                 getTitleText(),
                 leftPos + imageWidth / 2,
                 headerY + 6,
-                masteryColor(level)
+                masteryColor(playerLevel)
         );
 
         // XP bar
@@ -119,7 +131,7 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
         int barW = imageWidth - 24;
 
         g.fill(barX, barY, barX + barW, barY + 10, 0xFF2A2A2A);
-        g.fill(barX, barY, barX + (int) (barW * progress), barY + 10, masteryColor(level));
+        g.fill(barX, barY, barX + (int) (barW * progress), barY + 10, masteryColor(playerLevel));
         g.renderOutline(barX, barY, barW, 10, 0xFF000000);
 
         g.drawCenteredString(
@@ -130,32 +142,39 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
                 0xFFFFFFFF
         );
 
-        // Chest background
+        // Background
         g.blit(CHEST_BG, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 
-        // Panes
         int mx = mouseX - leftPos;
         int my = mouseY - topPos;
 
-        int levelIndex = 1;
+        /* ============================================================
+         *  LEVEL GRID (DEBUG ENABLED)
+         * ============================================================ */
 
-        for (int slot = 0; slot < 54 && levelIndex <= MAX_LEVELS; slot++) {
+        for (int slot = 0; slot < MAX_LEVELS; slot++) {
 
             int row = slot / 9;
-            if (row >= 6) break;
+            int col = slot % 9;
 
-            int x = 8 + (slot % 9) * 18;
+            int lvl = slot + 1;
+
+            int x = 8 + col * 18;
             int y = 18 + row * 18;
 
-            int lvl = levelIndex;
-
-            boolean reached = level >= lvl;
+            boolean reached = playerLevel >= lvl;
             boolean claimed = isLevelClaimed(lvl);
 
-            ItemStack pane =
-                    !reached ? Items.GRAY_STAINED_GLASS_PANE.getDefaultInstance()
-                            : claimed ? Items.LIME_STAINED_GLASS_PANE.getDefaultInstance()
-                            : Items.YELLOW_STAINED_GLASS_PANE.getDefaultInstance();
+            ItemStack pane;
+            if (!reached) {
+                pane = Items.GRAY_STAINED_GLASS_PANE.getDefaultInstance();
+            } else if (!hasClaiming()) {
+                pane = Items.LIME_STAINED_GLASS_PANE.getDefaultInstance();
+            } else if (claimed) {
+                pane = Items.LIME_STAINED_GLASS_PANE.getDefaultInstance();
+            } else {
+                pane = Items.YELLOW_STAINED_GLASS_PANE.getDefaultInstance();
+            }
 
             g.renderItem(pane, leftPos + x, topPos + y);
 
@@ -166,17 +185,18 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
                 tooltip.addAll(getPerkTooltip(lvl));
                 tooltip.add(Component.empty());
 
-                if (!reached)
+                if (!reached) {
                     tooltip.add(Component.literal("Locked").withStyle(ChatFormatting.RED));
-                else if (claimed)
+                } else if (!hasClaiming()) {
+                    tooltip.add(Component.literal("Unlocked").withStyle(ChatFormatting.GREEN));
+                } else if (claimed) {
                     tooltip.add(Component.literal("Claimed").withStyle(ChatFormatting.GREEN));
-                else
+                } else {
                     tooltip.add(Component.literal("Click to claim").withStyle(ChatFormatting.GOLD));
+                }
 
                 pendingTooltip = tooltip;
             }
-
-            levelIndex++;
         }
     }
 
@@ -194,18 +214,19 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
     protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {}
 
     /* ============================================================
-     *  CLICK HANDLING
+     *  CLICK HANDLING (UNCHANGED)
      * ============================================================ */
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
 
-        if (button != 0) return super.mouseClicked(mouseX, mouseY, button);
+        if (button != 0 || !hasClaiming())
+            return super.mouseClicked(mouseX, mouseY, button);
 
         int mx = (int) mouseX - leftPos;
         int my = (int) mouseY - topPos;
 
-        for (int slot = 0; slot < 54 && slot < MAX_LEVELS; slot++) {
+        for (int slot = 0; slot < MAX_LEVELS; slot++) {
 
             int row = slot / 9;
             int col = slot % 9;
@@ -214,7 +235,13 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
             int y = 18 + row * 18;
 
             if (mx >= x && mx < x + 18 && my >= y && my < y + 18) {
-                onClaimLevel(slot + 1);
+
+                int lvl = slot + 1;
+
+                if (getPlayerLevel() < lvl) return true;
+                if (isLevelClaimed(lvl)) return true;
+
+                onClaimLevel(lvl);
                 return true;
             }
         }

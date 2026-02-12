@@ -1,0 +1,132 @@
+{
+  "type": "combat",
+  "rewards": {
+
+    "1": { "money": 50 },
+    "2": { "money": 60 },
+    "3": { "money": 75 },
+    "4": { "money": 90 },
+
+    "5": {
+      "money": 200,
+      "items": [
+        { "id": "minecraft:iron_ingot", "count": 4 }
+      ],
+      "perk": {
+        "id": "combat_crit_1",
+        "name": "Critical Strikes",
+        "description": "Unlock critical hits.\nEach Combat level increases crit chance by +1% and crit damage by +2%."
+      }
+    },
+
+    "6": { "money": 120, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "7": { "money": 150, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "8": { "money": 180, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "9": { "money": 220, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+
+    "10": {
+      "money": 500,
+      "items": [
+        { "id": "minecraft:iron_sword", "count": 1 }
+      ],
+      "info": { "description": "Crit Chance +1%\nCrit Damage +2%" }
+    },
+
+    "11": { "money": 500, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "12": { "money": 500, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "13": { "money": 500, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "14": { "money": 500, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+
+    "15": {
+      "money": 700,
+      "items": [
+        { "id": "minecraft:shield", "count": 1 }
+      ],
+      "info": { "description": "Crit Chance +1%\nCrit Damage +2%" }
+    },
+
+    "16": { "money": 500, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "17": { "money": 500, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "18": { "money": 500, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+    "19": { "money": 500, "info": { "description": "Crit Chance +1%\nCrit Damage +2%" } },
+
+    "20": {
+      "money": 1000,
+      "items": [
+        { "id": "minecraft:diamond_sword", "count": 1 }
+      ],
+      "perk": {
+        "id": "combat_lifesteal_1",
+        "name": "Bloodthirst",
+        "description": "Unlock lifesteal.\nEach Combat level now increases lifesteal by +2%."
+      }
+    },
+
+    "21": { "money": 1000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "22": { "money": 1000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "23": { "money": 1000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "24": { "money": 1000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+
+    "25": {
+      "money": 2000,
+      "items": [
+        { "id": "minecraft:netherite_ingot", "count": 1 }
+      ],
+      "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" }
+    },
+
+    "26": { "money": 1000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "27": { "money": 1000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "28": { "money": 1000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "29": { "money": 1000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+
+    "30": {
+      "money": 3000,
+      "perk": {
+        "id": "combat_damage_2",
+        "name": "Brutal Force",
+        "description": "Deal increased base damage."
+      }
+    },
+
+    "31": { "money": 2000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "32": { "money": 2000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "33": { "money": 2000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "34": { "money": 2000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+
+    "35": {
+      "money": 4000,
+      "items": [
+        { "id": "minecraft:totem_of_undying", "count": 1 }
+      ]
+    },
+
+    "36": { "money": 2000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "37": { "money": 2000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "38": { "money": 2000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "39": { "money": 2000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+
+    "40": {
+      "money": 6000,
+      "perk": {
+        "id": "combat_crit_2",
+        "name": "Deadly Precision",
+        "description": "Massively increased critical damage."
+      }
+    },
+
+    "41": { "money": 3000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "42": { "money": 3000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "43": { "money": 3000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+    "44": { "money": 3000, "info": { "description": "Crit Chance +1%\nCrit Damage +2%\nLifesteal +2%" } },
+
+    "45": {
+      "money": 10000,
+      "title": {
+        "id": "combat_master",
+        "name": "Master of War",
+        "color": "dark_red"
+      }
+    }
+  }
+}

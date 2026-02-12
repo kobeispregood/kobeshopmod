@@ -1,19 +1,16 @@
 package net.lazy.kobe.mining;
 
-import net.lazy.kobe.item.ModItems;
-import net.lazy.kobe.network.NetworkHandler;
+import net.lazy.kobe.mastery.MasteryXp;
 import net.lazy.kobe.oregen.CobbleGenEvents;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
-
-import static net.lazy.kobe.econ.MoneyAPI.sync;
 
 public class MiningEvents {
 
@@ -29,9 +26,7 @@ public class MiningEvents {
         if (!(event.getPlayer() instanceof ServerPlayer player)) return;
 
         Block block = event.getState().getBlock();
-        MiningData data = player.getData(MiningAttachment.MINING);
 
-        int oldLevel = data.getLevel();
         int xp = 0;
 
         // -----------------------------
@@ -47,7 +42,8 @@ public class MiningEvents {
         int oreXp = getOreXp(block);
 
         if (oreXp > 0) {
-            float xpMultiplier = MiningPerks.getOreXpMultiplier(oldLevel);
+            int playerLevel = player.getData(MiningAttachment.MINING).getLevel();
+            float xpMultiplier = MiningPerks.getOreXpMultiplier(playerLevel);
             oreXp = Math.round(oreXp * xpMultiplier);
         }
 
@@ -56,50 +52,21 @@ public class MiningEvents {
         if (xp <= 0) return;
 
         // -----------------------------
-        // APPLY XP
+        // APPLY XP (SINGLE SOURCE OF TRUTH)
         // -----------------------------
-        data.addXp(xp);
-        int newLevel = data.getLevel();
-
-        // -----------------------------
-        // SYNC XP
-        // -----------------------------
-        NetworkHandler.sendToPlayer(
-                new MiningSyncPacket(data.getXp()),
-                player
-        );
-
-        // -----------------------------
-        // LEVEL UP
-        // -----------------------------
-        if (newLevel > oldLevel) {
-
-            NetworkHandler.sendToPlayer(
-                    new MiningLevelUpPacket(newLevel),
-                    player
-            );
-
-            var perks = MiningPerkUnlocks.getUnlockedPerks(oldLevel, newLevel);
-            if (!perks.isEmpty()) {
-                NetworkHandler.sendToPlayer(
-                        new MiningPerkUnlockPacket(perks),
-                        player
-                );
-            }
-        }
+        MasteryXp.addMiningXp(player, xp);
 
         // -----------------------------
         // EXTRA DROP PERK (ORES ONLY)
         // -----------------------------
-        if (oreXp > 0 && MiningPerks.rollExtraDrop(oldLevel, level.random)) {
+        int currentLevel = player.getData(MiningAttachment.MINING).getLevel();
+        if (oreXp > 0 && MiningPerks.rollExtraDrop(currentLevel, level.random)) {
             Block.popResource(
                     level,
                     event.getPos(),
                     new ItemStack(block.asItem())
             );
         }
-
-        System.out.println("[Mining Mastery] +" + xp + " XP (total=" + data.getXp() + ")");
     }
 
     // =================================================

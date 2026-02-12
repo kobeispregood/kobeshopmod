@@ -1,0 +1,74 @@
+{
+  "type": "foraging",
+  "rewards": {
+    "1":  { "money": 50 },
+    "2":  { "money": 60 },
+    "3":  { "money": 70 },
+    "4":  { "money": 80 },
+
+    "5": {
+      "money": 100,
+      "items": [{ "id": "minecraft:oak_log", "count": 8 }]
+    },
+
+    "10": {
+      "money": 300,
+      "perk": {
+        "id": "foraging_logs",
+        "name": "Lumberjack",
+        "description": "Chance to gain extra logs"
+      }
+    },
+
+    "15": {
+      "money": 200,
+      "items": [{ "id": "minecraft:spruce_log", "count": 8 }]
+    },
+
+    "20": {
+      "money": 600,
+      "perk": {
+        "id": "foraging_speed",
+        "name": "Swift Chop",
+        "description": "Break trees faster"
+      }
+    },
+
+    "25": {
+      "money": 300,
+      "items": [{ "id": "minecraft:jungle_log", "count": 10 }]
+    },
+
+    "30": {
+      "money": 1000,
+      "perk": {
+        "id": "foraging_sapling",
+        "name": "Green Thumb",
+        "description": "Saplings drop more often"
+      }
+    },
+
+    "35": {
+      "money": 400,
+      "items": [{ "id": "minecraft:apple", "count": 6 }]
+    },
+
+    "40": {
+      "money": 1500,
+      "perk": {
+        "id": "foraging_double",
+        "name": "Forest Bounty",
+        "description": "Chance for double wood drops"
+      }
+    },
+
+    "45": {
+      "money": 2500,
+      "title": {
+        "id": "forest_guardian",
+        "name": "Forest Guardian",
+        "color": "green"
+      }
+    }
+  }
+}

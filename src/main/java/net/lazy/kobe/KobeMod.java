@@ -2,14 +2,21 @@ package net.lazy.kobe;
 
 import com.mojang.logging.LogUtils;
 
-import net.lazy.kobe.combat.CombatAttachment;
+import net.lazy.kobe.alchemy.AlchemyEvents;
 
 import net.lazy.kobe.block.ModBlocks;
 import net.lazy.kobe.block.ModBlockEntities;
+import net.lazy.kobe.client.blakeybag.BlakeyBagScreen;
+import net.lazy.kobe.client.overlay.MoneyHudOverlay;
+import net.lazy.kobe.client.skill.*;
+import net.lazy.kobe.curios.CuriosCapabilities;
+import net.lazy.kobe.item.music.ModMusicDiscs;
+import net.lazy.kobe.mastery.MasteryJoinSync;
+import net.lazy.kobe.menu.ModMenus;
+import net.lazy.kobe.registry.ModEntities;
 
 import net.lazy.kobe.client.*;
 
-import net.lazy.kobe.combat.CombatEvents;
 import net.lazy.kobe.crate.CrateLootData;
 
 import net.lazy.kobe.econ.EconEvents;
@@ -18,21 +25,25 @@ import net.lazy.kobe.econ.MoneyAttachment;
 import net.lazy.kobe.farming.FarmingAttachment;
 import net.lazy.kobe.farming.FarmingDimensionSync;
 import net.lazy.kobe.farming.FarmingJoinSync;
+import net.lazy.kobe.foraging.ForagingEvents;
 import net.lazy.kobe.item.ModCreativeModeTabs;
 import net.lazy.kobe.item.ModItems;
 
+import net.lazy.kobe.mastery.MasteryAttachment;
+import net.lazy.kobe.enchanting.EnchantingEvents;
+import net.lazy.kobe.mastery.rewards.MasteryRewardLoader;
 import net.lazy.kobe.mining.*;
 import net.lazy.kobe.network.NetworkHandler;
 
 import net.lazy.kobe.oregen.GeneratorItemProtectionHandler;
 import net.lazy.kobe.oregen.OreGenAttachment;
 import net.lazy.kobe.oregen.gui.OreGenMenus;
+import net.lazy.kobe.registry.ModEntityAttributes;
+import net.lazy.kobe.registry.ModSounds;
 import net.lazy.kobe.shop.ShopCategoryLoader;
-import net.lazy.kobe.shop.net.ShopSyncEvents;
 import net.lazy.kobe.world.*;
 import net.lazy.kobe.skills.SkillMenus;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 
@@ -44,7 +55,6 @@ import net.lazy.kobe.oregen.gui.OreGenScreen;
 
 
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -77,7 +87,9 @@ public class KobeMod {
         ModItems.ITEMS.register(modEventBus);
         ModCreativeModeTabs.TABS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
-
+        ModEntities.ENTITIES.register(modEventBus);
+        ModSounds.SOUND_EVENTS.register(modEventBus);
+        modEventBus.addListener(ModEntityAttributes::registerAttributes);
         NeoForge.EVENT_BUS.register(new GeneratorItemProtectionHandler());
 
 
@@ -86,7 +98,7 @@ public class KobeMod {
         FarmingAttachment.register(modEventBus);
         MoneyAttachment.register(modEventBus);
         MiningAttachment.register(modEventBus);
-        CombatAttachment.register(modEventBus);
+        MasteryAttachment.register(modEventBus);
 
         // --------------------------------------------------
         // NETWORK + SETUP
@@ -94,7 +106,9 @@ public class KobeMod {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(NetworkHandler::register);
         modEventBus.addListener(this::addCreative);
-
+        modEventBus.addListener(this::onClientSetup);
+        modEventBus.addListener(CuriosCapabilities::register);
+        ModMusicDiscs.MUSIC_DISCS.register(modEventBus);
         // --------------------------------------------------
         // GLOBAL EVENTS (server + gameplay systems)
         // --------------------------------------------------
@@ -109,6 +123,7 @@ public class KobeMod {
         IslandOreGenAttachment.register(modEventBus);
         OreGenMenus.MENUS.register(modEventBus);
         SkillMenus.MENUS.register(modEventBus);
+        ModMenus.MENUS.register(modEventBus);
         NeoForge.EVENT_BUS.register(new MiningEvents());
         NeoForge.EVENT_BUS.register(new MiningCloneHandler());
         NeoForge.EVENT_BUS.register(new MiningJoinSync());
@@ -116,8 +131,14 @@ public class KobeMod {
         NeoForge.EVENT_BUS.register(new MiningDimensionSync());
         NeoForge.EVENT_BUS.register(new FarmingJoinSync());
         NeoForge.EVENT_BUS.register(new FarmingDimensionSync());
+        NeoForge.EVENT_BUS.register(new ForagingEvents());
+        NeoForge.EVENT_BUS.register(new AlchemyEvents());
+        NeoForge.EVENT_BUS.register(new EnchantingEvents());
+
         // ⭐ Register crate JSON reload listener
         NeoForge.EVENT_BUS.addListener(KobeMod::registerReloadListeners);
+        NeoForge.EVENT_BUS.register(MasteryJoinSync.class);
+
     }
 
     // =========================================================
@@ -126,7 +147,21 @@ public class KobeMod {
     private static void registerReloadListeners(AddReloadListenerEvent event) {
         System.out.println("========== JSON LOADERS REGISTERED ==========");
         event.addListener(new CrateLootData());
-        event.addListener(new MiningRewardManager()); // ⭐ THIS IS STEP 4
+        event.addListener(new MiningRewardManager());
+        event.addListener(new MasteryRewardLoader());
+    }
+    private void registerEntityAttributes(
+            net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent event
+    ) {
+        event.put(
+                net.lazy.kobe.registry.ModEntities.STONE_COLOSSUS.get(),
+                net.lazy.kobe.boss.StoneColossusEntity.createAttributes().build()
+        );
+
+        event.put(
+                net.lazy.kobe.registry.ModEntities.COPENGAMBLER.get(),
+                net.lazy.kobe.boss.CopengamblerEntity.createAttributes().build()
+        );
     }
 
 
@@ -153,7 +188,7 @@ public class KobeMod {
 
             // -----------------------------
             // ORE GEN
-            // -----------------------------
+            // ------f-----------------------
             event.register(
                     OreGenMenus.ORE_GEN_MENU.value(),
                     OreGenScreen::new
@@ -167,18 +202,18 @@ public class KobeMod {
                     SkillsScreen::new
             );
 
+            event.register(
+                    ModMenus.BLAKE_BAG.value(),
+                    BlakeyBagScreen::new
+            );
             // -----------------------------
             // SKILLS – PAGES
             // -----------------------------
             event.register(SkillMenus.MINING_MENU.value(), MiningScreen::new);
             event.register(SkillMenus.FARMING_MENU.value(), FarmingScreen::new);
             event.register(SkillMenus.COMBAT_MENU.value(), CombatScreen::new);
-            event.register(SkillMenus.FISHING_MENU.value(), FishingScreen::new);
-            event.register(SkillMenus.FORAGING_MENU.value(), ForagingScreen::new);
             event.register(SkillMenus.HUNTS_MENU.value(), HuntsScreen::new);
             event.register(SkillMenus.RUNECRAFTING_MENU.value(), RunecraftingScreen::new);
-            event.register(SkillMenus.ENCHANTING_MENU.value(), EnchantingScreen::new);
-            event.register(SkillMenus.ALCHEMY_MENU.value(), AlchemyScreen::new);
         }
 
         @SubscribeEvent
@@ -188,6 +223,9 @@ public class KobeMod {
                     MoneyHudOverlay.INSTANCE
             );
         }
+    }
+
+    private void onClientSetup(FMLClientSetupEvent event) {;
     }
 
     @SubscribeEvent

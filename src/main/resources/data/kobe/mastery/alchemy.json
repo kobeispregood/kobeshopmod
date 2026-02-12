@@ -1,0 +1,64 @@
+{
+  "type": "alchemy",
+  "rewards": {
+    "1": { "money": 60 },
+    "2": { "money": 70 },
+    "3": { "money": 80 },
+    "4": { "money": 90 },
+
+    "5": {
+      "money": 120,
+      "items": [{ "id": "minecraft:nether_wart", "count": 4 }]
+    },
+
+    "10": {
+      "money": 350,
+      "perk": {
+        "id": "alchemy_duration",
+        "name": "Lingering Mix",
+        "description": "Potions last longer"
+      }
+    },
+
+    "15": {
+      "money": 250,
+      "items": [{ "id": "minecraft:blaze_powder", "count": 2 }]
+    },
+
+    "20": {
+      "money": 700,
+      "perk": {
+        "id": "alchemy_strength",
+        "name": "Potent Brews",
+        "description": "Potion effects are stronger"
+      }
+    },
+
+    "30": {
+      "money": 1100,
+      "perk": {
+        "id": "alchemy_freebrew",
+        "name": "Efficient Brewing",
+        "description": "Chance to brew without consuming ingredients"
+      }
+    },
+
+    "40": {
+      "money": 1600,
+      "perk": {
+        "id": "alchemy_splash",
+        "name": "Explosive Concoctions",
+        "description": "Splash potions are more effective"
+      }
+    },
+
+    "45": {
+      "money": 2600,
+      "title": {
+        "id": "master_alchemist",
+        "name": "Master Alchemist",
+        "color": "dark_purple"
+      }
+    }
+  }
+}

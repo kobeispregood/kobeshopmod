@@ -1,0 +1,31 @@
+{
+  "boss.colossus_slam": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "kobe:boss/colossus_slam",
+        "stream": false
+      }
+    ]
+  },
+
+  "boss.colossus_windup": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "kobe:boss/colossus_windup",
+        "stream": false
+      }
+    ]
+  },
+
+  "music.sleep_tight": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "kobe:music/sleep_tight",
+        "stream": true
+      }
+    ]
+  }
+}

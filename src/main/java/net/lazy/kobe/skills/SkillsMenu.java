@@ -1,5 +1,6 @@
 package net.lazy.kobe.skills;
 
+import net.lazy.kobe.mastery.MasteryType;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -108,30 +109,45 @@ public class SkillsMenu extends AbstractContainerMenu {
                     Component.literal("Farming")
             ));
 
-            case 13 -> player.openMenu(new SimpleMenuProvider(
-                    (id, inv, p) -> new CombatMenu(id, inv),
-                    Component.literal("Combat")
-            ));
+            case 13 -> player.openMenu(
+                    new SimpleMenuProvider(
+                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.COMBAT),
+                            Component.literal("Combat")
+                    ),
+                    buf -> buf.writeEnum(MasteryType.COMBAT)
+            );
 
-            case 14 -> player.openMenu(new SimpleMenuProvider(
-                    (id, inv, p) -> new EnchantingMenu(id, inv),
-                    Component.literal("Enchanting")
-            ));
+            case 14 -> player.openMenu(
+                    new SimpleMenuProvider(
+                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.ALCHEMY),
+                            Component.literal("Enchanting")
+                    ),
+                    buf -> buf.writeEnum(MasteryType.ENCHANTING)
+            );
 
-            case 15 -> player.openMenu(new SimpleMenuProvider(
-                    (id, inv, p) -> new AlchemyMenu(id, inv),
-                    Component.literal("Alchemy")
-            ));
+            case 15 -> player.openMenu(
+                    new SimpleMenuProvider(
+                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.ALCHEMY),
+                            Component.literal("Alchemy")
+                    ),
+                    buf -> buf.writeEnum(MasteryType.ALCHEMY)
+            );
 
-            case 20 -> player.openMenu(new SimpleMenuProvider(
-                    (id, inv, p) -> new FishingMenu(id, inv),
-                    Component.literal("Fishing")
-            ));
+            case 20 -> player.openMenu(
+                    new SimpleMenuProvider(
+                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.FISHING),
+                            Component.literal("Fishing")
+                    ),
+                    buf -> buf.writeEnum(MasteryType.FISHING)
+            );
 
-            case 21 -> player.openMenu(new SimpleMenuProvider(
-                    (id, inv, p) -> new ForagingMenu(id, inv),
-                    Component.literal("Foraging")
-            ));
+            case 21 -> player.openMenu(
+                    new SimpleMenuProvider(
+                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.FORAGING),
+                            Component.literal("Foraging")
+                    ),
+                    buf -> buf.writeEnum(MasteryType.FORAGING)
+            );
 
             case 23 -> player.openMenu(new SimpleMenuProvider(
                     (id, inv, p) -> new HuntsMenu(id, inv),

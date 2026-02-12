@@ -1,0 +1,62 @@
+[
+  {
+    "id": "blocks",
+    "name": "Blocks",
+    "icon": "minecraft:grass_block"
+  },
+  {
+    "id": "decoration",
+    "name": "Decoration",
+    "icon": "minecraft:painting"
+  },
+  {
+    "id": "dyes",
+    "name": "Dyes",
+    "icon": "minecraft:red_dye"
+  },
+  {
+    "id": "farming",
+    "name": "Farming",
+    "icon": "minecraft:wheat"
+  },
+  {
+    "id": "food",
+    "name": "Food",
+    "icon": "minecraft:cooked_beef"
+  },
+  {
+    "id": "mobs",
+    "name": "Mobs",
+    "icon": "minecraft:nether_star"
+  },
+  {
+    "id": "modshop",
+    "name": "Mod Shop",
+    "icon": "minecraft:anvil"
+  },
+  {
+    "id": "music",
+    "name": "Music",
+    "icon": "minecraft:music_disc_cat"
+  },
+  {
+    "id": "ores",
+    "name": "Ores",
+    "icon": "minecraft:iron_ore"
+  },
+  {
+    "id": "redstone",
+    "name": "Redstone",
+    "icon": "minecraft:redstone"
+  },
+  {
+    "id": "spawners",
+    "name": "Spawners",
+    "icon": "minecraft:spawner"
+  },
+  {
+    "id": "workstations",
+    "name": "Workstations",
+    "icon": "minecraft:crafting_table"
+  }
+]

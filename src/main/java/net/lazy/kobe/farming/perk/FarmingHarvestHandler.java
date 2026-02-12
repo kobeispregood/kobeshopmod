@@ -26,6 +26,10 @@ public class FarmingHarvestHandler {
     @SubscribeEvent
     public static void onRightClickCrop(PlayerInteractEvent.RightClickBlock event) {
 
+        if (event.getItemStack().getItem() instanceof net.minecraft.world.item.FishingRodItem) {
+            return;
+        }
+
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (!(event.getLevel() instanceof ServerLevel level)) return;
 

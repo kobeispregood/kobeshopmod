@@ -2,6 +2,12 @@
   "item.kobe.black_opal": "Black Opal",
   "item.kobe.raw_black_opal": "Raw Black Opal",
 
+  "item.kobe.dunhamdice": "DunhamDice",
+  "item.kobe.rileys_ramen": "Riley’s Ramen",
+  "item.kobe.jess_jackpot": "Jess’s Jackpot",
+  "item.kobe.dinos_dollar": "Dino's Dollar",
+  "item.kobe.swift_socks": "Swift Socks",
+
   "item.kobe.rare_key": "Rare Crate Key",
   "item.kobe.legendary_key": "Legendary Crate Key",
   "item.kobe.common_key": "Common Crate Key",
@@ -11,8 +17,15 @@
 
   "block.kobe.common_crate": "Common Crate",
   "block.kobe.rare_crate": "Rare Crate",
-  "block.kobe.legendary_crate": "Legendary Crate"
+  "block.kobe.legendary_crate": "Legendary Crate",
 
+  "tooltip.kobe.jess_jackpot.condition": "While below $500:",
+  "tooltip.kobe.jess_jackpot.effect": "10% chance to deal +100% damage",
+  "tooltip.kobe.jess_jackpot.flavor": "All in.",
+
+  "entity.kobe.copengambler": "Copengambler",
+  "entity.kobe.stone_colossus": "Stone Colossus",
+
+  "item.kobe.sleep_tight": "Sleep Tight - Aceta",
+  "jukebox_song.kobe.sleep_tight": "Sleep Tight - Aceta"
 }
-
-

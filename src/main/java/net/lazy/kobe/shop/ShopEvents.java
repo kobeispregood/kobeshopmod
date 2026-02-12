@@ -9,6 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.minecraft.world.entity.player.Player;
+import net.lazy.kobe.curios.CurioHelper;
 
 public class ShopEvents {
 
@@ -54,13 +55,29 @@ public class ShopEvents {
         }
 
         // price based on current level
-        int price = PRICES[Math.min(current, PRICES.length - 1)];
+        int basePrice = PRICES[Math.min(current, PRICES.length - 1)];
+
+        float discount = CurioHelper.getShopDiscount((net.minecraft.server.level.ServerPlayer) player);
+
+        // optional safety cap (recommended)
+        discount = Math.min(discount, 0.50f); // max 50% off
+
+        int price = Math.max(1, Math.round(basePrice * (1.0f - discount)));
 
         // money check
         if (money.get() < price) {
-            player.sendSystemMessage(
-                    Component.literal("Not enough money. Cost: $" + price)
-            );
+            if (discount > 0) {
+                player.sendSystemMessage(
+                        Component.literal(
+                                "Not enough money. Cost: $" + price +
+                                        " (Discounted from $" + basePrice + ")"
+                        )
+                );
+            } else {
+                player.sendSystemMessage(
+                        Component.literal("Not enough money. Cost: $" + price)
+                );
+            }
             return false;
         }
 

@@ -1,5 +1,6 @@
 package net.lazy.kobe.network;
 
+import net.lazy.kobe.curios.CurioHelper;
 import net.lazy.kobe.econ.MoneyAttachment;
 import net.lazy.kobe.econ.MoneySyncPacket;
 import net.lazy.kobe.shop.PriceEntry;
@@ -56,7 +57,13 @@ public record BuyPacket(String key, int amount) implements CustomPacketPayload {
                 return;
             }
 
-            int cost = (int) price.buy() * msg.amount();
+            int baseCost = (int) (price.buy() * msg.amount());
+
+            float discount = CurioHelper.getShopDiscount(player);
+            discount = Math.min(discount, 0.50f); // safety cap
+
+            int discounted = Math.round(baseCost * (1.0f - discount));
+            int cost = Math.max(1, discounted);
 
             var money = player.getData(MoneyAttachment.MONEY);
             if (money.get() < cost) {

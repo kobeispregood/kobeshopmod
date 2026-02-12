@@ -1,0 +1,8 @@
+{
+  "sound_event": "kobe:music.sleep_tight",
+  "description": {
+    "translate": "jukebox_song.kobe.sleep_tight"
+  },
+  "length_in_seconds": 300,
+  "comparator_output": 15
+}
