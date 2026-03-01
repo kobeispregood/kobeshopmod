@@ -32,6 +32,10 @@ public class ModCreativeModeTabs {
                                 output.accept(ModBlocks.RARE_CRATE.get());
                                 output.accept(ModBlocks.LEGENDARY_CRATE.get());
 
+                                output.accept(ModBlocks.ZENITH_ORE.get());
+                                output.accept(ModBlocks.AETHERIUM_ORE.get());
+                                output.accept(ModBlocks.ASCENDITE_ORE.get());
+
                                 // Curios
                                 output.accept(ModItems.DINOS_DOLLAR.get());
                                 output.accept(ModItems.DUNHAMDICE.get());
@@ -39,9 +43,23 @@ public class ModCreativeModeTabs {
                                 output.accept(ModItems.RILEYS_RAMEN.get());
                                 output.accept(ModItems.BLAKEY_BAG.get());
                                 output.accept(ModItems.SWIFT_SOCKS.get());
-                                output.accept(ModMusicDiscs.SLEEP_TIGHT.get());
-                            })
+                                output.accept(ModItems.COMFORT_CLOAK.get());
+                                output.accept(ModItems.STRENGTH_SHARD.get());
+                                output.accept(ModItems.FATAL_FORTUNE.get());
+                                output.accept(ModItems.HAZARDOUS_HAND.get());
+                                output.accept(ModItems.ETHANS_END.get());
+                                output.accept(ModItems.STRENGTH_TABLET.get());
+                                output.accept(ModItems.ZENITH_STRENGTH_TABLET.get());
+                                output.accept(ModItems.ASCENDITE_STRENGTH_TABLET.get());
 
+
+                                output.accept(ModItems.ASCENDITE.get());
+                                output.accept(ModItems.ZENITH.get());
+                                output.accept(ModItems.AETHERIUM.get());
+
+                                output.accept(ModMusicDiscs.SLEEP_TIGHT.get());
+
+                            })
                             .build()
             );
 }

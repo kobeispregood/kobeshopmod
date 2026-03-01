@@ -12,11 +12,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 import java.util.Random;
 
-@EventBusSubscriber(
-        modid = "kobe",
-        bus = EventBusSubscriber.Bus.GAME,
-        value = Dist.CLIENT
-)
+@EventBusSubscriber()
 public class CrateParticleHandler {
 
     private static final Random RANDOM = new Random();

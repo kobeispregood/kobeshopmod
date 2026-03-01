@@ -1,6 +1,7 @@
 package net.lazy.kobe.farming;
 
-import net.lazy.kobe.mastery.MasteryXp;
+import net.lazy.kobe.mastery.MasteryType;
+import net.lazy.kobe.mastery.MasteryXpCentral;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,9 +19,6 @@ public class FarmingEvents {
     @SubscribeEvent
     public static void onCropBreak(BlockEvent.BreakEvent event) {
 
-        // -----------------------------
-        // VALIDATION
-        // -----------------------------
         if (!(event.getPlayer() instanceof ServerPlayer player)) return;
 
         BlockState state = event.getState();
@@ -31,19 +29,14 @@ public class FarmingEvents {
         int current = state.getValue(age);
         int max = age.getPossibleValues().stream().max(Integer::compareTo).orElse(0);
 
-        // -----------------------------
-        // ONLY FULLY GROWN CROPS
-        // -----------------------------
+        // Only fully grown crops
         if (current < max) return;
 
         int xp = BASE_CROP_XP;
-
         if (xp <= 0) return;
 
-        // -----------------------------
-        // APPLY XP (SINGLE SOURCE OF TRUTH)
-        // -----------------------------
-        MasteryXp.addFarmingXp(player, xp);
+        // Apply farming mastery XP
+        MasteryXpCentral.addXp(player, MasteryType.FARMING, xp);
     }
 
     private static IntegerProperty getAgeProperty(BlockState state) {

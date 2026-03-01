@@ -31,15 +31,6 @@ public class SkillMenus {
     public static final DeferredHolder<MenuType<?>, MenuType<SkillsMenu>> SKILLS_MENU =
             MENUS.register("skills", () -> new MenuType<>(SkillsMenu::new, FeatureFlags.DEFAULT_FLAGS));
 
-    public static final DeferredHolder<MenuType<?>, MenuType<MiningMenu>> MINING_MENU =
-            MENUS.register("mining", () -> new MenuType<>(MiningMenu::new, FeatureFlags.DEFAULT_FLAGS));
-
-    public static final DeferredHolder<MenuType<?>, MenuType<FarmingMenu>> FARMING_MENU =
-            MENUS.register("farming", () -> new MenuType<>(FarmingMenu::new, FeatureFlags.DEFAULT_FLAGS));
-
-    public static final DeferredHolder<MenuType<?>, MenuType<CombatMenu>> COMBAT_MENU =
-            MENUS.register("combat", () -> new MenuType<>(CombatMenu::new, FeatureFlags.DEFAULT_FLAGS));
-
     public static final DeferredHolder<MenuType<?>, MenuType<HuntsMenu>> HUNTS_MENU =
             MENUS.register("hunts", () -> new MenuType<>(HuntsMenu::new, FeatureFlags.DEFAULT_FLAGS));
 

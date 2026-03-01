@@ -15,9 +15,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-
 import net.minecraft.world.item.ItemStack;
+
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+
+import java.util.ArrayList;
 
 public record MasteryClaimAllPacket(
         MasteryType masteryType
@@ -44,6 +46,7 @@ public record MasteryClaimAllPacket(
 
     public static void handle(MasteryClaimAllPacket pkt, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
+
             if (!(ctx.player() instanceof ServerPlayer player)) return;
 
             MasteryProgress progress = player
@@ -57,6 +60,8 @@ public record MasteryClaimAllPacket(
             MasteryReward lastReward = null;
 
             for (int lvl = 1; lvl <= max; lvl++) {
+
+                if (lvl > MasteryProgress.MAX_LEVELS) break;
                 if (progress.isClaimed(lvl)) continue;
 
                 progress.claim(lvl);
@@ -79,6 +84,10 @@ public record MasteryClaimAllPacket(
                 }
             }
 
+            // =============================
+            // MONEY SYNC
+            // =============================
+
             if (totalMoney > 0) {
                 MoneyData money = player.getData(MoneyAttachment.MONEY);
                 money.add(totalMoney);
@@ -94,7 +103,12 @@ public record MasteryClaimAllPacket(
                 );
             }
 
+            // =============================
+            // LEVEL FEEDBACK
+            // =============================
+
             if (lastReward != null && highestLevel > 0) {
+
                 ChatFormatting color = masteryColor(pkt.masteryType());
 
                 player.sendSystemMessage(
@@ -136,24 +150,20 @@ public record MasteryClaimAllPacket(
                 }
             }
 
+            // =============================
+            // SYNC UPDATED MASTERY DATA
+            // =============================
+
             NetworkHandler.sendToPlayer(
                     new MasterySyncPacket(
                             pkt.masteryType(),
                             progress.getLevel(),
                             progress.getXpIntoLevel(),
-                            buildClaimedMask(progress)
+                            new ArrayList<>(progress.getClaimedLevels())
                     ),
                     player
             );
         });
-    }
-
-    private static int buildClaimedMask(MasteryProgress progress) {
-        int mask = 0;
-        for (int lvl : progress.getClaimedLevels()) {
-            mask |= (1 << (lvl - 1)); // ✅ FIX
-        }
-        return mask;
     }
 
     private static ChatFormatting masteryColor(MasteryType type) {

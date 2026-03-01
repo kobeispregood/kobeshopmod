@@ -1,6 +1,7 @@
 package net.lazy.kobe.oregen;
 
-import net.lazy.kobe.mining.MiningAttachment;
+import net.lazy.kobe.mastery.MasteryAttachment;
+import net.lazy.kobe.mastery.MasteryType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -39,7 +40,11 @@ public class GeneratorItemProtectionHandler {
         if (player == null) return;
 
         // Mining level gate
-        int miningLevel = player.getData(MiningAttachment.MINING).getLevel();
+        int miningLevel = player
+                .getData(MasteryAttachment.MASTERY)
+                .getOrCreate(MasteryType.MINING)
+                .getLevel();
+
         if (miningLevel < 10) return;
 
         // 🔥 FULL IMMUNITY BEFORE FIRST TICK

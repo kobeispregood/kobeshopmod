@@ -4,17 +4,8 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import net.lazy.kobe.mastery.MasteryProgress;
 import net.lazy.kobe.mastery.MasteryType;
-
-import net.lazy.kobe.mining.MiningAttachment;
-import net.lazy.kobe.mining.MiningData;
-import net.lazy.kobe.mining.MiningSyncPacket;
-
-import net.lazy.kobe.farming.FarmingAttachment;
-import net.lazy.kobe.farming.FarmingData;
-import net.lazy.kobe.farming.FarmingSyncPacket;
-
-import net.lazy.kobe.network.NetworkHandler;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -38,80 +29,26 @@ public class ResetSkillCommand {
                                             ServerPlayer player = ctx.getSource().getPlayerOrException();
                                             String skillInput = StringArgumentType.getString(ctx, "skill");
 
-                                            // -----------------------------
-                                            // NEW MASTERY SYSTEM
-                                            // -----------------------------
                                             MasteryType type = MasteryType.fromString(skillInput);
-                                            if (type != null && type.hasHandler()) {
+
+                                            if (type != null) {
 
                                                 type.reset(player);
 
                                                 ctx.getSource().sendSuccess(
                                                         () -> Component.literal(
-                                                                "§a" + type.getSerializedName() + " Mastery reset."
+                                                                "§a" + type.getSerializedName() + " mastery reset."
                                                         ),
                                                         false
                                                 );
                                                 return 1;
                                             }
 
-                                            // -----------------------------
-                                            // LEGACY SYSTEM
-                                            // -----------------------------
-                                            switch (skillInput.toLowerCase()) {
+                                            ctx.getSource().sendFailure(
+                                                    Component.literal("§cUnknown mastery: " + skillInput)
+                                            );
 
-                                                case "mining" -> {
-                                                    MiningData data = player.getData(MiningAttachment.MINING);
-                                                    data.reset();
-
-                                                    NetworkHandler.sendToPlayer(
-                                                            new MiningSyncPacket(data.getXp()),
-                                                            player
-                                                    );
-
-                                                    ctx.getSource().sendSuccess(
-                                                            () -> Component.literal("§aMining Mastery reset."),
-                                                            false
-                                                    );
-                                                }
-
-                                                case "farming" -> {
-                                                    FarmingData data = player.getData(FarmingAttachment.FARMING);
-                                                    data.reset();
-
-                                                    NetworkHandler.sendToPlayer(
-                                                            new FarmingSyncPacket(
-                                                                    data.getXp(),
-                                                                    data.getClaimedLevels()
-                                                                            .stream()
-                                                                            .mapToInt(Integer::intValue)
-                                                                            .toArray()
-                                                            ),
-                                                            player
-                                                    );
-
-                                                    ctx.getSource().sendSuccess(
-                                                            () -> Component.literal("§aFarming Mastery reset."),
-                                                            false
-                                                    );
-                                                }
-
-                                                default -> {
-                                                    if (type != null) {
-                                                        ctx.getSource().sendFailure(
-                                                                Component.literal(
-                                                                        "§cMastery exists but has no handler yet: " + skillInput
-                                                                )
-                                                        );
-                                                    } else {
-                                                        ctx.getSource().sendFailure(
-                                                                Component.literal("§cUnknown mastery: " + skillInput)
-                                                        );
-                                                    }
-                                                }
-                                            }
-
-                                            return 1;
+                                            return 0;
                                         })
                                 )
                         )
@@ -121,82 +58,34 @@ public class ResetSkillCommand {
                         // =============================================================
                         .then(Commands.literal("set")
                                 .then(Commands.argument("skill", StringArgumentType.word())
-                                        .then(Commands.argument("level", IntegerArgumentType.integer(0))
+                                        .then(Commands.argument("level", IntegerArgumentType.integer(0, MasteryProgress.MAX_LEVELS))
                                                 .executes(ctx -> {
 
                                                     ServerPlayer player = ctx.getSource().getPlayerOrException();
                                                     String skillInput = StringArgumentType.getString(ctx, "skill");
                                                     int level = IntegerArgumentType.getInteger(ctx, "level");
 
-                                                    // -----------------------------
-                                                    // NEW MASTERY SYSTEM
-                                                    // -----------------------------
                                                     MasteryType type = MasteryType.fromString(skillInput);
-                                                    if (type != null && type.hasHandler()) {
+
+                                                    if (type != null) {
 
                                                         type.setLevel(player, level);
 
                                                         ctx.getSource().sendSuccess(
                                                                 () -> Component.literal(
                                                                         "§a" + type.getSerializedName()
-                                                                                + " Mastery set to level " + level
+                                                                                + " mastery set to level " + level
                                                                 ),
                                                                 false
                                                         );
                                                         return 1;
                                                     }
 
-                                                    // -----------------------------
-                                                    // LEGACY SYSTEM
-                                                    // -----------------------------
-                                                    switch (skillInput.toLowerCase()) {
+                                                    ctx.getSource().sendFailure(
+                                                            Component.literal("§cUnknown mastery: " + skillInput)
+                                                    );
 
-                                                        case "mining" -> {
-                                                            MiningData data = player.getData(MiningAttachment.MINING);
-                                                            data.setLevel(level);
-
-                                                            NetworkHandler.sendToPlayer(
-                                                                    new MiningSyncPacket(data.getXp()),
-                                                                    player
-                                                            );
-
-                                                            ctx.getSource().sendSuccess(
-                                                                    () -> Component.literal(
-                                                                            "§aMining Mastery set to level " + level
-                                                                    ),
-                                                                    false
-                                                            );
-                                                        }
-
-                                                        case "farming" -> {
-                                                            FarmingData data = player.getData(FarmingAttachment.FARMING);
-                                                            data.setLevel(level);
-
-                                                            NetworkHandler.sendToPlayer(
-                                                                    new FarmingSyncPacket(
-                                                                            data.getXp(),
-                                                                            data.getClaimedLevels()
-                                                                                    .stream()
-                                                                                    .mapToInt(Integer::intValue)
-                                                                                    .toArray()
-                                                                    ),
-                                                                    player
-                                                            );
-
-                                                            ctx.getSource().sendSuccess(
-                                                                    () -> Component.literal(
-                                                                            "§aFarming Mastery set to level " + level
-                                                                    ),
-                                                                    false
-                                                            );
-                                                        }
-
-                                                        default -> ctx.getSource().sendFailure(
-                                                                Component.literal("§cUnknown mastery: " + skillInput)
-                                                        );
-                                                    }
-
-                                                    return 1;
+                                                    return 0;
                                                 })
                                         )
                                 )

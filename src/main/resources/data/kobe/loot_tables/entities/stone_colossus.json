@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "kobe:item",
+          "name": "kobe:jess_jackpot",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 5,
+                "max": 15
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "kobe:item",
+          "name": "kobe:legendary_key",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.90
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -3,8 +3,6 @@ package net.lazy.kobe.client.skill;
 import net.lazy.kobe.mastery.MasteryData;
 import net.lazy.kobe.mastery.MasteryType;
 import net.lazy.kobe.skills.SkillsMenu;
-import net.lazy.kobe.mining.MiningAttachment;
-import net.lazy.kobe.farming.FarmingAttachment;
 import net.lazy.kobe.mastery.MasteryAttachment;
 
 import net.minecraft.ChatFormatting;
@@ -67,15 +65,15 @@ public class SkillsScreen extends AbstractContainerScreen<SkillsMenu> {
 
         set(11, skill(
                 "Mining",
-                Items.IRON_PICKAXE,
-                player.getData(MiningAttachment.MINING).getLevel(),
+                Items.DIAMOND_PICKAXE,
+                mastery.getOrCreate(MasteryType.MINING).getLevel(),
                 SkillType.MINING
         ));
 
         set(12, skill(
                 "Farming",
                 Items.GOLDEN_HOE,
-                player.getData(FarmingAttachment.FARMING).getLevel(),
+                mastery.getOrCreate(MasteryType.FARMING).getLevel(),
                 SkillType.FARMING
         ));
 

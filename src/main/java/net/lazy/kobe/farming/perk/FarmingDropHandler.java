@@ -1,7 +1,8 @@
 package net.lazy.kobe.farming.perk;
 
-import net.lazy.kobe.farming.FarmingAttachment;
-import net.lazy.kobe.farming.FarmingData;
+import net.lazy.kobe.mastery.MasteryAttachment;
+import net.lazy.kobe.mastery.MasteryProgress;
+import net.lazy.kobe.mastery.MasteryType;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,35 +23,25 @@ public class FarmingDropHandler {
     @SubscribeEvent
     public static void onCropBreak(BlockEvent.BreakEvent event) {
 
-        // =========================
-        // SERVER ONLY
-        // =========================
         if (!(event.getPlayer() instanceof ServerPlayer player)) return;
         if (!(event.getLevel() instanceof ServerLevel level)) return;
 
         BlockState state = event.getState();
-        Block block = state.getBlock();
 
-        // =========================
-        // CROPS ONLY
-        // =========================
-        if (!(block instanceof CropBlock crop)) return;
+        if (!(state.getBlock() instanceof CropBlock crop)) return;
         if (!crop.isMaxAge(state)) return;
 
-        FarmingData data = player.getData(FarmingAttachment.FARMING);
-        int levelNum = data.getLevel();
+        MasteryProgress progress = player
+                .getData(MasteryAttachment.MASTERY)
+                .getOrCreate(MasteryType.FARMING);
 
-        // =========================
-        // REQUIRE LEVEL 25+
-        // =========================
+        int levelNum = progress.getLevel();
+
         if (levelNum < 25) return;
 
-        float multiplier = FarmingPerks.cropDropMultiplier(data);
+        float multiplier = FarmingPerks.cropDropMultiplier(progress);
         if (multiplier <= 1.0f) return;
 
-        // =========================
-        // GET BASE DROPS
-        // =========================
         List<ItemStack> drops = Block.getDrops(
                 state,
                 level,
@@ -60,18 +51,13 @@ public class FarmingDropHandler {
                 player.getMainHandItem()
         );
 
-        // =========================
-        // BONUS LOGIC
-        // =========================
         for (ItemStack stack : drops) {
 
-            // Skip seeds / crop block item
-            if (stack.is(block.asItem())) continue;
+            if (stack.is(state.getBlock().asItem())) continue;
 
             int baseCount = stack.getCount();
             float bonusAmount = baseCount * (multiplier - 1.0f);
 
-            // Guaranteed bonus
             int guaranteed = (int) bonusAmount;
             if (guaranteed > 0) {
                 ItemStack extra = stack.copy();
@@ -79,7 +65,6 @@ public class FarmingDropHandler {
                 Block.popResource(level, event.getPos(), extra);
             }
 
-            // Fractional chance bonus (+1)
             float fractional = bonusAmount - guaranteed;
             if (level.random.nextFloat() < fractional) {
                 ItemStack extra = stack.copy();

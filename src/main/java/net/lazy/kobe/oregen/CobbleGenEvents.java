@@ -1,10 +1,12 @@
 package net.lazy.kobe.oregen;
 
-import net.lazy.kobe.mining.MiningAttachment;
+import net.lazy.kobe.mastery.MasteryAttachment;
+import net.lazy.kobe.mastery.MasteryType;
 import net.lazy.kobe.oregen.data.OreGenTierLoader;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -52,7 +54,6 @@ public class CobbleGenEvents {
             player = sp;
         }
 
-
         int tier = 1;
 
         if (player != null) {
@@ -62,6 +63,25 @@ public class CobbleGenEvents {
 
         Block result = rollOre(level.random, tier);
 
+        if (player != null && isAscendancyOre(result)) {
+
+            player.sendSystemMessage(
+                    Component.literal("✦ Ascendancy Ore Generated: ")
+                            .withStyle(style -> style
+                                    .withColor(0xB38CFF)
+                                    .withBold(true))
+                            .append(result.getName())
+            );
+
+            level.playSound(
+                    null,
+                    pos,
+                    net.minecraft.sounds.SoundEvents.PLAYER_LEVELUP,
+                    net.minecraft.sounds.SoundSource.PLAYERS,
+                    0.7f,
+                    1.6f
+            );
+        }
         // 🔒 SAFE replacement — no ghost blocks
         event.setNewState(result.defaultBlockState());
     }
@@ -77,9 +97,12 @@ public class CobbleGenEvents {
         BlockPos pos = event.getEntity().blockPosition();
         if (!isCobbleGenerator(level, pos)) return;
 
-        int miningLevel = player.getData(MiningAttachment.MINING).getLevel();
-        if (miningLevel < 10) return;
+        int miningLevel = player
+                .getData(MasteryAttachment.MASTERY)
+                .getOrCreate(MasteryType.MINING)
+                .getLevel();
 
+        if (miningLevel < 10) return;
         event.getDrops().forEach(drop -> {
             if (drop instanceof ItemEntity item) {
                 item.setRemainingFireTicks(0);
@@ -121,6 +144,12 @@ public class CobbleGenEvents {
         return Blocks.COBBLESTONE;
     }
 
+    private static boolean isAscendancyOre(Block block) {
+        return net.minecraft.core.registries.BuiltInRegistries.BLOCK
+                .getKey(block)
+                .getNamespace()
+                .equals("kobe");
+    }
     /* ============================================================
      *  GENERATOR DETECTION
      * ============================================================ */

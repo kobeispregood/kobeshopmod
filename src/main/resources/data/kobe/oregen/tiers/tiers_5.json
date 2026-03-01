@@ -1,11 +1,14 @@
 {
   "tier": 5,
   "entries": [
-    { "block": "minecraft:stone", "weight": 40 },
-    { "block": "minecraft:raw_iron_block", "weight": 30 },
+    { "block": "minecraft:stone", "weight": 36 },
+    { "block": "minecraft:raw_iron_block", "weight": 28 },
     { "block": "minecraft:diamond_ore", "weight": 10 },
     { "block": "minecraft:gold_ore", "weight": 8 },
     { "block": "minecraft:coal_block", "weight": 5 },
+    { "block": "kobe:aetherium_ore", "weight": 3 },
+    { "block": "kobe:zenith_ore", "weight": 2 },
+    { "block": "kobe:ascendite_ore", "weight": 1 },
     { "block": "minecraft:ancient_debris", "weight": 1 }
   ]
 }

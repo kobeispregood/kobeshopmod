@@ -3,6 +3,8 @@ package net.lazy.kobe.oregen.data;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import net.lazy.kobe.KobeMod;
+import net.lazy.kobe.block.ModBlocks;
+import net.lazy.kobe.item.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -45,16 +47,20 @@ public class OreGenTierLoader extends SimpleJsonResourceReloadListener {
             ChatFormatting color = getColorForBlock(wb.block());
 
             MutableComponent line = Component.literal("♦ ")
-                    .append(Component.translatable(wb.block().getDescriptionId()))
-                    .append(Component.literal(" (" + percent + "%)"));
-
-            line.withStyle(color);
+                    .append(
+                            wb.block().getName().copy().withStyle(color)
+                    )
+                    .append(
+                            Component.literal(" (" + percent + "%)")
+                                    .withStyle(color)
+                    );
 
             if (wb.block() == Blocks.ANCIENT_DEBRIS) {
-                line.withStyle(ChatFormatting.BOLD);
+                line = line.withStyle(ChatFormatting.BOLD);
             }
 
             lines.add(line);
+
         }
 
         return lines;
@@ -81,6 +87,22 @@ public class OreGenTierLoader extends SimpleJsonResourceReloadListener {
 
         if (block == Blocks.DIAMOND_ORE || block == Blocks.DIAMOND_BLOCK) {
             return ChatFormatting.AQUA;
+        }
+
+        if (block == Blocks.ANCIENT_DEBRIS) {
+            return ChatFormatting.GOLD;
+        }
+
+        if (block.getDescriptionId().contains("ascendite")) {
+            return ChatFormatting.LIGHT_PURPLE;
+        }
+
+        if (block.getDescriptionId().contains("zenith")) {
+            return ChatFormatting.BLUE;
+        }
+
+        if (block.getDescriptionId().contains("aetherium")) {
+            return ChatFormatting.RED;
         }
 
         if (block == Blocks.ANCIENT_DEBRIS) {

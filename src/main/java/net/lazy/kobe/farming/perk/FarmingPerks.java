@@ -1,44 +1,67 @@
 package net.lazy.kobe.farming.perk;
 
-import net.lazy.kobe.farming.FarmingData;
+import net.lazy.kobe.mastery.MasteryProgress;
 
 public class FarmingPerks {
 
     /* ============================================================
-     *  AUTO-REPLANT
+     * AUTO REPLANT
      * ============================================================ */
 
-    public static boolean autoReplantEnabled(FarmingData data) {
-        return data.getLevel() >= 30;
+    public static boolean autoReplantEnabled(MasteryProgress progress) {
+        return progress.getLevel() >= 30;
     }
 
     /* ============================================================
-     *  CROP DROP MULTIPLIER (BUFFED + SMOOTH)
-     *
-     *  Level 25 → 1.00x
-     *  Level 30 → 1.20x
-     *  Level 35 → 1.40x
-     *  Level 40 → 1.60x
-     *  Level 45 → 1.80x (CAP)
+     * CROP DROP MULTIPLIER
      * ============================================================ */
 
-    public static float cropDropMultiplier(FarmingData data) {
+    public static float cropDropMultiplier(MasteryProgress progress) {
 
-        int level = data.getLevel();
+        int level = progress.getLevel();
 
         if (level < 25) return 1.0f;
 
-        // +4% per level after 25
         float bonus = (level - 25) * 0.04f;
 
-        // Hard cap at +80%
         bonus = Math.min(bonus, 0.80f);
 
         return 1.0f + bonus;
     }
 
     /* ============================================================
-     *  PERK DEFINITIONS
+     * DOUBLE HARVEST CHANCE
+     * ============================================================ */
+
+    public static float doubleHarvestChance(MasteryProgress progress) {
+
+        int level = progress.getLevel();
+
+        if (level < 10) return 0f;
+
+        float chance = 0.10f + (level - 10) * 0.005f;
+
+        return Math.min(0.25f, chance);
+    }
+
+    /* ============================================================
+     * NO TRAMPLE
+     * ============================================================ */
+
+    public static boolean noTrampleEnabled(MasteryProgress progress) {
+        return progress.getLevel() >= 20;
+    }
+
+    /* ============================================================
+     * BONUS XP
+     * ============================================================ */
+
+    public static int bonusXp(MasteryProgress progress) {
+        return Math.min(5, 1 + progress.getLevel() / 10);
+    }
+
+    /* ============================================================
+     * ENUM (OPTIONAL)
      * ============================================================ */
 
     public enum FarmingPerk {
@@ -57,47 +80,5 @@ public class FarmingPerks {
         public int requiredLevel() {
             return requiredLevel;
         }
-    }
-
-    /* ============================================================
-     *  DOUBLE HARVEST CHANCE (BUFFED)
-     *
-     *  Level 10 → 10%
-     *  Level 20 → 15%
-     *  Level 30 → 20%
-     *  Level 40 → 25% (CAP)
-     * ============================================================ */
-
-    public static float doubleHarvestChance(FarmingData data) {
-
-        int level = data.getLevel();
-
-        if (level < 10) return 0f;
-
-        float chance = 0.10f + (level - 10) * 0.005f;
-
-        return Math.min(0.25f, chance);
-    }
-
-    /* ============================================================
-     *  NO TRAMPLE
-     * ============================================================ */
-
-    public static boolean noTrampleEnabled(FarmingData data) {
-        return data.getLevel() >= 20;
-    }
-
-    /* ============================================================
-     *  BONUS XP (SCALED)
-     *
-     *  Level 5  → +1 XP
-     *  Level 15 → +2 XP
-     *  Level 25 → +3 XP
-     *  Level 35 → +4 XP
-     *  Level 45 → +5 XP
-     * ============================================================ */
-
-    public static int bonusXp(FarmingData data) {
-        return Math.min(5, 1 + data.getLevel() / 10);
     }
 }

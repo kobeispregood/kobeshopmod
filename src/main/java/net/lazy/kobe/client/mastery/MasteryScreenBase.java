@@ -18,7 +18,9 @@ import java.util.Optional;
 public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
         extends AbstractContainerScreen<T> {
 
-    protected static final int MAX_LEVELS = 45;
+    protected static final int MAX_LEVELS = 100;
+    protected static final int LEVELS_PER_PAGE = 45; // 5 rows x 9 columns
+    protected int currentPage = 0;
 
     protected static final ResourceLocation CHEST_BG =
             ResourceLocation.fromNamespaceAndPath(
@@ -83,13 +85,47 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
         int buttonHeight = 20;
 
         int x = (this.width - buttonWidth) / 2;
-        int y = topPos + imageHeight + 8;
+        int y = topPos + imageHeight + 16;
 
         addRenderableWidget(
                 net.minecraft.client.gui.components.Button.builder(
                         Component.literal("Claim All"),
                         btn -> onClaimAll()
                 ).bounds(x, y, buttonWidth, buttonHeight).build()
+        );
+        int arrowY = topPos - 20;
+
+        addRenderableWidget(
+                net.minecraft.client.gui.components.Button.builder(
+                        Component.literal("<"),
+                        btn -> {
+                            if (currentPage > 0) currentPage--;
+                        }
+                ).bounds(leftPos - 22, arrowY, 20, 20).build()
+        );
+
+        int size = 20;
+
+        int backX = leftPos + 4; // small padding from left edge
+        int backY = topPos + imageHeight - size - 4; // bottom of chest with padding
+
+        addRenderableWidget(
+                net.minecraft.client.gui.components.Button.builder(
+                        Component.literal("←"),
+                        btn -> net.lazy.kobe.network.NetworkHandler.sendToServer(
+                                new net.lazy.kobe.mastery.net.OpenSkillsPacket()
+                        )
+                ).bounds(backX, backY, size, size).build()
+        );
+
+        addRenderableWidget(
+                net.minecraft.client.gui.components.Button.builder(
+                        Component.literal(">"),
+                        btn -> {
+                            if ((currentPage + 1) * LEVELS_PER_PAGE < MAX_LEVELS)
+                                currentPage++;
+                        }
+                ).bounds(leftPos + imageWidth + 2, arrowY, 20, 20).build()
         );
     }
 
@@ -125,6 +161,16 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
                 masteryColor(playerLevel)
         );
 
+        int totalPages = (int) Math.ceil((double) MAX_LEVELS / LEVELS_PER_PAGE);
+
+        g.drawCenteredString(
+                font,
+                Component.literal("Page " + (currentPage + 1) + " / " + totalPages),
+                leftPos + imageWidth / 2,
+                topPos + imageHeight + 4,
+                0xAAAAAA
+        );
+
         // XP bar
         int barX = leftPos + 12;
         int barY = headerY + 20;
@@ -132,7 +178,7 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
 
         g.fill(barX, barY, barX + barW, barY + 10, 0xFF2A2A2A);
         g.fill(barX, barY, barX + (int) (barW * progress), barY + 10, masteryColor(playerLevel));
-        g.renderOutline(barX, barY, barW, 10, 0xFF000000);
+        g.renderOutline(barX, barY, barW, 10, 0xFFFFFFFF);
 
         g.drawCenteredString(
                 font,
@@ -152,12 +198,15 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
          *  LEVEL GRID (DEBUG ENABLED)
          * ============================================================ */
 
-        for (int slot = 0; slot < MAX_LEVELS; slot++) {
+        int startLevel = currentPage * LEVELS_PER_PAGE;
+        int endLevel = Math.min(startLevel + LEVELS_PER_PAGE, MAX_LEVELS);
+
+        for (int slot = 0; slot < (endLevel - startLevel); slot++) {
 
             int row = slot / 9;
             int col = slot % 9;
 
-            int lvl = slot + 1;
+            int lvl = startLevel + slot + 1;
 
             int x = 8 + col * 18;
             int y = 18 + row * 18;
@@ -226,7 +275,10 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
         int mx = (int) mouseX - leftPos;
         int my = (int) mouseY - topPos;
 
-        for (int slot = 0; slot < MAX_LEVELS; slot++) {
+        int startLevel = currentPage * LEVELS_PER_PAGE;
+        int endLevel = Math.min(startLevel + LEVELS_PER_PAGE, MAX_LEVELS);
+
+        for (int slot = 0; slot < (endLevel - startLevel); slot++) {
 
             int row = slot / 9;
             int col = slot % 9;
@@ -236,7 +288,7 @@ public abstract class MasteryScreenBase<T extends AbstractContainerMenu>
 
             if (mx >= x && mx < x + 18 && my >= y && my < y + 18) {
 
-                int lvl = slot + 1;
+                int lvl = startLevel + slot + 1;
 
                 if (getPlayerLevel() < lvl) return true;
                 if (isLevelClaimed(lvl)) return true;

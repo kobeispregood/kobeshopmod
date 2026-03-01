@@ -18,5 +18,7 @@ public class CommandEvents {
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         SkillsCommand.register(event.getDispatcher());
         ResetSkillCommand.register(event.getDispatcher());
+        TestDamageCommand.register(event.getDispatcher());
+        TitleCommand.register(event.getDispatcher());
     }
 }

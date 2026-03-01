@@ -1,60 +1,60 @@
 package net.lazy.kobe.combat;
 
 import net.lazy.kobe.curios.CurioHelper;
+import net.lazy.kobe.curios.strengthshard.StrengthShard;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 public final class CombatStatsCalculator {
 
     private CombatStatsCalculator() {}
 
-    /* =============================================================
-     *  MAIN ENTRY POINT
-     * ============================================================= */
     public static CombatStats calculate(ServerPlayer player) {
 
-        // -------------------------------------------------
-        // BASE: mastery-derived stats
-        // -------------------------------------------------
         int combatLevel = CombatLevelHelper.getCombatLevel(player);
+
         CombatStats stats = CombatStats.fromLevel(combatLevel);
 
-        // -------------------------------------------------
-        // CURIOS / ACCESSORIES
-        // -------------------------------------------------
         stats = stats.add(getCurioBonuses(player));
-
-        // -------------------------------------------------
-        // FUTURE: perks, potions, buffs, etc
-        // -------------------------------------------------
-        // stats = stats.add(getPerkBonuses(player));
-        // stats = stats.add(getTemporaryBuffs(player));
 
         return stats;
     }
+
     public static CombatStats applyCurioBonuses(
             ServerPlayer player,
             CombatStats baseStats
     ) {
         return baseStats.add(getCurioBonuses(player));
     }
-    /* =============================================================
-     *  CURIOS
-     * ============================================================= */
+
     private static CombatStats getCurioBonuses(ServerPlayer player) {
 
-        CombatStats bonus = CombatStats.empty();
+        CombatStats total = CombatStats.empty();
 
-        if (CurioHelper.hasDunhamDice(player)) {
-            bonus = bonus.add(
-                    new CombatStats(
-                            1.0f,
-                            0.05f,   // +5% crit chance
-                            1.05f,   // +5% crit damage
-                            0.0f
-                    )
-            );
+        java.util.Set<Class<?>> appliedTypes =
+                new java.util.HashSet<>();
+
+        for (ItemStack stack : CurioHelper.getAllEquippedCurios(player)) {
+
+            if (stack.isEmpty()) continue;
+
+            var item = stack.getItem();
+
+            if (!(item instanceof ICombatStatProvider provider)) continue;
+
+            Class<?> itemClass = item.getClass();
+
+            // If multiple not allowed and this TYPE already applied → skip
+            if (!provider.allowMultiple() &&
+                    appliedTypes.contains(itemClass)) {
+                continue;
+            }
+
+            total = total.add(provider.getCombatStats(stack, player));
+
+            appliedTypes.add(itemClass);
         }
 
-        return bonus;
+        return total;
     }
 }

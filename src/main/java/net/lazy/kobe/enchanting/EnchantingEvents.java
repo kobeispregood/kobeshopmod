@@ -4,30 +4,22 @@ import net.lazy.kobe.mastery.MasteryType;
 import net.lazy.kobe.mastery.MasteryXpCentral;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.EnchantmentMenu;
-
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEnchantItemEvent;
 
 public class EnchantingEvents {
 
     @SubscribeEvent
-    public void onXpChange(PlayerXpEvent.LevelChange event) {
+    public void onEnchant(PlayerEnchantItemEvent event) {
 
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        int delta = event.getLevels();
+        int enchantCount = event.getEnchantments().size();
 
-        // Only XP LOSS
-        if (delta >= 0) return;
+        int xp = event.getEnchantments().stream()
+                .mapToInt(e -> e.level * 10)
+                .sum();
 
-        // Only enchanting table (prevents death / bottles / commands)
-        if (!(player.containerMenu instanceof EnchantmentMenu)) return;
-
-        int levelsSpent = Math.abs(delta);
-        int xp = levelsSpent * 20;
-
-        // ✅ CORRECT XP PATH
         MasteryXpCentral.addXp(
                 player,
                 MasteryType.ENCHANTING,

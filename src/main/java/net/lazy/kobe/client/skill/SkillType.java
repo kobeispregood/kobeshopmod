@@ -1,8 +1,5 @@
 package net.lazy.kobe.client.skill;
 
-import net.lazy.kobe.farming.FarmingAttachment;
-import net.lazy.kobe.mining.MiningAttachment;
-
 import net.lazy.kobe.mastery.MasteryAttachment;
 import net.lazy.kobe.mastery.MasteryData;
 import net.lazy.kobe.mastery.MasteryType;
@@ -13,60 +10,16 @@ import net.minecraft.client.Minecraft;
 public enum SkillType {
 
     // =============================================================
-    // LEGACY SKILLS (UNCHANGED)
-    // =============================================================
-
-    MINING("Mining") {
-        @Override
-        public int getLevel() {
-            return Minecraft.getInstance()
-                    .player
-                    .getData(MiningAttachment.MINING)
-                    .getLevel();
-        }
-
-        @Override
-        public int getProgressPercent() {
-            var data = Minecraft.getInstance()
-                    .player
-                    .getData(MiningAttachment.MINING);
-
-            int into = data.getXpIntoLevel();
-            int total = data.getXpForNextLevel();
-            return total <= 0 ? 0 : (int) ((into / (float) total) * 100f);
-        }
-    },
-
-    FARMING("Farming") {
-        @Override
-        public int getLevel() {
-            return Minecraft.getInstance()
-                    .player
-                    .getData(FarmingAttachment.FARMING)
-                    .getLevel();
-        }
-
-        @Override
-        public int getProgressPercent() {
-            var data = Minecraft.getInstance()
-                    .player
-                    .getData(FarmingAttachment.FARMING);
-
-            int into = data.getXpIntoLevel();
-            int total = data.getXpForNextLevel();
-            return total <= 0 ? 0 : (int) ((into / (float) total) * 100f);
-        }
-    },
-
-    // =============================================================
     // NEW MASTERY SKILLS
     // =============================================================
 
     ENCHANTING("Enchanting", MasteryType.ENCHANTING),
+    MINING("Mining", MasteryType.MINING),
     ALCHEMY("Alchemy", MasteryType.ALCHEMY),
     FISHING("Fishing", MasteryType.FISHING),
     FORAGING("Foraging", MasteryType.FORAGING),
     COMBAT("Combat", MasteryType.COMBAT),
+    FARMING("Farming", MasteryType.FARMING),
 
     HUNTS("Hunts", MasteryType.HUNTS),
     RUNECRAFTING("Runecrafting", MasteryType.RUNECRAFTING);

@@ -7,7 +7,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraft.server.level.ServerPlayer;
 
-@EventBusSubscriber
+import java.util.ArrayList;
+
+@EventBusSubscriber(modid = "kobe")
 public class MasteryJoinSync {
 
     @SubscribeEvent
@@ -17,19 +19,15 @@ public class MasteryJoinSync {
         MasteryData data = player.getData(MasteryAttachment.MASTERY);
 
         for (MasteryType type : MasteryType.values()) {
-            MasteryProgress progress = data.getOrCreate(type);
 
-            long mask = 0L;
-            for (int lvl : progress.getClaimedLevels()) {
-                mask |= (1L << (lvl - 1));
-            }
+            MasteryProgress progress = data.getOrCreate(type);
 
             NetworkHandler.sendToPlayer(
                     new MasterySyncPacket(
                             type,
                             progress.getLevel(),
                             progress.getXpIntoLevel(),
-                            mask
+                            new ArrayList<>(progress.getClaimedLevels())
                     ),
                     player
             );

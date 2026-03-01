@@ -145,6 +145,50 @@ public final class CurioHelper {
                 })
                 .orElse(false);
     }
+    public static ItemStack getStrengthShard(ServerPlayer player) {
+        return CuriosApi.getCuriosInventory(player)
+                .flatMap(inv -> inv.findFirstCurio(ModItems.STRENGTH_SHARD.get()))
+                .map(slot -> slot.stack())
+                .orElse(ItemStack.EMPTY);
+    }
+    public static java.util.List<ItemStack> getAllEquippedCurios(ServerPlayer player) {
+
+        java.util.List<ItemStack> results = new java.util.ArrayList<>();
+
+        var invOpt = top.theillusivec4.curios.api.CuriosApi.getCuriosInventory(player);
+        if (invOpt.isEmpty()) return results;
+
+        var inv = invOpt.get();
+        var provider = player.level().registryAccess();
+
+        // Normal equipped curios
+        inv.getCurios().forEach((identifier, stacksHandler) -> {
+            for (int i = 0; i < stacksHandler.getSlots(); i++) {
+                ItemStack stack = stacksHandler.getStacks().getStackInSlot(i);
+                if (!stack.isEmpty()) {
+                    results.add(stack);
+                }
+            }
+        });
+
+        // Check Blakey Bag contents
+        inv.findFirstCurio(net.lazy.kobe.item.ModItems.BLAKEY_BAG.get())
+                .ifPresent(slot -> {
+                    var bagItems =
+                            net.lazy.kobe.menu.BlakeyBagData.getItems(
+                                    slot.stack(),
+                                    provider
+                            );
+
+                    for (ItemStack stack : bagItems) {
+                        if (!stack.isEmpty()) {
+                            results.add(stack);
+                        }
+                    }
+                });
+
+        return results;
+    }
 
     public static float getShopDiscount(Player player) {
         if (!(player instanceof ServerPlayer sp)) return 0.0f;

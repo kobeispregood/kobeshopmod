@@ -4,7 +4,8 @@ public record CombatStats(
         float baseDamageMultiplier,
         float critChance,
         float critMultiplier,
-        float lifestealPercent
+        float lifestealPercent,
+        float defence
 ) {
 
     public CombatStats add(CombatStats other) {
@@ -12,7 +13,8 @@ public record CombatStats(
                 this.baseDamageMultiplier * other.baseDamageMultiplier,
                 this.critChance + other.critChance,
                 this.critMultiplier * other.critMultiplier,
-                this.lifestealPercent + other.lifestealPercent
+                this.lifestealPercent + other.lifestealPercent,
+                this.defence + other.defence
         );
     }
 
@@ -24,7 +26,8 @@ public record CombatStats(
                 1.0f, // no bonus damage
                 0.0f, // no crit chance
                 1.0f, // no crit multiplier
-                0.0f  // no lifesteal
+                0.0f,  // no lifesteal
+                0.0f // no defense
         );
     }
 
@@ -33,7 +36,8 @@ public record CombatStats(
                     1.0f,   // no base damage bonus
                     0.05f,  // +5% crit chance
                     1.05f,  // +5% crit damage
-                    0.0f    // no lifesteal
+                    0.0f,    // no lifesteal
+                    0.0f    // no defense
             );
 
     /* =============================================================
@@ -41,16 +45,9 @@ public record CombatStats(
      * ============================================================= */
     public static CombatStats fromLevel(int level) {
 
-        // -------------------------
-        // BASE DAMAGE
-        // +1% per level
-        // -------------------------
         float baseDamage =
-                1.0f + (level * 0.01f);
+                1.0f + (level * 0.20f);
 
-        // -------------------------
-        // CRITICAL HITS (unlock at 5)
-        // -------------------------
         float critChance = 0.0f;
         float critMultiplier = 1.0f;
 
@@ -64,24 +61,27 @@ public record CombatStats(
                     lerp(1.20f, 2.0f, progress);
         }
 
-        // -------------------------
-        // LIFESTEAL (unlock at 20)
-        // -------------------------
         float lifesteal = 0.0f;
 
         if (level >= 20) {
             lifesteal =
-                    Math.min(1.0f + ((level - 20) * 0.2f), 5.0f);
+                    Math.min(0.01f + ((level - 20) * 0.002f), 0.05f);
+        }
+
+        float defense = 0f;
+
+        if (level >= 10) {
+            defense = Math.min((level - 10) * 3f, 150f);
         }
 
         return new CombatStats(
                 baseDamage,
                 critChance,
                 critMultiplier,
-                lifesteal
+                lifesteal,
+                defense
         );
     }
-
     /* =============================================================
      *  UTIL
      * ============================================================= */

@@ -2,14 +2,13 @@ package net.lazy.kobe;
 
 import com.mojang.logging.LogUtils;
 
-import net.lazy.kobe.alchemy.AlchemyEvents;
-
 import net.lazy.kobe.block.ModBlocks;
 import net.lazy.kobe.block.ModBlockEntities;
 import net.lazy.kobe.client.blakeybag.BlakeyBagScreen;
 import net.lazy.kobe.client.overlay.MoneyHudOverlay;
 import net.lazy.kobe.client.skill.*;
 import net.lazy.kobe.curios.CuriosCapabilities;
+import net.lazy.kobe.item.ModRecipes;
 import net.lazy.kobe.item.music.ModMusicDiscs;
 import net.lazy.kobe.mastery.MasteryJoinSync;
 import net.lazy.kobe.menu.ModMenus;
@@ -22,9 +21,6 @@ import net.lazy.kobe.crate.CrateLootData;
 import net.lazy.kobe.econ.EconEvents;
 import net.lazy.kobe.econ.MoneyAttachment;
 
-import net.lazy.kobe.farming.FarmingAttachment;
-import net.lazy.kobe.farming.FarmingDimensionSync;
-import net.lazy.kobe.farming.FarmingJoinSync;
 import net.lazy.kobe.foraging.ForagingEvents;
 import net.lazy.kobe.item.ModCreativeModeTabs;
 import net.lazy.kobe.item.ModItems;
@@ -38,9 +34,10 @@ import net.lazy.kobe.network.NetworkHandler;
 import net.lazy.kobe.oregen.GeneratorItemProtectionHandler;
 import net.lazy.kobe.oregen.OreGenAttachment;
 import net.lazy.kobe.oregen.gui.OreGenMenus;
-import net.lazy.kobe.registry.ModEntityAttributes;
 import net.lazy.kobe.registry.ModSounds;
 import net.lazy.kobe.shop.ShopCategoryLoader;
+import net.lazy.kobe.titles.TitleEvents;
+import net.lazy.kobe.titles.TitlesAttachment;
 import net.lazy.kobe.world.*;
 import net.lazy.kobe.skills.SkillMenus;
 
@@ -55,6 +52,7 @@ import net.lazy.kobe.oregen.gui.OreGenScreen;
 
 
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -72,13 +70,33 @@ import net.lazy.kobe.oregen.CobbleGenEvents;
 
 import org.slf4j.Logger;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 @Mod(KobeMod.MOD_ID)
 public class KobeMod {
+
+// Ascendancy
 
     public static final String MOD_ID = "kobe";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    static {
+        try {
+            Path configDir = FMLPaths.CONFIGDIR.get();
+            Path attributeFixDir = configDir.resolve("attributefix");
+
+            Files.createDirectories(attributeFixDir.resolve("minecraft"));
+            Files.createDirectories(attributeFixDir.resolve("neoforge"));
+
+            System.out.println("[KobeMod] Ensured AttributeFix namespace folders exist.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public KobeMod(IEventBus modEventBus, ModContainer modContainer) {
+
 
         // --------------------------------------------------
         // REGISTRIES
@@ -89,17 +107,15 @@ public class KobeMod {
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModEntities.ENTITIES.register(modEventBus);
         ModSounds.SOUND_EVENTS.register(modEventBus);
-        modEventBus.addListener(ModEntityAttributes::registerAttributes);
+        modEventBus.addListener(this::registerEntityAttributes);
         NeoForge.EVENT_BUS.register(new GeneratorItemProtectionHandler());
-
+        ModRecipes.register(modEventBus);
 
         // Register custom menu type
 
-        FarmingAttachment.register(modEventBus);
         MoneyAttachment.register(modEventBus);
-        MiningAttachment.register(modEventBus);
         MasteryAttachment.register(modEventBus);
-
+        TitlesAttachment.register(modEventBus);
         // --------------------------------------------------
         // NETWORK + SETUP
         // --------------------------------------------------
@@ -124,30 +140,24 @@ public class KobeMod {
         OreGenMenus.MENUS.register(modEventBus);
         SkillMenus.MENUS.register(modEventBus);
         ModMenus.MENUS.register(modEventBus);
-        NeoForge.EVENT_BUS.register(new MiningEvents());
-        NeoForge.EVENT_BUS.register(new MiningCloneHandler());
-        NeoForge.EVENT_BUS.register(new MiningJoinSync());
         NeoForge.EVENT_BUS.register(new MiningSpeedEvents());
-        NeoForge.EVENT_BUS.register(new MiningDimensionSync());
-        NeoForge.EVENT_BUS.register(new FarmingJoinSync());
-        NeoForge.EVENT_BUS.register(new FarmingDimensionSync());
         NeoForge.EVENT_BUS.register(new ForagingEvents());
-        NeoForge.EVENT_BUS.register(new AlchemyEvents());
         NeoForge.EVENT_BUS.register(new EnchantingEvents());
+        NeoForge.EVENT_BUS.register(new TitleEvents());
 
         // ⭐ Register crate JSON reload listener
         NeoForge.EVENT_BUS.addListener(KobeMod::registerReloadListeners);
         NeoForge.EVENT_BUS.register(MasteryJoinSync.class);
-
     }
 
     // =========================================================
     //  LOAD CRATE LOOT JSON ON PACK RELOAD
     // =========================================================
+
+
     private static void registerReloadListeners(AddReloadListenerEvent event) {
         System.out.println("========== JSON LOADERS REGISTERED ==========");
         event.addListener(new CrateLootData());
-        event.addListener(new MiningRewardManager());
         event.addListener(new MasteryRewardLoader());
     }
     private void registerEntityAttributes(
@@ -209,9 +219,6 @@ public class KobeMod {
             // -----------------------------
             // SKILLS – PAGES
             // -----------------------------
-            event.register(SkillMenus.MINING_MENU.value(), MiningScreen::new);
-            event.register(SkillMenus.FARMING_MENU.value(), FarmingScreen::new);
-            event.register(SkillMenus.COMBAT_MENU.value(), CombatScreen::new);
             event.register(SkillMenus.HUNTS_MENU.value(), HuntsScreen::new);
             event.register(SkillMenus.RUNECRAFTING_MENU.value(), RunecraftingScreen::new);
         }

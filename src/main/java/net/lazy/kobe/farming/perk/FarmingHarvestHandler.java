@@ -1,7 +1,9 @@
 package net.lazy.kobe.farming.perk;
 
-import net.lazy.kobe.farming.FarmingAttachment;
-import net.lazy.kobe.farming.FarmingData;
+import net.lazy.kobe.mastery.MasteryAttachment;
+import net.lazy.kobe.mastery.MasteryProgress;
+import net.lazy.kobe.mastery.MasteryType;
+import net.lazy.kobe.mastery.net.MasterySyncPacket;
 import net.lazy.kobe.network.NetworkHandler;
 
 import net.minecraft.core.BlockPos;
@@ -26,10 +28,6 @@ public class FarmingHarvestHandler {
     @SubscribeEvent
     public static void onRightClickCrop(PlayerInteractEvent.RightClickBlock event) {
 
-        if (event.getItemStack().getItem() instanceof net.minecraft.world.item.FishingRodItem) {
-            return;
-        }
-
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (!(event.getLevel() instanceof ServerLevel level)) return;
 
@@ -39,11 +37,11 @@ public class FarmingHarvestHandler {
         if (!(state.getBlock() instanceof CropBlock crop)) return;
         if (!crop.isMaxAge(state)) return;
 
-        FarmingData data = player.getData(FarmingAttachment.FARMING);
-        if (data == null) return;
+        MasteryProgress progress = player
+                .getData(MasteryAttachment.MASTERY)
+                .getOrCreate(MasteryType.FARMING);
 
-        // XP-based gate (safe forever)
-        if (data.getXp() < data.getXpRequiredForLevel(REQUIRED_LEVEL)) return;
+        if (progress.getLevel() < REQUIRED_LEVEL) return;
 
         List<ItemStack> drops = Block.getDrops(
                 state,
@@ -58,8 +56,28 @@ public class FarmingHarvestHandler {
             Block.popResource(level, pos, stack.copy());
         }
 
-        data.addXp(2);
-        NetworkHandler.syncFarming(player, data);
+        player.swing(event.getHand(), true);
+
+        level.playSound(
+                null,
+                pos,
+                state.getSoundType().getBreakSound(),
+                net.minecraft.sounds.SoundSource.BLOCKS,
+                1.0F,
+                1.0F
+        );
+
+        progress.addXp(2);
+
+        NetworkHandler.sendToPlayer(
+                new MasterySyncPacket(
+                        MasteryType.FARMING,
+                        progress.getLevel(),
+                        progress.getXpIntoLevel(),
+                        new java.util.ArrayList<>(progress.getClaimedLevels())
+                ),
+                player
+        );
 
         level.setBlock(pos, crop.getStateForAge(0), Block.UPDATE_ALL);
 

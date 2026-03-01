@@ -96,9 +96,13 @@ public class OreGenScreen extends AbstractContainerScreen<OreGenMenu> {
                 false
         );
 
+        boolean isMax = level >= MAX_TIER;
+
         gfx.drawString(
                 font,
-                "Hover upgrade to view next output",
+                isMax
+                        ? "Hover to view current output"
+                        : "Hover upgrade to view next output",
                 12,
                 64,
                 MUTED,
@@ -113,23 +117,28 @@ public class OreGenScreen extends AbstractContainerScreen<OreGenMenu> {
     private void renderUpgradeTooltip(GuiGraphics gfx, int mouseX, int mouseY) {
         if (upgradeButton == null || !upgradeButton.isHovered()) return;
 
-        int nextTier = menu.getLevel() + 1;
-        if (nextTier > MAX_TIER) return;
+        int currentLevel = menu.getLevel();
+        boolean isMax = currentLevel >= MAX_TIER;
+
+        int displayTier = isMax ? currentLevel : currentLevel + 1;
 
         List<Component> tooltip = new ArrayList<>();
 
-        tooltip.add(Component.literal("Next Tier Output").withStyle(s -> s.withBold(true)));
+        tooltip.add(
+                Component.literal(isMax ? "Current Output (MAX)" : "Next Tier Output")
+                        .withStyle(style -> style.withBold(true))
+        );
+
         tooltip.add(Component.literal(" "));
 
-        // Pull REAL data from JSON
-        tooltip.addAll(OreGenTierLoader.getTierTooltip(nextTier));
+        tooltip.addAll(OreGenTierLoader.getTierTooltip(displayTier));
 
-        // Netherite reminder (not in JSON by design)
-        if (nextTier >= 5) {
+        // Netherite reminder (only if the displayed tier is final tier)
+        if (displayTier >= MAX_TIER) {
             tooltip.add(Component.literal(" "));
             tooltip.add(
                     Component.literal("♦ Netherite Block (0.001%)")
-                            .withStyle(s -> s.withColor(NETHER).withBold(true))
+                            .withStyle(style -> style.withColor(NETHER).withBold(true))
             );
         }
 

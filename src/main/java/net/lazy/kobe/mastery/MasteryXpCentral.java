@@ -5,6 +5,8 @@ import net.lazy.kobe.mastery.net.MasterySyncPacket;
 import net.lazy.kobe.network.NetworkHandler;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.ArrayList;
+
 public final class MasteryXpCentral {
 
     private MasteryXpCentral() {}
@@ -24,9 +26,6 @@ public final class MasteryXpCentral {
 
         int newLevel = progress.getLevel();
 
-        // ------------------------------------------------
-        // LEVEL-UP FEEDBACK (matches other skills)
-        // ------------------------------------------------
         if (newLevel > oldLevel) {
             NetworkHandler.sendToPlayer(
                     new MasteryLevelUpPacket(type, newLevel),
@@ -34,25 +33,19 @@ public final class MasteryXpCentral {
             );
         }
 
-        // ------------------------------------------------
-        // CLAIMED MASK
-        // ------------------------------------------------
-        int claimedMask = 0;
-        for (int lvl : progress.getClaimedLevels()) {
-            claimedMask |= (1 << lvl);
-        }
-
-        // ------------------------------------------------
-        // SYNC
-        // ------------------------------------------------
         NetworkHandler.sendToPlayer(
                 new MasterySyncPacket(
                         type,
                         progress.getLevel(),
                         progress.getXpIntoLevel(),
-                        claimedMask
+                        new ArrayList<>(progress.getClaimedLevels())
                 ),
                 player
         );
+    }
+
+    public static int getLevel(ServerPlayer player, MasteryType type) {
+        MasteryData data = player.getData(MasteryAttachment.MASTERY);
+        return data.getOrCreate(type).getLevel();
     }
 }

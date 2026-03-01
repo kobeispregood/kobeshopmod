@@ -99,15 +99,21 @@ public class SkillsMenu extends AbstractContainerMenu {
 
         switch (slotId) {
 
-            case 11 -> player.openMenu(new SimpleMenuProvider(
-                    (id, inv, p) -> new MiningMenu(id, inv),
-                    Component.literal("Mining")
-            ));
+            case 11 -> player.openMenu(
+                    new SimpleMenuProvider(
+                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.MINING),
+                            Component.literal("Mining")
+                    ),
+                    buf -> buf.writeEnum(MasteryType.MINING)
+            );
 
-            case 12 -> player.openMenu(new SimpleMenuProvider(
-                    (id, inv, p) -> new FarmingMenu(id, inv),
-                    Component.literal("Farming")
-            ));
+            case 12 -> player.openMenu(
+                    new SimpleMenuProvider(
+                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.FARMING),
+                            Component.literal("Farming")
+                    ),
+                    buf -> buf.writeEnum(MasteryType.FARMING)
+            );
 
             case 13 -> player.openMenu(
                     new SimpleMenuProvider(
@@ -119,7 +125,7 @@ public class SkillsMenu extends AbstractContainerMenu {
 
             case 14 -> player.openMenu(
                     new SimpleMenuProvider(
-                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.ALCHEMY),
+                            (id, inv, p) -> new MasteryMenu(id, inv, MasteryType.ENCHANTING),
                             Component.literal("Enchanting")
                     ),
                     buf -> buf.writeEnum(MasteryType.ENCHANTING)

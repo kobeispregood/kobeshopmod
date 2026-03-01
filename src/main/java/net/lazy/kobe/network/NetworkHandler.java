@@ -1,22 +1,15 @@
 package net.lazy.kobe.network;
 
-import net.lazy.kobe.farming.FarmingLevelUpPacket;
 import net.lazy.kobe.econ.MoneySyncPacket;
 import net.lazy.kobe.farming.*;
-import net.lazy.kobe.mastery.net.MasteryClaimAllPacket;
-import net.lazy.kobe.mastery.net.MasteryClaimLevelPacket;
-import net.lazy.kobe.mining.*;
-import net.lazy.kobe.oregen.network.OreGenUpgradePacket;
+import net.lazy.kobe.mastery.net.*;
 
-import net.lazy.kobe.mastery.net.MasterySyncPacket;
-import net.lazy.kobe.mastery.net.MasteryLevelUpPacket;
+import net.lazy.kobe.oregen.network.OreGenUpgradePacket;
 
 import net.lazy.kobe.shop.net.SyncShopDataPacketHandler;
 import net.lazy.kobe.shop.net.SyncShopDataPacket;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-
-import net.lazy.kobe.combat.*;
 
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -43,31 +36,6 @@ public final class NetworkHandler {
                 BuyPacket::handle
         );
 
-        registrar.playToServer(
-                MiningClaimAllPacket.TYPE,
-                MiningClaimAllPacket.STREAM_CODEC,
-                MiningClaimAllPacket::handle
-        );
-
-
-        registrar.playToServer(
-                MiningClaimLevelPacket.TYPE,
-                MiningClaimLevelPacket.STREAM_CODEC,
-                MiningClaimLevelPacket::handle
-        );
-
-
-        registrar.playToServer(
-                FarmingClaimLevelPacket.TYPE,
-                FarmingClaimLevelPacket.STREAM_CODEC,
-                FarmingClaimLevelPacket::handle
-        );
-
-        registrar.playToServer(
-                FarmingClaimAllPacket.TYPE,
-                FarmingClaimAllPacket.STREAM_CODEC,
-                FarmingClaimAllPacket::handle
-        );
 
         registrar.playToServer(
                 CrateOpenPacket.TYPE,
@@ -99,6 +67,12 @@ public final class NetworkHandler {
                 MasteryClaimAllPacket::handle
         );
 
+        registrar.playToServer(
+                OpenSkillsPacket.TYPE,
+                OpenSkillsPacket.CODEC,
+                OpenSkillsPacket::handle
+        );
+
         // =============================================================
         //  SERVER → CLIENT
         // =============================================================
@@ -114,48 +88,6 @@ public final class NetworkHandler {
                 MasteryLevelUpPacket::handle
         );
 
-        registrar.playToClient(
-                FarmingClaimSyncPacket.TYPE,
-                FarmingClaimSyncPacket.STREAM_CODEC,
-                FarmingClaimSyncPacket::handle
-        );
-
-        registrar.playToClient(
-                MiningSyncPacket.TYPE,
-                MiningSyncPacket.CODEC,
-                MiningSyncPacket::handle
-        );
-
-        registrar.playToClient(
-                MiningLevelUpPacket.TYPE,
-                MiningLevelUpPacket.STREAM_CODEC,
-                MiningLevelUpPacket::handle
-        );
-
-        registrar.playToClient(
-                MiningClaimSyncPacket.TYPE,
-                MiningClaimSyncPacket.STREAM_CODEC,
-                MiningClaimSyncPacket::handle
-        );
-
-        registrar.playToClient(
-                MiningPerkUnlockPacket.TYPE,
-                MiningPerkUnlockPacket.STREAM_CODEC,
-                MiningPerkUnlockPacket::handle
-        );
-
-        registrar.playToClient(
-                FarmingLevelUpPacket.TYPE,
-                FarmingLevelUpPacket.STREAM_CODEC,
-                FarmingLevelUpPacket::handle
-        );
-
-
-        registrar.playToClient(
-                FarmingSyncPacket.TYPE,
-                FarmingSyncPacket.CODEC,
-                FarmingSyncPacket::handle
-        );
 
         registrar.playToClient(
                 CrateRevealPacket.TYPE,
@@ -194,20 +126,6 @@ public final class NetworkHandler {
     public static void sendToPlayer(CustomPacketPayload payload, ServerPlayer player) {
         PacketDistributor.sendToPlayer(player, payload);
     }
-
-    // =============================================================
-    //  FARMING SYNC (SERVER → CLIENT)  ⭐ FIXED ⭐
-    // =============================================================
-    public static void syncFarming(ServerPlayer player, FarmingData data) {
-        int[] claimed = data.getClaimedLevels()
-                .stream()
-                .mapToInt(i -> i)
-                .toArray();
-
-        sendToPlayer(
-                new FarmingSyncPacket(data.getXp(), claimed),
-                player
-        );
-    }
 }
+
 

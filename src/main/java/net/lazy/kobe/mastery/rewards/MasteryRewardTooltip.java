@@ -26,6 +26,18 @@ public final class MasteryRewardTooltip {
             return tooltip;
         }
 
+        ChatFormatting theme = masteryColor(type);
+
+        // =============================================================
+        // HEADER
+        // =============================================================
+        tooltip.add(
+                Component.literal("Level " + level + " Rewards")
+                        .withStyle(theme, ChatFormatting.BOLD)
+        );
+
+        tooltip.add(Component.literal("")); // spacing line
+
         // =============================================================
         // MONEY
         // =============================================================
@@ -50,11 +62,17 @@ public final class MasteryRewardTooltip {
         // ITEMS
         // =============================================================
         if (!reward.items.isEmpty()) {
+
+            tooltip.add(
+                    Component.literal("Items:")
+                            .withStyle(theme)
+            );
+
             for (ItemStack stack : reward.items) {
                 tooltip.add(
                         Component.literal("• ")
                                 .append(stack.getHoverName())
-                                .withStyle(ChatFormatting.GRAY)
+                                .withStyle(theme)
                 );
             }
         }
@@ -64,9 +82,11 @@ public final class MasteryRewardTooltip {
         // =============================================================
         if (reward.perk != null) {
 
+            tooltip.add(Component.literal(""));
+
             tooltip.add(
                     Component.literal("Perk Unlocked:")
-                            .withStyle(ChatFormatting.GOLD)
+                            .withStyle(theme)
             );
 
             tooltip.add(
@@ -74,17 +94,24 @@ public final class MasteryRewardTooltip {
                             .withStyle(ChatFormatting.GRAY)
             );
 
-            if (reward.perk.description() != null && !reward.perk.description().isBlank()) {
+            if (reward.perk.description() != null &&
+                    !reward.perk.description().isBlank()) {
+
                 tooltip.add(
                         Component.literal("  " + reward.perk.description())
                                 .withStyle(ChatFormatting.DARK_GRAY)
                 );
             }
         }
+
         // =============================================================
-        // INFO (PASSIVE PROGRESSION TEXT)
+        // PASSIVE INFO TEXT
         // =============================================================
-        if (reward.perk == null && reward.infoDescription != null && !reward.infoDescription.isBlank()) {
+        if (reward.perk == null &&
+                reward.infoDescription != null &&
+                !reward.infoDescription.isBlank()) {
+
+            tooltip.add(Component.literal(""));
 
             for (String line : reward.infoDescription.split("\n")) {
 
@@ -112,6 +139,8 @@ public final class MasteryRewardTooltip {
         // =============================================================
         if (reward.title != null) {
 
+            tooltip.add(Component.literal(""));
+
             tooltip.add(
                     Component.literal("Title Unlocked:")
                             .withStyle(ChatFormatting.LIGHT_PURPLE)
@@ -119,7 +148,7 @@ public final class MasteryRewardTooltip {
 
             tooltip.add(
                     Component.literal("• " + reward.title.name())
-                            .withStyle(ChatFormatting.GRAY)
+                            .withStyle(reward.title.getColor())
             );
         }
 
@@ -127,19 +156,18 @@ public final class MasteryRewardTooltip {
     }
 
     // =============================================================
-    // HELPERS
+    // COLOR THEMING PER MASTERY
     // =============================================================
-    private static String formatId(String id) {
-        String[] parts = id.split("_");
-        StringBuilder out = new StringBuilder();
-
-        for (String part : parts) {
-            if (part.isEmpty()) continue;
-            out.append(Character.toUpperCase(part.charAt(0)))
-                    .append(part.substring(1))
-                    .append(" ");
-        }
-
-        return out.toString().trim();
+    private static ChatFormatting masteryColor(MasteryType type) {
+        return switch (type) {
+            case COMBAT -> ChatFormatting.RED;
+            case MINING -> ChatFormatting.GREEN;
+            case FARMING -> ChatFormatting.YELLOW;
+            case FISHING -> ChatFormatting.AQUA;
+            case FORAGING -> ChatFormatting.DARK_GREEN;
+            case ALCHEMY -> ChatFormatting.LIGHT_PURPLE;
+            case ENCHANTING -> ChatFormatting.BLUE;
+            default -> ChatFormatting.GRAY;
+        };
     }
 }

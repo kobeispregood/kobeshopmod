@@ -5,6 +5,7 @@
 
   { "itemId": "minecraft:redstone_block", "amount": 4, "weight": 10 },
   { "itemId": "minecraft:lapis_block", "amount": 3, "weight": 8 },
+  { "itemId": "kobe:legendary_key", "amount": 1, "weight": 1 },
 
   { "itemId": "minecraft:experience_bottle", "amount": 32, "weight": 10 },
 

@@ -7,14 +7,19 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public record MasterySyncPacket(
         MasteryType masteryType,
         int level,
         int xpIntoLevel,
-        long claimedMask   // ✅ LONG
+        List<Integer> claimedLevels   // ✅ NOW LIST
 ) implements CustomPacketPayload {
 
     public static final Type<MasterySyncPacket> TYPE =
@@ -26,14 +31,25 @@ public record MasterySyncPacket(
                         buf.writeEnum(pkt.masteryType());
                         buf.writeVarInt(pkt.level());
                         buf.writeVarInt(pkt.xpIntoLevel());
-                        buf.writeLong(pkt.claimedMask()); // ✅ writeLong
+
+                        buf.writeVarInt(pkt.claimedLevels().size());
+                        for (int lvl : pkt.claimedLevels()) {
+                            buf.writeVarInt(lvl);
+                        }
                     },
-                    buf -> new MasterySyncPacket(
-                            buf.readEnum(MasteryType.class),
-                            buf.readVarInt(),
-                            buf.readVarInt(),
-                            buf.readLong() // ✅ readLong
-                    )
+                    buf -> {
+                        MasteryType type = buf.readEnum(MasteryType.class);
+                        int level = buf.readVarInt();
+                        int xp = buf.readVarInt();
+
+                        int size = buf.readVarInt();
+                        List<Integer> claimed = new ArrayList<>();
+                        for (int i = 0; i < size; i++) {
+                            claimed.add(buf.readVarInt());
+                        }
+
+                        return new MasterySyncPacket(type, level, xp, claimed);
+                    }
             );
 
     @Override
@@ -46,6 +62,7 @@ public record MasterySyncPacket(
     // =============================================================
     public static void handle(MasterySyncPacket pkt, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
+
             var player = Minecraft.getInstance().player;
             if (player == null) return;
 
@@ -55,41 +72,29 @@ public record MasterySyncPacket(
             // --------------------------------------------
             // Capture OLD claim state
             // --------------------------------------------
-            long oldMask = 0L;
-            for (int lvl : progress.getClaimedLevels()) {
-                oldMask |= (1L << (lvl - 1));
-            }
+            Set<Integer> oldClaims = new HashSet<>(progress.getClaimedLevels());
 
             // --------------------------------------------
             // Apply NEW data
             // --------------------------------------------
             progress.setLevel(pkt.level());
             progress.setXp(pkt.xpIntoLevel());
+
             progress.resetClaims();
-
-            long newMask = pkt.claimedMask();
-
-            // 🔧 LEGACY FIX:
-            // If level 1 is missing but level 2 bit is set, shift it down
-            if ((newMask & 1L) == 0L && (newMask & (1L << 1)) != 0L) {
-                newMask |= 1L;
-            }
-
-            for (int lvl = 1; lvl <= 45; lvl++) {
-                if ((newMask & (1L << (lvl - 1))) != 0L) {
-                    progress.claim(lvl);
-                }
-            }
+            progress.getClaimedLevels().addAll(pkt.claimedLevels());
 
             // --------------------------------------------
             // Play sound ONLY if something NEW was claimed
             // --------------------------------------------
-            if ((newMask & ~oldMask) != 0) {
-                player.playSound(
-                        SoundEvents.EXPERIENCE_ORB_PICKUP,
-                        0.7f,
-                        1.0f
-                );
+            for (int lvl : pkt.claimedLevels()) {
+                if (!oldClaims.contains(lvl)) {
+                    player.playSound(
+                            SoundEvents.EXPERIENCE_ORB_PICKUP,
+                            0.7f,
+                            1.0f
+                    );
+                    break;
+                }
             }
         });
     }

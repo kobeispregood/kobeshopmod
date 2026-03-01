@@ -192,7 +192,7 @@ public class IslandCommands {
 
     private static int goHub(ServerPlayer player) {
         ServerLevel level = player.server.overworld();
-        player.teleportTo(level, -72.5, 4, 0.5, 270f, 0f);
+        player.teleportTo(level, -52, 90, 0.5, 270f, 0f);
         player.sendSystemMessage(Component.literal("§aTeleported to Hub."));
         return 1;
     }

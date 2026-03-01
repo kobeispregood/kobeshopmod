@@ -4,16 +4,21 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class MasteryProgress {
+
+    /* ============================================================
+     *  CODEC (DATA SAVE / LOAD)
+     * ============================================================ */
 
     public static final Codec<MasteryProgress> CODEC =
             RecordCodecBuilder.create(inst -> inst.group(
                     Codec.INT.fieldOf("level").forGetter(MasteryProgress::getLevel),
                     Codec.INT.fieldOf("xp").forGetter(MasteryProgress::getXp),
                     Codec.INT.listOf()
-                            .optionalFieldOf("claimedLevels", java.util.List.of())
+                            .optionalFieldOf("claimedLevels", List.of())
                             .forGetter(p -> p.claimedLevels.stream().toList())
             ).apply(inst, (level, xp, claimedList) -> {
                 MasteryProgress p = new MasteryProgress(level, xp);
@@ -21,10 +26,23 @@ public class MasteryProgress {
                 return p;
             }));
 
+    /* ============================================================
+     *  CONSTANTS
+     * ============================================================ */
+
+    public static final int MAX_LEVELS = 100;
+
+    /* ============================================================
+     *  DATA
+     * ============================================================ */
+
     private int level;
-    private int xp; // xp INTO current level
+    private int xp; // XP INTO CURRENT LEVEL
     private final Set<Integer> claimedLevels = new HashSet<>();
-    public static final int MAX_LEVELS = 45;
+
+    /* ============================================================
+     *  CONSTRUCTORS
+     * ============================================================ */
 
     public MasteryProgress() {
         this(0, 0);
@@ -35,9 +53,9 @@ public class MasteryProgress {
         this.xp = Math.max(0, xp);
     }
 
-    /* ===============================
+    /* ============================================================
      *  LEVEL / XP
-     * =============================== */
+     * ============================================================ */
 
     public int getLevel() {
         return level;
@@ -52,13 +70,14 @@ public class MasteryProgress {
     }
 
     public int getXpForNextLevel() {
-        return 100 + (level * 50);
+        // Smooth quadratic scaling for 100 levels
+        return 100 + (level * level * 10);
     }
 
     public float getProgress() {
-        int denom = getXpForNextLevel();
-        if (denom <= 0) return 0f;
-        return (float) xp / (float) denom;
+        int needed = getXpForNextLevel();
+        if (needed <= 0) return 0f;
+        return (float) xp / (float) needed;
     }
 
     public void addXp(int amount) {
@@ -66,14 +85,20 @@ public class MasteryProgress {
 
         xp += amount;
 
-        while (xp >= getXpForNextLevel()) {
+        while (level < MAX_LEVELS && xp >= getXpForNextLevel()) {
             xp -= getXpForNextLevel();
             level++;
+        }
+
+        // Clamp at max
+        if (level >= MAX_LEVELS) {
+            level = MAX_LEVELS;
+            xp = 0;
         }
     }
 
     public void setLevel(int level) {
-        this.level = Math.max(0, level);
+        this.level = Math.min(Math.max(0, level), MAX_LEVELS);
         this.xp = 0;
     }
 
@@ -81,16 +106,18 @@ public class MasteryProgress {
         this.xp = Math.max(0, xp);
     }
 
-    /* ===============================
+    /* ============================================================
      *  CLAIMED LEVELS
-     * =============================== */
+     * ============================================================ */
 
     public boolean isClaimed(int level) {
         return claimedLevels.contains(level);
     }
 
     public void claim(int level) {
-        claimedLevels.add(level);
+        if (level > 0 && level <= MAX_LEVELS) {
+            claimedLevels.add(level);
+        }
     }
 
     public Set<Integer> getClaimedLevels() {
@@ -99,12 +126,5 @@ public class MasteryProgress {
 
     public void resetClaims() {
         claimedLevels.clear();
-    }
-    private static int buildClaimedMask(MasteryProgress progress) {
-        int mask = 0;
-        for (int lvl : progress.getClaimedLevels()) {
-            mask |= (1 << lvl);
-        }
-        return mask;
     }
 }

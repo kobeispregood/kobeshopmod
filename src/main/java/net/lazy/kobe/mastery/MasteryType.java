@@ -1,11 +1,9 @@
 package net.lazy.kobe.mastery;
 
 import com.mojang.serialization.Codec;
-import net.lazy.kobe.mastery.handlers.*;
+import net.lazy.kobe.mastery.handlers.DefaultMasteryHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
-
-import java.util.Locale;
 
 public enum MasteryType implements StringRepresentable {
 
@@ -13,23 +11,23 @@ public enum MasteryType implements StringRepresentable {
     // CORE SKILLS
     // =============================================================
 
-    MINING("mining", new MiningMasteryHandler()),
-    FARMING("farming", null),
-    COMBAT("combat", new CombatMasteryHandler()),
+    MINING("mining"),
+    FARMING("farming"),
+    COMBAT("combat"),
 
     // =============================================================
     // FUTURE / ADVANCED SKILLS
     // =============================================================
 
-    FISHING("fishing", new FishingMasteryHandler()),
-    FORAGING("foraging", new ForagingMasteryHandler()),
-    ALCHEMY("alchemy",  new AlchemyMasteryHandler()),
-    ENCHANTING("enchanting", new EnchantingMasteryHandler()),
-    RUNECRAFTING("runecrafting", null),
-    HUNTS("hunts", null);
+    FISHING("fishing"),
+    FORAGING("foraging"),
+    ALCHEMY("alchemy"),
+    ENCHANTING("enchanting"),
+    RUNECRAFTING("runecrafting"),
+    HUNTS("hunts");
 
     // =============================================================
-    // CODEC (UNCHANGED BEHAVIOR)
+    // CODEC
     // =============================================================
 
     public static final Codec<MasteryType> CODEC =
@@ -40,15 +38,15 @@ public enum MasteryType implements StringRepresentable {
     // =============================================================
 
     private final String id;
-    private final MasteryHandler handler;
+    private final DefaultMasteryHandler handler;
 
     // =============================================================
     // CONSTRUCTOR
     // =============================================================
 
-    MasteryType(String id, MasteryHandler handler) {
+    MasteryType(String id) {
         this.id = id;
-        this.handler = handler;
+        this.handler = new DefaultMasteryHandler(this);
     }
 
     // =============================================================
@@ -64,20 +62,12 @@ public enum MasteryType implements StringRepresentable {
     // HANDLER ACCESS
     // =============================================================
 
-    public boolean hasHandler() {
-        return handler != null;
-    }
-
     public void reset(ServerPlayer player) {
-        if (handler != null) {
-            handler.reset(player);
-        }
+        handler.reset(player);
     }
 
     public void setLevel(ServerPlayer player, int level) {
-        if (handler != null) {
-            handler.setLevel(player, level);
-        }
+        handler.setLevel(player, level);
     }
 
     // =============================================================

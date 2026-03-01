@@ -1,11 +1,13 @@
 package net.lazy.kobe.boss;
 
+import net.lazy.kobe.item.ModItems;
 import net.lazy.kobe.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,11 +26,14 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -44,23 +49,23 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
     private static final EntityDataAccessor<Integer> PHASE =
             SynchedEntityData.defineId(CopengamblerEntity.class, EntityDataSerializers.INT);
 
-    private static final int PHASE_IDLE    = 0;
-    private static final int PHASE_SLOT    = 1;
+    private static final int PHASE_IDLE = 0;
+    private static final int PHASE_SLOT = 1;
     private static final int PHASE_RESOLVE = 2;
     private static final int PHASE_RECOVER = 3;
 
     /* ===================== TIMING ===================== */
 
-    private static final int LEFT_SPAWN_TICK  = 10;
-    private static final int MID_SPAWN_TICK   = 20;
+    private static final int LEFT_SPAWN_TICK = 10;
+    private static final int MID_SPAWN_TICK = 20;
     private static final int RIGHT_SPAWN_TICK = 30;
-    private static final int SLOT_DURATION   = 150;
+    private static final int SLOT_DURATION = 150;
 
     private static final int ROLL_SOUND_INTERVAL = 5;
 
     // ⏱️ SHORTENED END
     private static final int RESOLVE_DELAY = 10; // was 20
-    private static final int RESOLVE_END   = 20; // was 30
+    private static final int RESOLVE_END = 20; // was 30
 
     /* ===================== STATE ===================== */
 
@@ -106,8 +111,8 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2, true));
-        goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
+        goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.6, true));
+        goalSelector.addGoal(2, new RandomStrollGoal(this, 1.8));
         goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 
         targetSelector.addGoal(0, new HurtByTargetGoal(this));
@@ -437,6 +442,7 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
 
     private void cleanupTempEntities() {
         if (!(level() instanceof ServerLevel server)) return;
+        if (this.isDeadOrDying()) return; // 🔥 prevents wiping drops on death
 
         for (Zombie z : server.getEntitiesOfClass(Zombie.class, getBoundingBox().inflate(30))) {
             if (!z.getPersistentData().contains("copengambler_life")) continue;
@@ -515,13 +521,68 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
             super.knockback(strength, x, z);
         }
     }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         return getPhase() != PHASE_SLOT && super.hurt(source, amount);
     }
+
     @Override
     public void onAddedToLevel() {
         super.onAddedToLevel();
         this.setHealth(this.getMaxHealth());
+    }
+
+    @Override
+    protected ResourceKey<LootTable> getDefaultLootTable() {
+        return this.getType().getDefaultLootTable();
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(ServerLevel level,
+                                       DamageSource source,
+                                       boolean recentlyHit) {
+
+        super.dropCustomDeathLoot(level, source, recentlyHit);
+
+        if (level.isClientSide()) return;
+
+        // Mojmap 1.21: lastHurtByPlayer is Player, not ServerPlayer
+        if (!(this.lastHurtByPlayer instanceof ServerPlayer player)) return;
+
+        // 🎁 Drops FIRST
+        this.spawnAtLocation(new ItemStack(ModItems.JESS_JACKPOT.get(), 1), 0.0f);
+
+        if (this.random.nextFloat() < 0.9f) {
+            this.spawnAtLocation(new ItemStack(ModItems.LEGENDARY_KEY.get(), 1), 0.0f);
+        }
+
+        // 🔥 Boss finish visuals AFTER drops
+        level.sendParticles(
+                ParticleTypes.EXPLOSION_EMITTER,
+                this.getX(),
+                this.getY() + 1.5,
+                this.getZ(),
+                1,
+                0, 0, 0,
+                0
+        );
+
+        level.playSound(
+                null,
+                this.blockPosition(),
+                SoundEvents.END_PORTAL_SPAWN,
+                SoundSource.HOSTILE,
+                2.5F,
+                1.0F
+        );
+
+        // ⚡ Lightning last so it can't interfere
+        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
+        if (bolt != null) {
+            bolt.moveTo(this.getX(), this.getY(), this.getZ());
+            bolt.setVisualOnly(true); // 🔥 THIS IS THE FIX
+            level.addFreshEntity(bolt);
+        }
     }
 }

@@ -4,6 +4,7 @@
   { "itemId": "minecraft:copper_ingot", "amount": 16, "weight": 16 },
 
   { "itemId": "minecraft:gold_ingot", "amount": 4, "weight": 10 },
+  { "itemId": "kobe:rare_key", "amount": 1, "weight": 1 },
   { "itemId": "minecraft:redstone", "amount": 16, "weight": 10 },
   { "itemId": "minecraft:lapis_lazuli", "amount": 12, "weight": 8 },
 
