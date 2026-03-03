@@ -17,10 +17,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -31,7 +34,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
@@ -59,10 +61,21 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
     private boolean slamAnimStarted = false;
     private boolean slamDidImpact = false;
     private boolean windupSoundPlayed = false;
+    // === ADD THESE ===
+    private boolean playHitAnim = false;
+    private boolean playThrowAnim = false;
 
     private int slamTicks = 0;
     private int slamCooldown = 0;
     private int rockThrowCooldown = 0;
+    private LivingEntity pendingMeleeTarget;
+    private LivingEntity pendingThrowTarget;
+    private boolean doingMelee = false;
+    private int meleeTicks = 0;
+    private boolean enragedPlayed = false;
+
+    private boolean doingThrow = false;
+    private int throwTicks = 0;
 
     private final ServerBossEvent bossBar =
             new ServerBossEvent(
@@ -70,8 +83,6 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
                     BossEvent.BossBarColor.RED,
                     BossEvent.BossBarOverlay.PROGRESS
             );
-
-    /* ================= CONSTRUCTOR ================= */
 
     public StoneColossusEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -109,7 +120,19 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
+
+        goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, false) {
+            @Override
+            public boolean canUse() {
+                return !isSlamming() && super.canUse();
+            }
+
+            @Override
+            public boolean canContinueToUse() {
+                return !isSlamming() && super.canContinueToUse();
+            }
+        });
+
         goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 0.9D, 48.0F));
         goalSelector.addGoal(3, new RandomStrollGoal(this, 0.6D));
         goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 32.0F));
@@ -119,6 +142,55 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
                 1,
                 new NearestAttackableTargetGoal<>(this, Player.class, true)
         );
+
+        targetSelector.addGoal(
+                2,
+                new NearestAttackableTargetGoal<>(this, Monster.class, true) {
+
+                    @Override
+                    public boolean canUse() {
+                        if (!super.canUse()) return false;
+
+                        LivingEntity target = this.target;
+                        return target != null
+                                && target != StoneColossusEntity.this;
+                    }
+                }
+        );
+
+        targetSelector.addGoal(
+                3,
+                new HurtByTargetGoal(this).setAlertOthers()
+        );
+    }
+
+    /* ================= DAMAGE BLOCK ================= */
+
+    @Override
+    public boolean doHurtTarget(Entity target) {
+        if (doingMelee) return false;
+        if (isSlamming()) return false;
+        if (!(target instanceof LivingEntity living)) return false;
+
+        if (!level().isClientSide) {
+            doingMelee = true;
+            meleeTicks = 0;
+            pendingMeleeTarget = living;
+            triggerAnim("attacks", "hit");
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+
+        // Brief invulnerability during actual impact frame
+        if (isSlamming() && slamTicks < SLAM_IMPACT_TICK + 6) {
+            return false;
+        }
+
+        return super.hurt(source, amount);
     }
 
     /* ================= TICK ================= */
@@ -127,41 +199,126 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
     public void tick() {
         super.tick();
 
+        // ================= BOSS BAR =================
         if (!level().isClientSide) {
             float pct = getHealth() / getMaxHealth();
             bossBar.setProgress(Mth.clamp(pct, 0.0F, 1.0F));
             bossBar.setName(Component.translatable(getType().getDescriptionId()));
         }
 
+        // ================= COOLDOWNS =================
         if (slamCooldown > 0) slamCooldown--;
         if (rockThrowCooldown > 0) rockThrowCooldown--;
 
         LivingEntity target = getTarget();
-        boolean enraged = getHealth() < getMaxHealth() * 0.5F;
+        boolean enraged = getHealth() < getMaxHealth() * 0.25F;
 
+        // ================= ENRAGE EFFECT =================
+        if (enraged) {
+
+            if (!enragedPlayed && !level().isClientSide) {
+                enragedPlayed = true;
+
+                level().playSound(
+                        null,
+                        blockPosition(),
+                        ModSounds.COLOSSUS_WINDUP.get(),
+                        SoundSource.HOSTILE,
+                        3.0F,
+                        0.6F
+                );
+            }
+
+            if (level() instanceof ServerLevel server && tickCount % 4 == 0) {
+                server.sendParticles(
+                        ParticleTypes.FLAME,
+                        getX(),
+                        getY() + 1.2,
+                        getZ(),
+                        10,
+                        0.7,
+                        0.6,
+                        0.7,
+                        0.01
+                );
+            }
+        }
+
+        // ================= PASSIVE STONE AURA =================
+        if (level() instanceof ServerLevel server) {
+            if (tickCount % 6 == 0) {
+                BlockState ground = level().getBlockState(blockPosition().below());
+                if (ground.isAir()) ground = Blocks.STONE.defaultBlockState();
+
+                server.sendParticles(
+                        new BlockParticleOption(ParticleTypes.BLOCK, ground),
+                        getX(),
+                        getY() + 0.1,
+                        getZ(),
+                        6,
+                        0.6,
+                        0.1,
+                        0.6,
+                        0.02
+                );
+            }
+        }
+
+// ================= HEAVY FOOTSTEP =================
+        if (!isSlamming() && doingMelee == false && doingThrow == false) {
+            if (onGround() && tickCount % 20 == 0 && level() instanceof ServerLevel server) {
+                server.sendParticles(
+                        ParticleTypes.CLOUD,
+                        getX(),
+                        getY(),
+                        getZ(),
+                        12,
+                        0.8,
+                        0.05,
+                        0.8,
+                        0.02
+                );
+
+                level().playSound(
+                        null,
+                        blockPosition(),
+                        ModSounds.COLOSSUS_SLAM.get(),
+                        SoundSource.HOSTILE,
+                        0.6F,
+                        0.5F
+                );
+            }
+        }
+        // ================= SLAM TRIGGER =================
         if (!level().isClientSide && target != null && !isSlamming() && slamCooldown <= 0) {
             if (distanceTo(target) <= SLAM_TRIGGER_RANGE && hasLineOfSight(target)) {
                 startSlam();
             }
         }
 
+        // ================= ROCK THROW TRIGGER =================
         if (!level().isClientSide
                 && target != null
                 && !isSlamming()
+                && !doingMelee
                 && rockThrowCooldown <= 0
                 && distanceTo(target) > 7.0
                 && distanceTo(target) < 34.0
                 && hasLineOfSight(target)) {
 
-            throwRockAt(target);
-            rockThrowCooldown = enraged ? 30 : 50;
+            throwRockAt(target, enraged);
+            rockThrowCooldown = enraged ? 20 : 50;
         }
 
+        // ================= SLAM LOGIC =================
         if (isSlamming()) {
             getNavigation().stop();
+
+            setYBodyRot(getYRot());
+            yHeadRot = getYRot();
+
             slamTicks++;
 
-            // 🔊 Play wind-up sound ONCE
             if (!windupSoundPlayed && slamTicks == 1 && !level().isClientSide) {
                 windupSoundPlayed = true;
                 level().playSound(
@@ -172,6 +329,10 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
                         3.0F,
                         1.0F
                 );
+
+                for (Player p : level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(20))) {
+                    p.push(0, 0.2, 0);
+                }
             }
 
             if (!slamDidImpact && slamTicks >= SLAM_IMPACT_TICK && !level().isClientSide) {
@@ -181,6 +342,68 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
 
             if (slamTicks >= SLAM_TOTAL_TICKS && !level().isClientSide) {
                 endSlam();
+            }
+        }
+
+        // ================= MELEE TIMING =================
+// ================= MELEE TIMING =================
+        if (doingMelee) {
+            meleeTicks++;
+
+            if (meleeTicks == 7) { // impact frame
+                if (pendingMeleeTarget != null
+                        && pendingMeleeTarget.isAlive()
+                        && distanceTo(pendingMeleeTarget) < 4.0
+                        && hasLineOfSight(pendingMeleeTarget)) {
+
+                    dealMeleeDamageNow(pendingMeleeTarget);
+
+                    this.push(
+                            getLookAngle().x * 0.2,
+                            0.1,
+                            getLookAngle().z * 0.2
+                    );
+
+                    for (Player p : level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(8))) {
+                        p.push(0, 0.15, 0);
+                    }
+                }
+            }
+
+            if (meleeTicks > 15) {
+                doingMelee = false;
+                pendingMeleeTarget = null;
+            }
+        }
+
+        // ================= THROW TIMING =================
+        if (doingThrow) {
+            throwTicks++;
+
+            // Throw charge particles
+            if (level() instanceof ServerLevel server) {
+                server.sendParticles(
+                        ParticleTypes.CRIT,
+                        getX(),
+                        getEyeY(),
+                        getZ(),
+                        4,
+                        0.4,
+                        0.2,
+                        0.4,
+                        0.02
+                );
+            }
+
+            if (throwTicks == 10) { // adjust to match visual release
+                if (pendingThrowTarget != null && pendingThrowTarget.isAlive()) {
+                    spawnRockNow(pendingThrowTarget);
+                }
+            }
+
+            if (throwTicks > 20) {
+                doingThrow = false;
+                pendingThrowTarget = null;
             }
         }
     }
@@ -194,6 +417,9 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
         slamAnimStarted = false;
         windupSoundPlayed = false;
         slamCooldown = SLAM_COOLDOWN_TICKS;
+
+        // temporary resistance
+        addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, SLAM_TOTAL_TICKS, 2, false, false));
     }
 
     private void endSlam() {
@@ -204,22 +430,6 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
 
     /* ================= SLAM IMPACT ================= */
 
-    private void breakPlayerShield(Player player) {
-        if (!player.isBlocking()) return;
-
-        player.disableShield();
-
-        EquipmentSlot slot =
-                player.getUsedItemHand() == InteractionHand.MAIN_HAND
-                        ? EquipmentSlot.MAINHAND
-                        : EquipmentSlot.OFFHAND;
-
-        ItemStack shield = player.getItemBySlot(slot);
-        if (!shield.isEmpty()) {
-            shield.hurtAndBreak(1000, player, slot);
-        }
-    }
-
     private void doSlamImpact() {
         if (!(level() instanceof ServerLevel server)) return;
 
@@ -229,8 +439,8 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
         server.sendParticles(
                 new BlockParticleOption(ParticleTypes.BLOCK, ground),
                 getX(), getY(), getZ(),
-                180,
-                3.5, 0.3, 3.5,
+                220,
+                3.8, 0.3, 3.8,
                 0.35
         );
 
@@ -239,7 +449,7 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
                 blockPosition(),
                 ModSounds.COLOSSUS_SLAM.get(),
                 SoundSource.HOSTILE,
-                3.5F,
+                4.0F,
                 1.0F
         );
 
@@ -250,28 +460,34 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
 
             double dist = distanceTo(e);
 
-            if (e instanceof Player player) {
-                breakPlayerShield(player);
-            }
-
             float damage = (float) Mth.clamp(
-                    34.0 - (dist * 3.5),
-                    14.0,
-                    34.0
+                    38.0 - (dist * 4.0),
+                    16.0,
+                    38.0
             );
 
             e.hurt(damageSources().mobAttack(this), damage);
 
-            double kb = Mth.clamp(1.4 - (dist * 0.12), 0.5, 1.4);
+            double kb = Mth.clamp(1.6 - (dist * 0.15), 0.6, 1.6);
 
             e.push(
                     (e.getX() - getX()) * kb,
-                    1.0,
+                    1.2,
                     (e.getZ() - getZ()) * kb
             );
         }
     }
 
+    /* ================= ROCK THROW ================= */
+
+    private void throwRockAt(LivingEntity target, boolean enraged) {
+        if (!level().isClientSide) {
+            doingThrow = true;
+            throwTicks = 0;
+            pendingThrowTarget = target;
+            triggerAnim("attacks", "throw");
+        }
+    }
     /* ================= DEATH MESSAGE ================= */
 
     @Override
@@ -288,41 +504,36 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
         }
     }
 
-    /* ================= ROCK THROW ================= */
-
-    private void throwRockAt(LivingEntity target) {
-        RockProjectileEntity rock = new RockProjectileEntity(level(), this);
-        rock.setPos(getX(), getEyeY() - 0.2, getZ());
-
-        double dx = target.getX() - getX();
-        double dy = target.getEyeY() - rock.getY();
-        double dz = target.getZ() - getZ();
-
-        float speed = getHealth() < getMaxHealth() * 0.5F ? 2.6F : 2.2F;
-        rock.shoot(dx, dy, dz, speed, 0.10F);
-
-        level().addFreshEntity(rock);
-    }
-
     /* ================= GECKOLIB ================= */
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 
+        // ================= MOVEMENT =================
         controllers.add(new AnimationController<>(
-                this, "movement", 5,
+                this,
+                "movement",
+                5,
                 state -> {
+
                     if (isSlamming()) return PlayState.STOP;
 
                     return state.isMoving()
-                            ? state.setAndContinue(RawAnimation.begin().thenLoop("animation.stone_colossus.walk"))
-                            : state.setAndContinue(RawAnimation.begin().thenLoop("animation.stone_colossus.idle"));
+                            ? state.setAndContinue(
+                            RawAnimation.begin()
+                                    .thenLoop("animation.stone_colossus.walk"))
+                            : state.setAndContinue(
+                            RawAnimation.begin()
+                                    .thenLoop("animation.stone_colossus.idle"));
                 }
         ));
 
+        // ================= SLAM =================
         controllers.add(new AnimationController<>(
-                this, "slam",
+                this,
+                "slam",
                 state -> {
+
                     if (!isSlamming()) {
                         slamAnimStarted = false;
                         return PlayState.STOP;
@@ -337,15 +548,39 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
                             RawAnimation.begin()
                                     .thenPlay("animation.stone_colossus.windup")
                                     .thenPlay("animation.stone_colossus.slam")
-                                    .thenPlay("animation.stone_colossus.recovery")
-                    );
+                                    .thenPlay("animation.stone_colossus.recovery"));
                 }
         ));
+
+        // ================= ATTACKS (TRIGGER SYSTEM) =================
+        // ================= ATTACKS (TRIGGER SYSTEM) =================
+        controllers.add(
+                new AnimationController<>(this, "attacks", 0, state -> PlayState.STOP)
+                        .triggerableAnim(
+                                "hit",
+                                RawAnimation.begin()
+                                        .thenPlay("animation.stone_colossus.hit"))
+                        .triggerableAnim(
+                                "throw",
+                                RawAnimation.begin()
+                                        .thenPlay("animation.stone_colossus.throw"))
+
+        );
     }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return animCache;
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new GroundPathNavigation(this, level);
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distance) {
+        return false;
     }
 
     /* ================= BOSS BAR ================= */
@@ -361,14 +596,26 @@ public class StoneColossusEntity extends Monster implements GeoEntity {
         super.stopSeenByPlayer(player);
         bossBar.removePlayer(player);
     }
+    private void spawnRockNow(LivingEntity target) {
+        if (target == null || target.isRemoved()) return;
 
-    @Override
-    protected PathNavigation createNavigation(Level level) {
-        return new GroundPathNavigation(this, level);
+        RockProjectileEntity rock = new RockProjectileEntity(level(), this);
+        rock.setPos(getX(), getEyeY() - 0.2, getZ());
+
+        double dx = target.getX() - getX();
+        double dy = target.getEyeY() - rock.getY();
+        double dz = target.getZ() - getZ();
+
+        rock.shoot(dx, dy, dz, 2.3F, 0.01F);
+        level().addFreshEntity(rock);
     }
 
-    @Override
-    public boolean removeWhenFarAway(double distance) {
-        return false;
+    private void dealMeleeDamageNow(LivingEntity target) {
+        if (target == null || target.isRemoved()) return;
+
+        target.hurt(
+                damageSources().mobAttack(this),
+                (float) getAttributeValue(Attributes.ATTACK_DAMAGE)
+        );
     }
 }

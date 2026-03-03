@@ -12,16 +12,16 @@ public class TitleRegistry {
 
     public static final Title WARRIOR_I = register(
             new Title(
-                    "warrior_i",
-                    Component.literal("[Warrior I] ")
+                    "warrior",
+                    Component.literal("[Warrior] ")
                             .withStyle(ChatFormatting.RED)
             )
     );
 
     public static final Title MINER_I = register(
             new Title(
-                    "miner_i",
-                    Component.literal("[Miner I] ")
+                    "miner",
+                    Component.literal("[Miner] ")
                             .withStyle(ChatFormatting.GRAY)
             )
     );

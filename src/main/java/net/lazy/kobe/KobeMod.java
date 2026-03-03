@@ -172,6 +172,12 @@ public class KobeMod {
                 net.lazy.kobe.registry.ModEntities.COPENGAMBLER.get(),
                 net.lazy.kobe.boss.CopengamblerEntity.createAttributes().build()
         );
+
+        event.put(ModEntities.TIERED_ZOMBIE.get(),
+                net.lazy.kobe.mobs.TieredZombie.createAttributes().build());
+
+        event.put(ModEntities.TIERED_SKELETON.get(),
+                net.lazy.kobe.mobs.TieredSkeleton.createAttributes().build());
     }
 
 
@@ -192,6 +198,20 @@ public class KobeMod {
 
     @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
     public static class ClientEvents {
+
+        @SubscribeEvent
+        public static void registerEntityRenderers(
+                net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event
+        ) {
+            event.registerEntityRenderer(
+                    net.lazy.kobe.registry.ModEntities.TIERED_ZOMBIE.get(),
+                    net.lazy.kobe.client.render.TieredZombieRenderer::new
+            );
+            event.registerEntityRenderer(
+                    net.lazy.kobe.registry.ModEntities.TIERED_SKELETON.get(),
+                    net.lazy.kobe.client.render.TieredSkeletonRenderer::new
+            );
+        }
 
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {

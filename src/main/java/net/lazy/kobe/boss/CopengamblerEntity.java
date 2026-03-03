@@ -18,12 +18,16 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -33,10 +37,11 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
@@ -65,7 +70,7 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
 
     // ⏱️ SHORTENED END
     private static final int RESOLVE_DELAY = 10; // was 20
-    private static final int RESOLVE_END = 20; // was 30
+    private static final int RESOLVE_END = 20;   // was 30
 
     /* ===================== STATE ===================== */
 
@@ -111,7 +116,20 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.6, true));
+
+        // ✅ Touch-up: block melee goal entirely while gambling (prevents swing attempts)
+        goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.6, true) {
+            @Override
+            public boolean canUse() {
+                return !isGambling() && super.canUse();
+            }
+
+            @Override
+            public boolean canContinueToUse() {
+                return !isGambling() && super.canContinueToUse();
+            }
+        });
+
         goalSelector.addGoal(2, new RandomStrollGoal(this, 1.8));
         goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 
@@ -149,6 +167,17 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
         bossBar.removePlayer(player);
     }
 
+    /* ===================== MELEE DAMAGE BLOCK (YOUR REQUEST) ===================== */
+
+    @Override
+    public boolean doHurtTarget(Entity target) {
+        // ✅ Touch-up: she cannot DEAL melee damage during gamble animation/phases
+        if (isGambling()) {
+            return false;
+        }
+        return super.doHurtTarget(target);
+    }
+
     /* ===================== TICK ===================== */
 
     @Override
@@ -171,6 +200,9 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
 
             case PHASE_SLOT -> {
                 setDeltaMovement(Vec3.ZERO);
+
+                // ✅ Touch-up: stop pathing jitter during slot
+                getNavigation().stop();
 
                 // ✅ ADD: "INVULNERABLE" VISUALS DURING SLOT (so players know hits won't work)
                 if (phaseTick % 3 == 0) {
@@ -217,6 +249,9 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
 
             case PHASE_RESOLVE -> {
                 setDeltaMovement(Vec3.ZERO);
+
+                // ✅ Touch-up: stop pathing jitter during resolve too
+                getNavigation().stop();
 
                 if (!jackpotFired && phaseTick >= RESOLVE_DELAY) {
                     jackpotFired = true;
@@ -524,6 +559,7 @@ public class CopengamblerEntity extends Monster implements GeoEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        // keeps your original behavior: invulnerable during SLOT only
         return getPhase() != PHASE_SLOT && super.hurt(source, amount);
     }
 

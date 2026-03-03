@@ -1,5 +1,6 @@
 package net.lazy.kobe.client.overlay;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Monster;
@@ -17,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @EventBusSubscriber(modid = "kobe")
 public class EntityHealthNameUpdater {
-//**
+
     // Stores original names (Component.empty() = no original name)
     private static final Map<UUID, Component> ORIGINAL_NAMES = new ConcurrentHashMap<>();
 
@@ -27,6 +28,7 @@ public class EntityHealthNameUpdater {
     @SubscribeEvent
     public static void onJoin(EntityJoinLevelEvent event) {
         if (!(event.getEntity() instanceof Monster mob)) return;
+
         cacheOriginalName(mob);
         updateName(mob);
     }
@@ -50,7 +52,7 @@ public class EntityHealthNameUpdater {
     }
 
     /* ============================================================
-       ENTITY DEATH → RESTORE NAME
+       ENTITY DEATH → RESTORE ORIGINAL NAME
        ============================================================ */
     @SubscribeEvent
     public static void onDeath(LivingDeathEvent event) {
@@ -62,7 +64,7 @@ public class EntityHealthNameUpdater {
             mob.setCustomName(null);
             mob.setCustomNameVisible(false);
         } else {
-            mob.setCustomName(original);
+            mob.setCustomName(original.copy()); // preserve styling
             mob.setCustomNameVisible(true);
         }
     }
@@ -71,6 +73,7 @@ public class EntityHealthNameUpdater {
        CORE LOGIC
        ============================================================ */
     private static void updateName(Mob mob) {
+
         if (!mob.isAlive()) return;
 
         float max = mob.getMaxHealth();
@@ -84,21 +87,22 @@ public class EntityHealthNameUpdater {
                         hp > max * 0.33f ? 0xFFFF00 :
                                 0xFF5555;
 
-        // ✅ Always rebuild from ORIGINAL (never from current custom name)
         Component original = ORIGINAL_NAMES.get(mob.getUUID());
 
         Component baseName;
+
         if (original != null && !original.equals(Component.empty())) {
-            // mob had a real custom name before we touched it
-            baseName = Component.literal(original.getString());
+            // ✅ Preserve full formatting (tier colors etc.)
+            baseName = original.copy();
         } else {
-            // unnamed mob -> clean vanilla name
+            // Vanilla fallback
             baseName = Component.translatable(mob.getType().getDescriptionId());
         }
 
         Component display = Component.empty()
                 .append(baseName)
-                .append(Component.literal(" "))
+                .append(Component.literal("  |  ")
+                        .withStyle(ChatFormatting.DARK_GRAY))
                 .append(
                         Component.literal("❤ " + formatHp(hp))
                                 .withStyle(style -> style.withColor(color))
@@ -108,15 +112,18 @@ public class EntityHealthNameUpdater {
         mob.setCustomNameVisible(true);
     }
 
-
     /* ============================================================
-       NAME CACHE (NULL-SAFE)
+       NAME CACHE
        ============================================================ */
     private static void cacheOriginalName(Mob mob) {
+
         UUID id = mob.getUUID();
+
         ORIGINAL_NAMES.computeIfAbsent(
                 id,
-                k -> mob.getCustomName() != null ? mob.getCustomName() : Component.empty()
+                k -> mob.getCustomName() != null
+                        ? mob.getCustomName().copy()
+                        : Component.empty()
         );
     }
 
@@ -124,10 +131,13 @@ public class EntityHealthNameUpdater {
        HP FORMATTER
        ============================================================ */
     private static String formatHp(int hp) {
+
         if (hp >= 1_000_000)
             return String.format("%.1fM", hp / 1_000_000f);
+
         if (hp >= 1_000)
             return String.format("%.1fk", hp / 1_000f);
+
         return String.valueOf(hp);
     }
 }

@@ -10,10 +10,17 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
+
+import java.util.List;
 
 @EventBusSubscriber(modid = "kobe")
 public class MiningEvents {
@@ -26,7 +33,9 @@ public class MiningEvents {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
         if (!(event.getPlayer() instanceof ServerPlayer player)) return;
 
-        Block block = event.getState().getBlock();
+        BlockState state = event.getState();
+        Block block = state.getBlock();
+
         int xp = 0;
 
         // -----------------------------
@@ -53,16 +62,13 @@ public class MiningEvents {
 
         xp += oreXp;
 
-        if (xp <= 0) return;
-
-        // -----------------------------
-        // APPLY XP (UNIFIED SYSTEM)
-        // -----------------------------
-        MasteryXpCentral.addXp(
-                player,
-                MasteryType.MINING,
-                xp
-        );
+        if (xp > 0) {
+            MasteryXpCentral.addXp(
+                    player,
+                    MasteryType.MINING,
+                    xp
+            );
+        }
 
         // -----------------------------
         // EXTRA DROP PERK
@@ -73,11 +79,17 @@ public class MiningEvents {
                 .getLevel();
 
         if (oreXp > 0 && MiningPerks.rollExtraDrop(currentLevel, level.random)) {
-            Block.popResource(
-                    level,
-                    event.getPos(),
-                    new ItemStack(block.asItem())
+
+            List<ItemStack> drops = state.getDrops(
+                    new LootParams.Builder(level)
+                            .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(event.getPos()))
+                            .withParameter(LootContextParams.TOOL, player.getMainHandItem())
+                            .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
             );
+
+            for (ItemStack stack : drops) {
+                Block.popResource(level, event.getPos(), stack.copy());
+            }
         }
     }
 

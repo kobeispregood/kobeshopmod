@@ -8,7 +8,9 @@ public class MiningPerks {
     // MINING SPEED (GEN ONLY)
     // -------------------------
     public static float getMiningSpeedMultiplier(int level) {
-        if (level >= 40) return 1.30f;
+        if (level >= 50) return 1.50f;
+        if (level >= 45) return 1.40f;
+        if (level >= 40) return 1.32f;
         if (level >= 30) return 1.25f;
         if (level >= 20) return 1.18f;
         if (level >= 10) return 1.10f;
